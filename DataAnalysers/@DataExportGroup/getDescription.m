@@ -1,0 +1,9 @@
+function str = getDescription(obj)
+% GETDESCRIPTION Returns the description for this object
+
+str = ['Multi-select the sound files you want to export in the tree '  ...
+       'then select all the timeseries dataObjects you would like in ' ...
+       'the list box and hit Export.  The Objects must all be of '     ...
+       'the same length as they are concatenated in columns'];
+
+% EOF
