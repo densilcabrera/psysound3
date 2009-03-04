@@ -44,11 +44,11 @@ end
 
 % Get the dataAnalysis folder's dataStorageArray
 dsArr = getDataStorageArrObj(daPath);
-for i = 1:getNumChildren(dsArr)
-  if getName(node)
-  dsArr = removeNode(dsArr,1);
-  end
-end
+% for i = 1:getNumChildren(dsArr)
+%   if 1 %getName(node)
+%   dsArr = removeNode(dsArr,1);
+%   end
+% end
 
 % Create the FFT (say) node
 daObj = dataStorage(obj.Name, daName, [daName 'Folder'], 0);
@@ -57,15 +57,11 @@ daObj = dataStorage(obj.Name, daName, [daName 'Folder'], 0);
 dsArr = addNode(dsArr, daObj);
 saveDataStorageArrObj(daPath, dsArr);
 
-% in FFT folder
+% and Save the new data Object in FFT folder
 dsArr = getDataStorageArrObj(dsObjDASfolder);
-
-% Save the new data Object
 dataObj         = dataObjS.DataObj;
 dataObjName     = dataObj.name;
 dataObjFileName = genvarname(dataObjName);
-
-% % Save the struct as a mat file. 
 save(fullfile(dsObjDASfolder, dataObjFileName), 'dataObjS');
 
 % Finally create a dataStorage object for this data object
