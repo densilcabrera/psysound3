@@ -115,6 +115,39 @@ Z = [];
     zrs = [0; roots([1 6532 4.0975e7])];
     pls = [-1776.3; -7288.5; roots([1 21514 3.8836e8])];
     
+	 case 'R'
+		% Filter weightings from [1], pg 12
+		% These are defined for 48k
+		b = [1 -2 1];
+		a = [1 -1.99004745483398 0.99007225036621];
+
+		% Use direct substituition of the definition of the z-transform
+		% (z=exp(s*T)) to recalculate coeffecients for a different sampling
+		% rate
+		% Note: This could be another option for pre-filtering
+
+		if Fs ~= 48e3;
+  	poles = roots(a);
+  
+  	% Make polynomial after fixing up the roots
+  	% 
+  	% z = exp(s*T) --> s = ln(z)/T
+  	%
+  	% s = ln(z1)/T1 = ln(z2)/T2  -->  z2 = exp(ln(z1)*T2/T1)
+  	%
+  	a = poly(exp(log(poles)*48e3/Fs));
+  
+  	% Note that the two zeros at 1 remain there.
+  	% Note also, that the negligible high frequency gain adjustment
+  	% is ignored.
+		end
+
+		weightings.a = a;
+    weightings.b = b;
+    
+    % ... and we're done
+    return		
+		
    case 'Z' % un-weighted
     weightings.a = 1;
     weightings.b = 1;

@@ -16,17 +16,27 @@ end
 % line feed
 str{2} = sprintf('\nIntegration time(s): ');
 
-switch obj.iChoices
- case 'f'
-  str{3} = 'fast';
- case 's'
-  str{3} = 'slow';
- case {'fs' 'sf'}
-  str{3} = 'fast & slow';
- otherwise
-  % do nothing
-  str{3} = '';
+strInt = [];
+for i = 1:length(obj.iChoices)
+  if i > 1
+    
+    strInt = [strInt ', '];
+  end
+  
+  switch char(obj.iChoices{i})
+    case 'f'
+      strInt = [strInt  'Fast'];
+    case 's'
+      strInt = [strInt  'Slow'];
+    case 'i'
+      strInt = [strInt 'Imp'];
+    case 'p'
+      strInt = [strInt 'Peak'];
+    otherwise
+      % do nothing
+      strInt = [strInt obj.iChoices{i}];
+  end
 end
-
+str{3} = strInt;
 % assign output
 out = [str{:}];

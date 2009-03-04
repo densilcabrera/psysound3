@@ -18,7 +18,7 @@ ud = get(iH, 'UserData');
 
 % Set the integration prop
 if iscell(ud)
-  obj = setiChoices(obj, [ud{:}]);
+  obj = setiChoices(obj, ud);
 else
   obj = setiChoices(obj, ud);
 end

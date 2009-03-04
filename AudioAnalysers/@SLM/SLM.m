@@ -44,7 +44,7 @@ obj = set(obj, 'type', 'TimeDomain');
   function initObj
   
   obj.wChoices = 'AZ';
-  obj.iChoices = 'f';
+  obj.iChoices = {'f','s'};
 
   obj.ignoreDelay = true;
   
