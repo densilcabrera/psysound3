@@ -34,7 +34,7 @@ for w = 1:wLen % foreach weighting type
   s(j).iFH = {};
   % Now loop over each integration type
   for i = 1:iLen
-    s(j).iFH{end+1} = integrator(fs, iChoices(i));
+    s(j).iFH{end+1} = integrator(fs, char(iChoices(i)));
   end
   j = j + 1;
 end
@@ -48,7 +48,7 @@ dataOut = cell(1, len);
     data = [];
     k    = 1;
     for i=1:length(s)
-      % Run the weghtings filter
+      % Run the weightings filter
       data = s(i).wFH.run(dataIn);
 
       % Now run each of the integrations

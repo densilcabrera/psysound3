@@ -30,12 +30,13 @@ for w=1:length(wChoices)
    case 'Z'
     % unweighted
     dBoffset = 94.89;
-   otherwise
-    error('SLM: unknown level offset');
+    otherwise
+    dBoffset = 94.89;
+    warning('SLM: unknown level offset');
   end
   
   for i=1:length(iChoices)
-    switch iChoices(i) 
+    switch char(iChoices(i))
 			case 'f',
       	iStr = 'Fast';
       	del  = 1 * 0.125 * fs;
@@ -48,6 +49,10 @@ for w=1:length(wChoices)
     	case 'p',
       	iStr = 'Peak';
       	del  = 1 * 0.00050 * fs;
+      otherwise
+        iStr = char(iChoices(i));
+        tau = str2num(iStr(2:end));
+      	del  = 1 * tau * fs;
 		end
 
     % Pad the filter delay with NaN's
