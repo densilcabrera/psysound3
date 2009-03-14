@@ -207,8 +207,11 @@ end
 
 % Declare memory for the Output structure
 if vLvl, tic; end
-  dataBuffer = allocOutputDataStorage(obj);
 
+% Do not allocate memory if Raw mode is used. 
+if ~strcmp(get(obj, 'type'), 'Raw')    
+  dataBuffer = allocOutputDataStorage(obj);  
+end
   % Update progress
   if ~isempty(wBar), 
     wBarProgress = wBarProgress + wBarStepSize;
@@ -220,7 +223,7 @@ if vLvl
   aTime  = aTime + tictoc;
 end
 
-if vLvl | estimate
+if (vLvl | estimate) && ~strcmp(get(obj, 'type'), 'Raw')   
   sz = 0;
   dataBufFnames = fieldnames(dataBuffer);
   for i=1:length(dataBufFnames)
@@ -485,9 +488,14 @@ for index = 1:numWindows
   % Fill in the outputs
   if vLvl | estimate, tic; end
 
-    % Call the subclass method
-    obj = assignOutputs(obj, windowDataProcessed, dataBuffer, s);
-
+  if ~strcmp(get(obj, 'type'), 'Raw')   
+    % Call the subclass method  
+    obj = assignOutputs(obj, windowDataProcessed, dataBuffer, s);  
+  else
+    % if Raw Mode is used then windowDataProcessed should 
+    % go straight to constructDataObjects
+  end
+  
     % Update progress
     if ~isempty(wBar), 
       wBarProgress = wBarProgress + wBarStepSize;
@@ -520,8 +528,11 @@ end
 % Construct data objects
 if vLvl, tic; end
   if ~estimate
-    obj = constructDataObjects(obj, dataBuffer, tVector);
-    
+    if ~strcmp(get(obj, 'type'), 'Raw')   
+      obj = constructDataObjects(obj, dataBuffer, tVector);
+    else
+      obj = constructDataObjects(obj, windowDataProcessed, tVector);
+    end
     if synch
       % Truncate for synchronisation
       for k=1:length(obj.output)
