@@ -4,13 +4,13 @@ function obj = constructDataObjects(obj, dataBuffer, timePoints)
 % Analogous to assignoutputs
 %
 % Get the p data
-p = dataBuffer.p.get();
+p = dataBuffer{1};
 
 % Get the s data
-s = dataBuffer.s.get();
+s = dataBuffer{2};
 
 % Get the t data
-t = dataBuffer.t.get();
+t = dataBuffer{3};
 
 oDataRate = get(obj,'outputDataRate');
 
