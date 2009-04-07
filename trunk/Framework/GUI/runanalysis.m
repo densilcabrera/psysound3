@@ -275,8 +275,11 @@ for i = 1:fLen
 		% Update summary box string
     if ~isempty(summaryBoxH)
       updateSummaryBox(summaryBoxH, ...
-                  sprintf('  %-20s %+10s', obj.Name, 'failed - see error'));
-    lasterr
+                  sprintf('  %-20s %+10s', obj.Name, 'Failed: See Error'));
+        errStr = getErrStringWithStack(lasterror);
+      for i =  1:length(errStr)
+        disp(errStr{i});
+      end
     end
 		end
   end % foreach analyser
@@ -512,4 +515,19 @@ drawnow;
 
 end % updateSummaryBox
 
+
+function errStr = getErrStringWithStack(lerr)
+
+psyDir = fileparts(which('psysound3'));
+str = {lerr.message, ''};
+stk = lerr.stack;
+for i=1:length(stk)
+  fname = strrep(stk(i).file, psyDir, '');  % psysound path
+  fname = fname(2:end-2); % remove leading slash and extension
+  str{end+1} = ['In ', fname, ' -> ',...
+    stk(i).name, ' at ', num2str(stk(i).line)];
+end
+
+errStr = str;
+end
 % [EOF]
