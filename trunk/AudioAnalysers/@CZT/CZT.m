@@ -33,7 +33,7 @@ switch nargin
 end
 
 % Set name
-obj = set(obj, 'Name', 'CZT Analysis'); 
+obj = set(obj, 'Name', 'CZT Spectrum'); 
 
 % Set default Overlap, Window size and Windowing function
 ov.size = 75;
