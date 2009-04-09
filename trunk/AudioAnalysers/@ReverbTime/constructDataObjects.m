@@ -24,7 +24,7 @@ oDataRate = get(obj,'outputDataRate');
 
 % format for TimeSeries
 tsRT = createDataObject('tSeries',ReverbTime,Time);
-tsRT.Name = 'Schroeder Integation';
+tsRT.Name = 'Schroeder Integration';
 tsRT.DataInfo.Unit = 'dB';
 tsRT.TimeInfo.Increment= 1/fs;
 output{1} = tsRT;
