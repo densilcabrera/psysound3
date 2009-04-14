@@ -7,7 +7,16 @@ function psysound3
 % Check to see if PsySound3 is on the path
 p = path;
 
-if ~isempty(findstr(p, 'psysound3'))
+if ~isempty(findstr(p, 'psysound3')) 
+	try
+    getPsysound3Prefs; % CHECK IF PREFERENCES ARE THERE (May not be if PsySound paths added manually)
+  catch
+    configPsySound3;
+  end
+  disp('Starting PsySound3. ');
+  disp('Please read README File distributed with Software.');
+  disp('PsySound is BETA Software. Use at your own risk.');
+  
   PsySoundGUI;
 else
   fprintf(['PsySound3 does not seem to be configured, configuring before proceeding.\n']);
@@ -73,6 +82,9 @@ try
   %           'dataStorage', 'utils'};
   
   subdir = genpath(pwd);
+	%% Do not add .svn paths
+
+
   colons = findstr(subdir,':');
   boundaries = [[1 colons(1:end-1)+1]' [colons(1:end)-1]'];
   direcInd = 1;
@@ -107,7 +119,7 @@ try
 catch
   disp(['There was an error configuring PsySound. Please see ' ...
         'below']);
-  lasterr
+  rethrow(lasterror);
 end
 
 try  
