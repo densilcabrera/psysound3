@@ -9,7 +9,7 @@ legend off; colorbar off;
 ax = findobj(panel, 'Type','Axes'); % there is only one!
 
 % Get the Objects
-dObjS = findAllInDataSet('name', 'Average Magnitude Spectrum');
+dObjS = findAllInDataSet('name', 'Average Power Spectrum');
 
 % Bail out if empty
 if isempty(dObjS)

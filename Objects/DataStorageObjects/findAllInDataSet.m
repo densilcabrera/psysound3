@@ -37,7 +37,11 @@ for i=1:length(ch)
     end
   else
     % Load its node object and recurse
-    load(fullfile(dirPath, node.filename, filesep, 'dataInfo.mat'));
+    try
+      load(fullfile(dirPath, node.filename, filesep, 'dataInfo.mat'));
+    catch
+      continue
+    end
     objs = getAllInDataSet(dsArr, objs, prop, val, fullfile(dirPath, node.filename));
   end
   

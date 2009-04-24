@@ -114,6 +114,10 @@ for i=1:length(fnames);
     end
   elseif isa(val, 'function_handle')
     fprintf('  %s\t: %s\n', fname, func2str(val));
+  elseif iscell(val)
+    for i = 1:length(val)
+      fprintf('  %s (%i) \t: %s\n', fname, i, val{i});
+    end
   elseif isobject(val)
     % Recurse if object
     displaySubclassFields(val);

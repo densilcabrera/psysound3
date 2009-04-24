@@ -12,21 +12,33 @@ for i=1:length(carrier)
     wave = wave/max(abs(wave));
     wavwrite(wave,44100,24,'sound.wav');
     % Load filehandle
-    fh          = readData('sound.wav');
-    fh.calCoeff = 1;        % Calibrate
+    fh           = readData('sound.wav');
+    fh.calCoeff  = 1;        % Calibrate
     
-    obj         = SLM(fh);
-    obj         = process(obj,fh,[]);  % process the object
-    fh.calCoeff = 10^((60 - median(obj.output{1}.data))/20);
+    obj          = SLM(fh);
+    obj.wChoices = 'Z';
+    obj          = process(obj,fh,[]);  % process the object
+    
+    values = obj.output{1}.data(~isnan(obj.output{1}.data));
+    fh.calCoeff  = 10^((63 - median(values))/20);
+    
+    obj          = SLM(fh);
+    obj.wChoices = 'Z';
+    obj          = process(obj,fh,[]);  % process the object
+    values = obj.output{1}.data(~isnan(obj.output{1}.data));
+    disp(median(values));
+    
+    
     clear('obj');
     obj         = RoughnessDW(fh);    % Analyser Instantiation
+
     obj         = process(obj,fh,[]);  % process the object
     data1(i,j)   = median(obj.output{1}.data); 
 		clear('obj');
-		obj         = RoughnessDW2(fh);    % Analyser Instantiation
-    obj         = process(obj,fh,[]);  % process the object
-    data2(i,j)   = median(obj.output{1}.data); 
-    clear('obj');
+% 		obj         = RoughnessDW2(fh);    % Analyser Instantiation
+%     obj         = process(obj,fh,[]);  % process the object
+%     data2(i,j)   = median(obj.output{1}.data); 
+%     clear('obj');
   end
 end
 
@@ -45,11 +57,11 @@ subjectivedata =  ...
  
 data1 = data1';
 difference1 = (data1 - subjectivedata)./subjectivedata * 100;
-data2 = data2';
-difference2 = (data2 - subjectivedata)./subjectivedata * 100;
+fprintf('Model Data\t Subjective Data \t Model-Subjc \t Percentage Difference \t Carrier Freq\t AM Freq\n');
 fprintf('\n');
+
 for i=1:length(carrier)
   for j=1:length(am)
-    fprintf('%.2f\t  %.2f(%.2f)\t %.2f(%.2f)\t -- %.2f %.2f\n', subjectivedata(j,i), data1(j,i), difference1(j,i), data2(j,i), difference2(j,i), carrier(i), am(j));
+    fprintf(' %.2f\t %.2f\t %.2f\t %.2f\t %.2f \t %.2f\n', data1(j,i), subjectivedata(j,i),  data1(j,i) - subjectivedata(j,i),difference1(j,i), carrier(i), am(j));
   end
 end
