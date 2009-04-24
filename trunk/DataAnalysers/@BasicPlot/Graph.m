@@ -16,7 +16,14 @@ if ~isempty(deblank(plotStrs{1})),
 end
 
 % Find axes
-ax = findobj(p, 'Type','Axes', 'Tag', 'SingleAxes');
+ax = findobj(p, 'Type','Axes');
+if length(ax) == 2
+  ax =ax(2);
+end
+
+% if isempty(ax)
+%   ax = findobj(p, 'Type','Axes');
+% end
 
 % Get the tree nodes
 nodes = getSelectedTreeNodes(obj, p);
@@ -29,7 +36,7 @@ end
 % Clear up some things
 axes(ax);
 cla; legend off; colorbar off;
-
+axis auto;
 set(ax, 'UserData', []);
 set(ax, 'XLimMode', 'auto');
 set(ax, 'YLimMode', 'auto');
@@ -158,11 +165,19 @@ switch(get(hObj, 'String'))
     if ~isempty(data1) && ~isempty(data2)
       axes(ax);
       % Plot
-      plotyy(time1, data1, time2, data2);
-      %xlabel('Time(s)');
-      %set(get(AX(1),'Ylabel'),'String',[dataObj1.Name ' (' dataObj1.DataInfo.Units ')'])
-      %set(get(AX(2),'Ylabel'),'String',[dataObj2.Name ' (' dataObj2.DataInfo.Units ')'])
-      title([dataObj1.Name, ' and ', sprintf('\n'), dataObj2.Name]);
+      [h,ax1,ax2] = plotyy(time1, data1, time2, data2);
+      xlabel('Time(s)');
+			if ~isempty(dataObj1.DataInfo.Units)
+      	set(get(h(1),'YLabel'),'String',[dataObj1.Name ' (' dataObj1.DataInfo.Units ')'])
+			else
+					set(get(h(1),'YLabel'),'String',dataObj1.Name)
+			end
+			if ~isempty(dataObj2.DataInfo.Units)
+	      set(get(h(2),'YLabel'),'String',[dataObj2.Name ' (' dataObj2.DataInfo.Units ')'])
+  		else
+		  	set(get(h(2),'YLabel'),'String',dataObj2.Name)
+			end
+    %title([dataObj1.Name, ' and ', sprintf('\n'), dataObj2.Name]);
     else
       text(0.2, 0.5, 'Incompatible data encountered');
     end
@@ -275,7 +290,7 @@ switch(get(hObj, 'String'))
         end
       end
     catch
-      errordlg('Error: 1 of these objects cannot be plotted with subfigure. Sorry.');
+      errordlg('Error: At least 1 of these objects cannot be plotted with subfigure. Sorry.');
     end    
     % link axes for zooming
     linkaxes(h, 'x');
