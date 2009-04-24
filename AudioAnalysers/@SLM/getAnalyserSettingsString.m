@@ -17,13 +17,22 @@ end
 str{2} = sprintf('\nIntegration time(s): ');
 
 strInt = [];
-for i = 1:length(obj.iChoices)
-  if i > 1
-    
+
+if ischar(obj.iChoices)
+	for i = 1:length(obj.iChoices)
+	 iChoices(i) = obj.iChoices(i);
+	end
+else
+	iChoices = obj.iChoices;
+end
+
+
+for i = 1:length(iChoices)
+  if i > 1  
     strInt = [strInt ', '];
   end
   
-  switch char(obj.iChoices{i})
+  switch char(iChoices{i})
     case 'f'
       strInt = [strInt  'Fast'];
     case 's'
@@ -34,7 +43,7 @@ for i = 1:length(obj.iChoices)
       strInt = [strInt 'Peak'];
     otherwise
       % do nothing
-      strInt = [strInt obj.iChoices{i}];
+      strInt = [strInt str2num(iChoices{i})]; % This has not been tested
   end
 end
 str{3} = strInt;
