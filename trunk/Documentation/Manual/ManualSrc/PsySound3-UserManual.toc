@@ -2,24 +2,24 @@
 \contentsline {subsection}{\numberline {1.1}Warning}{2}
 \contentsline {section}{\numberline {2}Installation}{2}
 \contentsline {subsection}{\numberline {2.1}Matlab-based Installation}{2}
-\contentsline {section}{\numberline {3}Basic Program Usage}{3}
-\contentsline {subsection}{\numberline {3.1}Step 1 - File Selection}{3}
-\contentsline {subsection}{\numberline {3.2}Step 2 - File Calibration}{3}
-\contentsline {subsection}{\numberline {3.3}Step 3 - Analysis with AudioAnalysers}{5}
-\contentsline {subsection}{\numberline {3.4}Step 4 - AudioAnalyser Output Analysis with DataAnalysers}{7}
-\contentsline {section}{\numberline {4}Command Line Interface}{8}
-\contentsline {subsection}{\numberline {4.1}Data Set Analysis Wrapper}{8}
-\contentsline {section}{\numberline {5}Writing New AudioAnalysers}{9}
-\contentsline {subsection}{\numberline {5.1}Step By Step How-to}{10}
-\contentsline {subsection}{\numberline {5.2}TemplateAnalyser.m}{10}
-\contentsline {subsection}{\numberline {5.3}allocOutputDataStorage.m}{11}
-\contentsline {subsection}{\numberline {5.4}processWindow.m}{11}
-\contentsline {subsection}{\numberline {5.5}assignOutput.m}{11}
-\contentsline {subsection}{\numberline {5.6}constructDataObjects.m}{12}
-\contentsline {subsection}{\numberline {5.7}Raw Interface}{12}
-\contentsline {section}{\numberline {6}Writing New DataAnalysers}{13}
-\contentsline {subsection}{\numberline {6.1}Folder: @BasicPlot}{13}
-\contentsline {subsection}{\numberline {6.2}Constructor: BasicPlot.m}{13}
-\contentsline {subsection}{\numberline {6.3}User Interface: ui.m}{14}
-\contentsline {subsection}{\numberline {6.4}User Interface: updateDataAnalyserPanel.m}{14}
-\contentsline {subsection}{\numberline {6.5}Callback: Graph.m}{14}
+\contentsline {section}{\numberline {3}Basic Program Usage}{4}
+\contentsline {subsection}{\numberline {3.1}Step 1 - File Selection}{4}
+\contentsline {subsection}{\numberline {3.2}Step 2 - File Calibration}{4}
+\contentsline {subsection}{\numberline {3.3}Step 3 - Analysis with AudioAnalysers}{6}
+\contentsline {subsection}{\numberline {3.4}Step 4 - AudioAnalyser Output Analysis with DataAnalysers}{8}
+\contentsline {section}{\numberline {4}Command Line Interface}{9}
+\contentsline {subsection}{\numberline {4.1}Data Set Analysis Wrapper}{9}
+\contentsline {section}{\numberline {5}Writing New AudioAnalysers}{10}
+\contentsline {subsection}{\numberline {5.1}Step By Step How-to}{11}
+\contentsline {subsection}{\numberline {5.2}TemplateAnalyser.m}{11}
+\contentsline {subsection}{\numberline {5.3}allocOutputDataStorage.m}{12}
+\contentsline {subsection}{\numberline {5.4}processWindow.m}{12}
+\contentsline {subsection}{\numberline {5.5}assignOutput.m}{12}
+\contentsline {subsection}{\numberline {5.6}constructDataObjects.m}{13}
+\contentsline {subsection}{\numberline {5.7}Raw Interface}{13}
+\contentsline {section}{\numberline {6}Writing New DataAnalysers}{14}
+\contentsline {subsection}{\numberline {6.1}Folder: @BasicPlot}{14}
+\contentsline {subsection}{\numberline {6.2}Constructor: BasicPlot.m}{14}
+\contentsline {subsection}{\numberline {6.3}User Interface: ui.m}{15}
+\contentsline {subsection}{\numberline {6.4}User Interface: updateDataAnalyserPanel.m}{15}
+\contentsline {subsection}{\numberline {6.5}Callback: Graph.m}{15}

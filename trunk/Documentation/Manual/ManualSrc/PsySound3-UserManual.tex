@@ -29,7 +29,9 @@ THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 
 To explain, we make a lot of effort to make sure that the algorithms supplied work as intended and can be calibrated accurately. However, many of the algorithms can be used in numerous ways, and testing against all possible uses is a very difficult task. If you wish to use an algorithm for a particular purpose it would probably be necessary to test the algorithm against representative test stimuli. Be aware that there is a lot of knowledge necessary to use extracted features appropriately and that this system is not intended to be used as a `black box', but as a convenient interface. 
 
-Some sine tone testing data reports are produced automatically, and can be seen in the \texttt{Documentation/Examples/SineTones} folder. More tests would be gratefully received and added.
+The accuracy of these algorithms CANNOT be guaranteed. Please DO NOT ASSUME that these algorithms are accurate. 
+
+Some sine tone testing data reports are produced automatically, and can be seen in the `Documentation/Examples/SineTones' folder. More tests would be gratefully received and added.
 
 \section{Installation}
 
@@ -274,7 +276,7 @@ pts               = getNumWindows(obj);
 dataBuffer.myData = makeDataBuffer(pts, 1);
 \end{verbatim}
 
-\textt{allocOutputDataStorage.m} returns only \textt{dataBuffer} and therefore you need to attach your new dataBuffers as fields of this `struct'. The code above creates a matrix that is `pts' long and only 1 cell wide, basically a big list.
+\texttt{allocOutputDataStorage.m} returns only \texttt{dataBuffer} and therefore you need to attach your new dataBuffers as fields of this `struct'. The code above creates a matrix that is `pts' long and only 1 cell wide, basically a big list.
 
 If your file actually returns one quarter of the size of the window analysed, then you need to set up a matrix for the data buffer. This will require knowing the size of the window (as it can often be changed). 
 
