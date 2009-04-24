@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.10.7)  6 JAN 2009 11:27
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2009.2.27)  9 APR 2009 14:30
 entering extended mode
  file:line:error style messages enabled.
 **PsySound3-UserManual.tex
@@ -199,90 +199,65 @@ LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 17.
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 24.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 32.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 44.
 
 (/Users/sfer9710/Library/texmf/tex/latex/psnfss/lw35nfss/tex/latex/psnfss/ot1pc
 r.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Overfull \hbox (150.71144pt too wide) in paragraph at lines 32--33
-[]\OT1/ppl/m/n/10 Some sine tone test-ing data re-ports are pro-duced au-to-mat
--i-cally, and can be seen in the \OT1/pcr/m/n/10 Documentation/Examples/SineTon
-es
- []
-
-[2] <Step1-AddingFiles.jpg, id=12, 987.69pt x 624.3325pt>
+) [2] [3] <Step1-AddingFiles.jpg, id=15, 987.69pt x 624.3325pt>
 File: Step1-AddingFiles.jpg Graphic file (type jpg)
 
-<use Step1-AddingFiles.jpg> [3
+<use Step1-AddingFiles.jpg> [4
 
  <./Step1-AddingFiles.jpg>]
-<Step2-ChoosingMethod.jpg, id=16, 381.425pt x 128.48pt>
+<Step2-ChoosingMethod.jpg, id=19, 381.425pt x 128.48pt>
 File: Step2-ChoosingMethod.jpg Graphic file (type jpg)
 
 <use Step2-ChoosingMethod.jpg>
-<Step2-SupplyLevel.jpg, id=17, 989.6975pt x 625.33624pt>
+<Step2-SupplyLevel.jpg, id=20, 989.6975pt x 625.33624pt>
 File: Step2-SupplyLevel.jpg Graphic file (type jpg)
 
-<use Step2-SupplyLevel.jpg> [4 <./Step2-ChoosingMethod.jpg> <./Step2-SupplyLeve
-l.jpg>] <Step2-StandardiseTo70.jpg, id=21, 987.69pt x 624.3325pt>
+<use Step2-SupplyLevel.jpg> [5 <./Step2-ChoosingMethod.jpg> <./Step2-SupplyLeve
+l.jpg>] <Step2-StandardiseTo70.jpg, id=24, 987.69pt x 624.3325pt>
 File: Step2-StandardiseTo70.jpg Graphic file (type jpg)
 
 <use Step2-StandardiseTo70.jpg>
-<Step3-ChooseAnalyser.jpg, id=22, 987.69pt x 624.3325pt>
+<Step3-ChooseAnalyser.jpg, id=25, 987.69pt x 624.3325pt>
 File: Step3-ChooseAnalyser.jpg Graphic file (type jpg)
 
-<use Step3-ChooseAnalyser.jpg> [5 <./Step2-StandardiseTo70.jpg>]
-<Step3-TimeEstimate.jpg, id=26, 987.69pt x 624.3325pt>
+<use Step3-ChooseAnalyser.jpg> [6 <./Step2-StandardiseTo70.jpg>]
+<Step3-TimeEstimate.jpg, id=29, 987.69pt x 624.3325pt>
 File: Step3-TimeEstimate.jpg Graphic file (type jpg)
 
-<use Step3-TimeEstimate.jpg> [6 <./Step3-ChooseAnalyser.jpg> <./Step3-TimeEstim
-ate.jpg>] <Step4-NodeOpen.jpg, id=30, 987.69pt x 624.3325pt>
+<use Step3-TimeEstimate.jpg> [7 <./Step3-ChooseAnalyser.jpg> <./Step3-TimeEstim
+ate.jpg>] <Step4-NodeOpen.jpg, id=34, 987.69pt x 624.3325pt>
 File: Step4-NodeOpen.jpg Graphic file (type jpg)
 
-<use Step4-NodeOpen.jpg> [7 <./Step4-NodeOpen.jpg>] [8
+<use Step4-NodeOpen.jpg> [8 <./Step4-NodeOpen.jpg>] [9
 
 ]
-<AudioAnalysersDiagram.pdf, id=38, 600.2425pt x 377.41pt>
+<AudioAnalysersDiagram.pdf, id=41, 600.2425pt x 377.41pt>
 File: AudioAnalysersDiagram.pdf Graphic file (type pdf)
 
-<use AudioAnalysersDiagram.pdf> [9
+<use AudioAnalysersDiagram.pdf> [10
 
-] [10 <./AudioAnalysersDiagram.pdf>]
-Overfull \hbox (7.93198pt too wide) in paragraph at lines 270--271
+] [11 <./AudioAnalysersDiagram.pdf>]
+Overfull \hbox (7.93198pt too wide) in paragraph at lines 272--273
 []\OT1/ppl/m/n/10 To work out how many win-dows there will be for this par-tic-
 u-lar file use \OT1/pcr/m/n/10 getNumWindows(obj)\OT1/ppl/m/n/10 .
  []
 
-./PsySound3-UserManual.tex:277: Undefined control sequence.
-l.277 \textt
-            {allocOutputDataStorage.m} returns only \textt{dataBuffer} and t...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./PsySound3-UserManual.tex:277: Undefined control sequence.
-l.277 ...cOutputDataStorage.m} returns only \textt
-                                                  {dataBuffer} and therefore...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-[11]
-Overfull \hbox (2.58138pt too wide) in paragraph at lines 330--331
+[12]
+Overfull \hbox (2.58138pt too wide) in paragraph at lines 332--333
 []\OT1/ppl/m/n/10 Fundamentally we need to get the data from the dataBuffer and
  cre-ate a dataOb-ject that matches
  []
 
-[12] [13
+[13] [14
 
 ]
-./PsySound3-UserManual.tex:421: Undefined control sequence.
-l.421 \textt
+./PsySound3-UserManual.tex:423: Undefined control sequence.
+l.423 \textt
             {dataObj = getDataObjectFromTreeNode(obj, nodes(1))}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -290,10 +265,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[14] [15] (./PsySound3-UserManual.aux) ) 
+[15] [16] (./PsySound3-UserManual.aux) ) 
 Here is how much of TeX's memory you used:
  1701 strings out of 94073
- 23422 string characters out of 1163505
+ 23422 string characters out of 1163499
  2069778 words of memory out of 4520974
  4978 multiletter control sequences out of 10000+50000
  15262 words of font info for 41 fonts, out of 2000000 for 2000
@@ -305,9 +280,9 @@ y10.pfb></usr/local/gwTeX/texmf.texlive/fonts/type1/urw/courier/ucrr8a.pfb></us
 r/local/gwTeX/texmf.texlive/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/gwT
 eX/texmf.texlive/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/gwTeX/texmf.te
 xlive/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on PsySound3-UserManual.pdf (15 pages, 897568 bytes).
+Output written on PsySound3-UserManual.pdf (16 pages, 897750 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
+ 116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
