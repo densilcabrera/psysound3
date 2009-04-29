@@ -84,8 +84,12 @@ try
   subdir = genpath(pwd);
 	%% Do not add .svn paths
 
-
+  if ismac||isunix
   colons = findstr(subdir,':');
+  elseif ispc
+  colons = findstr(subdir,';');
+  end
+      
   boundaries = [[1 colons(1:end-1)+1]' [colons(1:end)-1]'];
   direcInd = 1;
   for i = 1:length(boundaries)
