@@ -1,9 +1,12 @@
 function RoughnessTest()
 % Testing Roughness Code.
 
-carrier  = [250 500 1000 2000 4000];
-am       = [20 30 40 50 60 70 80 90 100 110];
-pref     = 20e-6;
+ carrier  = [250 500 1000 2000 4000];
+ am       = [20 30 40 50 60 70 80 90 100 110];
+ pref     = 20e-6;
+
+%carrier = 1000;
+%am =70;
 
 for i=1:length(carrier)
   for j=1:length(am)
@@ -20,7 +23,7 @@ for i=1:length(carrier)
     obj          = process(obj,fh,[]);  % process the object
     
     values = obj.output{1}.data(~isnan(obj.output{1}.data));
-    fh.calCoeff  = 10^((63 - median(values))/20);
+    fh.calCoeff  = 10^((63.876 - median(values))/20); % Roughness tends to use strange values for cal.
     
     obj          = SLM(fh);
     obj.wChoices = 'Z';
