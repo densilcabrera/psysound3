@@ -1,8 +1,11 @@
-function treeArray = dataStorageTree(varargin)
+function obj = dataStorageTree(varargin)
 % DATASTORAGETREE object for PsySound3 data files
 %
 % This object is a container object to act as an array for the
-% dataStorage objects
+% dataStorage objects and as a method to access (not change) the 
+% data Objects themselves. 
+%
+% Use get method to get dataobjects of a particular type
 
 switch nargin
   case 0
@@ -14,31 +17,32 @@ switch nargin
     error('Invalid argument(s) in constructor of dataStorageTree');
 end
 
+obj = struct('tree',treeArray);
+obj = class(obj,'dataStorageTree');
+
 % Assign out
-
-
-
 function [treeArray,ind] = recurseTree(dataDir, treeArray, ind)
+% Recursive function to build array of tree elements.
+
 	load(fullfile(dataDir, filesep, 'dataInfo.mat'));
-	 for i = 1:length(dsArr)
+	 for i = 1:getNumChildren(dsArr)
 		if dsArr(i).isLeaf == 1  
-      
-			treeArray(ind).name = dsArr(i).name;
+      treeArray(ind).name = dsArr(i).name;
 			treeArray(ind).dObj = dsArr(i);
       treeArray(ind).nodeType = dsArr(i).nodeType; 
 			treeArray(ind).isLeaf = 1;
       treeArray(ind).filename = [dataDir filesep dsArr(i).filename];
       treeArray(ind).children = length(dsArr);
-      ind = ind + 1;
+      ind = ind+1;
     else
       treeArray(ind).name = dsArr(i).name;
-      treeArray(ind).nodeType = 'Folder';
+      treeArray(ind).nodeType = dsArr(i).nodeType;
       treeArray(ind).isLeaf = 0;
       treeArray(ind).filename = [dataDir filesep dsArr(i).filename];
       treeArray(ind).children = length(dsArr);
       [treeArray,ind] = recurseTree(treeArray(ind).filename, treeArray, ind+1);
     end
-
   end
 
+  
 % end dataStorage constructor

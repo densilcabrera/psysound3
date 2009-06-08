@@ -140,7 +140,7 @@ decFactor = 5;
       DAAFObj = concatenate(DAAFObj);
 			% play sound, export sound
       sound(DAAFObj);
-      export(DAAFObj,reprChoice);    
+      %export(DAAFObj,reprChoice);    
           
       
     case 'BeatSpectrum'
@@ -164,7 +164,7 @@ decFactor = 5;
       DAAFObj = xfade(DAAFObj);
       DAAFObj = concatenate(DAAFObj);
       sound(DAAFObj);
-      export(DAAFObj,reprChoice);    
+      %export(DAAFObj,reprChoice);    
       
       
     case 'BeatSegmentation'
@@ -178,7 +178,7 @@ decFactor = 5;
       DAAFObj = xfade(DAAFObj);
       DAAFObj = concatenate(DAAFObj);
       sound(DAAFObj);
-      export(DAAFObj,reprChoice);    
+      %export(DAAFObj,reprChoice);    
 
     case 'ChromaSonification'
       if strcmp(class(dataObjS(1).DataObj),'AudioTSeries')

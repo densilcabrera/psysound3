@@ -1,46 +1,41 @@
-function process(obj, hObj)
-% PROCESS  This method is called when the Process button is pressed
+function out = analyse(obj, DObj, varargin)
+% ANALYSE  This method is called when the Process button is pressed - it
+% is the actual analysis and the process method is the wrapper around it.
 %
-% Get the tree nodes
 
-[TSObj, dataObjS, node, uit] = getDataFromNode(obj, hObj, 'tSeries');
+TSObj = DObj.DataObj;
+data = TSObj.data;
+time = TSObj.time;
+fs =1/TSObj.TimeInfo.Increment;
+wl = floor(fs /2);
 
-% Get the Checkboxes from the ui
-panel = get(hObj,'Parent');
-pRa = findobj(panel, 'Tag', 'PeriodicityGraphRateExt');
-pSm = findobj(panel, 'Tag', 'PeriodicityGraphSmoothness');
-pRa = get(pRa, 'Value'); pSm = get(pSm, 'Value'); 
+
 
 % Automatically Convert to Midi Notes
-if strcmp(dataObjS.DataObj.DataInfo.Units,'Hz')
+if strcmp(TSObj.DataInfo.Units,'Hz')
 	data = hz2midi(data);
+  units = 'Hz';
+else
+  units = TSObj.DataInfo.Units;
 end
 
-out = analyse(obj,dataObjS);
+[RateTS,ExtentTS] = RateExtentZeroX(data, time, fs, wl);
 
-addSummaryToNode(obj, dataObjS, node, out{1}, out{2},out{3},out{4});
+RateStatsI = find(isfinite(RateTS));
+RateStats = RateTS(RateStatsI); % Finite only
+RateMed = median(RateStats); 
+RateStD = std(RateStats);
 
-% Annotations = find(~isnan(RateTS));
-% 
-% if pRa
-%   figure; 
-%   
-%   h(1) = subplot(2,1,1);
-%   plot(time,RateTS,'ro'); hold on;
-%   plot(time(Annotations),RateTS(Annotations),'k'); hold on;
-%  set(gca,'Box', 'off');
-%   
-%   h(2) = subplot(2,1,2);
-%   plot(time, data,'k'); hold on;
-%   plot(time(Annotations), data(Annotations),'og');
-%   set(gca, 'Box','off')
-%   
-%   linkaxes(h,'x');
-% end
-% 
-% if pSm
-% 
-% end
+ExtentStatsI = find(isfinite(ExtentTS));
+ExtentStats = abs(ExtentTS(ExtentStatsI));
+ExtentMed = median(ExtentStats);
+ExtentStD = std(ExtentStats);
+summary1 = {'Median Rate','Hz',RateMed};
+summary2 = {'Std. Dev Rate','Hz',RateStD};
+summary3 = {'Median Extent',units,ExtentMed};
+summary4 = {'Std. Dev Extent',units,ExtentStD};
+
+out = {summary1,summary2,summary3,summary4};
 
 % EOF
 
@@ -68,6 +63,7 @@ for i = 1+startind:length(posTime)
       if negTime(j) > 0 % negative going transition
         posneg = [i j];
         for k = (j-startind):-1:i-lastind % Move backwards
+         if k>0
           if posTime(k) > 0 % Last posgoing transition
             negpos = [j k];
             indexs(row  , 1:2) = negpos; % last posgoing transition
@@ -75,7 +71,8 @@ for i = 1+startind:length(posTime)
             row = row+2;
             breakout = 1;
           end
-          if breakout||k==1;     
+         end
+          if breakout||k==1;
             break
           end
         end

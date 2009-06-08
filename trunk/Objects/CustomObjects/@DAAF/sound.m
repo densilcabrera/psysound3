@@ -12,6 +12,6 @@ if nargin == 2
     audio = [audio; zeros(obj.FS*0.5,1)]; 
     audio = [audio; objArr{i}.OutputAudio];
   end
-  sound(audio ,obj.FS);
+  sound(audio./(max(abs(audio))*1.1) ,obj.FS);
 end
 % EOF
