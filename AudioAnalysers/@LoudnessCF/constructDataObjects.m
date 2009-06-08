@@ -28,12 +28,12 @@ ts.Name          = 'Loudness';
 ts.TimeInfo.Increment = tPeriod;
 output{end+1} = ts;
 
-% format for TimeSeries
-ts = createDataObject('tSeries', Fl);
-ts.DataInfo.Unit = 'vacils';
-ts.Name = 'Fluctuation'; 
-ts.TimeInfo.Increment = tstep;
-output{end+1} = ts;
+% % format for TimeSeries
+% ts = createDataObject('tSeries', Fl);
+% ts.DataInfo.Unit = 'vacils';
+% ts.Name = 'Fluctuation'; 
+% ts.TimeInfo.Increment = tstep;
+% output{end+1} = ts;
 
 % format hires for TimeSpectrum
 tSpec = createDataObject('tSpectrum', (1:24), main_N, timePoints);
