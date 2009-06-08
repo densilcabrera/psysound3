@@ -1,0 +1,18 @@
+- Fix terminal in Analyser Run Analysis (Corrupted)
+- Fix Error Output - send to log. file
+- Revert FFT, Delete CZT references in FFT
+- Fix ThirdOctaveBand and Raw Mode
+- Fix YIN analyser
+- Fix DataAnalysers to work in Terminal
+- Fix ESA
+- Fix platform problems
+- Calibration Problems
+- Revisit calibration modes
+- Delete 'Get Time Estimate', replace with GUI that takes a guess. 
+- Conflate Cepstrum Analysers
+- Reduce GUI Elements used to one uitree if poss.
+- Delete excess menu items
+- DataAnalysers should be independent of GUI
+- Auditing modes
+- Check Class gateways between each part of UML structure and test.
+- Various Accuracy Bugs
