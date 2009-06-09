@@ -19,4 +19,4 @@ gz(z) = 0.00012*(z/10).^4-0.0056*(z/10).^3+0.1*(z/10).^2-0.81*(z/10)+3.5;
 
 z = 0.1:0.1:(n/10);
 
-sharp = 0.11 * sum(loudspec.*gz.*z.*0.1) / sum(loudspec.*0.1);
+sharp = 0.11 * sum(loudspec.*gz.*z.*0.1) / sum(loudspec.*0.1 +eps);
