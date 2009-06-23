@@ -11,36 +11,12 @@ pRa = findobj(panel, 'Tag', 'PeriodicityGraphRateExt');
 pSm = findobj(panel, 'Tag', 'PeriodicityGraphSmoothness');
 pRa = get(pRa, 'Value'); pSm = get(pSm, 'Value'); 
 
-% Automatically Convert to Midi Notes
-if strcmp(dataObjS.DataObj.DataInfo.Units,'Hz')
-	data = hz2midi(data);
-end
 
-out = analyse(obj,dataObjS);
+
+out = analyse(obj,dataObjS,pRa,pSm);
 
 addSummaryToNode(obj, dataObjS, node, out{1}, out{2},out{3},out{4});
 
-% Annotations = find(~isnan(RateTS));
-% 
-% if pRa
-%   figure; 
-%   
-%   h(1) = subplot(2,1,1);
-%   plot(time,RateTS,'ro'); hold on;
-%   plot(time(Annotations),RateTS(Annotations),'k'); hold on;
-%  set(gca,'Box', 'off');
-%   
-%   h(2) = subplot(2,1,2);
-%   plot(time, data,'k'); hold on;
-%   plot(time(Annotations), data(Annotations),'og');
-%   set(gca, 'Box','off')
-%   
-%   linkaxes(h,'x');
-% end
-% 
-% if pSm
-% 
-% end
 
 % EOF
 
