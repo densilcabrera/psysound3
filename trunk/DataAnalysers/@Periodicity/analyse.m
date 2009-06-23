@@ -5,21 +5,46 @@ function out = analyse(obj, DObj, varargin)
 
 TSObj = DObj.DataObj;
 data = TSObj.data;
+
+%There could be NaNs at the start or end. 
+% It shouldn't be more than 2/3 of the sample.
+% Remove Remove Remove
+nanind = find(isnan(data(end-29:end)));
+firstThird = floor(length(data)/3);
+firstfinite =  find(isnan(data(1:firstThird)),1,'last');
+endTwoThirds = floor(2 * (length(data)/3));
+lastfinite =  find(isnan(data(endTwoThirds:end)),1,'first');
+lastfinite = endTwoThirds + lastfinite;
+if isempty(lastfinite);  lastfinite = length(data);end
+if isempty(firstfinite);  firstfinite = 1; end
+data = data(firstfinite+1:lastfinite-2);
+
 time = TSObj.time;
 fs =1/TSObj.TimeInfo.Increment;
 wl = floor(fs /2);
+if nargin > 2
+  pRa = varargin{1};
+  pSm = varargin{2};
+else 
+  pRa = 0;
+  pSm = 0;
+end
+
+% use a 20Hz lowpass 2nd order butterworth filter
+[b,a] = butter(2,20/(fs/2),'low');
+datafilt = filtfilt(b,a,data);
 
 
 
 % Automatically Convert to Midi Notes
 if strcmp(TSObj.DataInfo.Units,'Hz')
-	data = hz2midi(data);
+	datafilt = hz2midi(datafilt);
   units = 'Hz';
 else
   units = TSObj.DataInfo.Units;
 end
 
-[RateTS,ExtentTS] = RateExtentZeroX(data, time, fs, wl);
+[RateTS,ExtentTS] = RateExtentZeroX(datafilt, time, fs, wl);
 
 RateStatsI = find(isfinite(RateTS));
 RateStats = RateTS(RateStatsI); % Finite only
@@ -35,13 +60,40 @@ summary2 = {'Std. Dev Rate','Hz',RateStD};
 summary3 = {'Median Extent',units,ExtentMed};
 summary4 = {'Std. Dev Extent',units,ExtentStD};
 
-out = {summary1,summary2,summary3,summary4};
+
+[CentroidHz] = SmoothnessCentroid(datafilt, time, fs, wl, pSm);
+
+summary5 = {'Smoothness Centroid','Hz',CentroidHz};
+
+out = {summary1,summary2,summary3,summary4, summary5};
+
+
+Annotations = find(~isnan(RateTS));
+
+% 
+if pRa
+  figure; 
+  
+  h(1) = subplot(2,1,1);
+  plot(time,RateTS,'ro'); hold on;
+  plot(time(Annotations),RateTS(Annotations),'k'); hold on;
+ set(gca,'Box', 'off');
+  
+  h(2) = subplot(2,1,2);
+  plot(time, data,'k'); hold on;
+  plot(time(Annotations), data(Annotations),'og');
+  set(gca, 'Box','off')
+  
+  linkaxes(h,'x');
+end
+
 
 % EOF
 
 
 
 function [Rate,Extent] = RateExtentZeroX(tsTrain, time, fs, wl)
+time = time(1:length(tsTrain));
 
 diffSig  = [0; diff(tsTrain)];
 posGoing = diffSig(1:end-1) <= 0 & diffSig(2:end) > 0;
@@ -238,3 +290,17 @@ for i = 1:rows
     vibrato.hAmp(vMarkers(i,2):length(vibrato.pitchValues)) = NaN;
   end
 end
+
+
+function [CentroidHz] = SmoothnessCentroid(data, time, fs, wl, pSm)
+
+freqscale = (([1:length(data)]' - 1) / length(data)) * fs;
+magnitudeData = abs(fft(data).^2);
+CentroidHz = sum(freqscale.*magnitudeData) / (sum(magnitudeData)+eps);
+
+
+if pSm
+  figure; plot(freqscale(1:end/2),10*log10(magnitudeData(1:end/2)));
+  axis([0 20 40 100]);
+end
+
