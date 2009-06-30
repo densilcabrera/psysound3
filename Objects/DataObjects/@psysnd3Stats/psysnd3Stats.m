@@ -68,7 +68,7 @@ function obj = calcStats(obj, data, dBOffset)
     % Back to decibels
     obj.mean = power2dB(muPowData) + dBOffset;
   else
-    mu = mean(data);
+    mu = NaN;
     obj.mean = mu;
   end
 
