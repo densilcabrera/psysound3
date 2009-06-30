@@ -132,7 +132,7 @@ try
 catch
     prefs.dataDir = [folderpath filesep 'PsySoundData'];
     fprintf('Setting up Preferences...\n');
-    fprintf(['Setting data folder to: \t'  [folderpath filesep filesep 'PsysoundData'] '\nYou can change this using File>>Preferences in the PsySound3 GUI.\n']);
+    fprintf(['Setting data folder to: \t'  [folderpath filesep 'PsysoundData'] '\nYou can change this using File>>Preferences in the PsySound3 GUI.\n']);
     prefs.showWaitBar= 0;
     prefs.multiChannelType= 1;
     prefs.multiChannelSelect= 1;
