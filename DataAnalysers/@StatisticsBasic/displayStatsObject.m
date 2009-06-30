@@ -49,9 +49,23 @@ for i = 1:length(Names)
     col(end,j+1) = {getSummaryByName(sObj, Names{i})};
   end
 end
+hedrow =[];
+for j =1:length(col(:,1))
+  hedrow = [hedrow sprintf('%s\t',col{j,1})];
+end
 
+
+for i = 1:length(col(2,:))-1
+  rowdata = [];
+  for j =1:length(col(:,1))
+    rowdata = [rowdata sprintf('%s\t',col{j,i+1})];
+  end
+    rows(i,1) = {rowdata};
+end
+tablerows(1) = {hedrow};
+tablerows(2:length(rows)+1) = rows;
 % Set the table data
-set(obj.Table,'Data',col);
+set(obj.Table,'String',tablerows');
 
 
 
@@ -64,6 +78,7 @@ if length(statsObj) == 1
   return
 end
 
+Names = {};
 for i = 1:length(statsObj)
   for j = 1:length(statsObj{i}.Summaries)
     Names(i,j) = {statsObj{i}.Summaries{j}.Name};

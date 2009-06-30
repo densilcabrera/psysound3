@@ -4,17 +4,21 @@ function obj = ui(obj, panel)
 
 bgColor = [0.9 0.9 0.9];
 
-% Create buttons
-pos = [0.05 0.7 0.12 0.05];
-
-
-obj.Table = uitable('Parent', panel);
-set(obj.Table, 'Visible', false);
+obj.Table = uicontrol('Parent'  , panel, ...
+              'units'   , 'normalized', ...
+              'Position', [0.2 0.08 0.72 0.85], ...
+              'String'  , 'Press display to display the statistics', ...
+              'ToolTip' , 'Adds data object to table', ...
+              'Tag'     , 'BasicStatisticsTable', ...
+							'Style'   , 'listbox', ...
+              'Max' ,   10000);
+            
+%set(obj.Table, 'Visible', false);
 set(panel,'Visible','off');
 
 h = uicontrol('Parent'  , panel, ...
               'units'   , 'normalized', ...
-              'Position', pos, ...
+              'Position', [0.05 0.7 0.12 0.05], ...
               'String'  , 'Display', ...
               'Callback', @(src, ev)displayStatsObject(obj, src), ...
               'ToolTip' , 'Adds data object to table', ...
@@ -47,26 +51,26 @@ h = uicontrol('Parent'  , panel, ...
 %return;
 
 % Set position
-set(obj.Table, 'Units', 'normalized');
+%set(obj.Table, 'Units', 'normalized');
 
- set(obj.Table, 'Position', [0.47 0.18 0.48 0.65]);
+% set(obj.Table, 'Position', [0.47 0.18 0.48 0.65]);
 %set(hTable, 'Position', [0 0.02 0.7 0.8]);
-assignin('base', 'gg', obj.Table);
+%assignin('base', 'gg', obj.Table);
+% 
+% % Set the callback as userdata on the panel
+% set(panel, 'UserData', @statsTableCallback);
 
-% Set the callback as userdata on the panel
-set(panel, 'UserData', @statsTableCallback);
-
-  % Set the function handle on the panel
-  function statsTableCallback
-
-  % Key off the tab as the panel is always visible!
-    vis = get(get(panel, 'Parent'), 'Visible');
-    if strcmp(vis, 'on')
-      set(obj.Table, 'Visible', true);
-    else
-      set(obj.Table, 'Visible', false);
-    end
-  end
+%   % Set the function handle on the panel
+%   function statsTableCallback
+% 
+%   % Key off the tab as the panel is always visible!
+%     vis = get(get(panel, 'Parent'), 'Visible');
+%     if strcmp(vis, 'on')
+%       set(obj.Table, 'Visible', true);
+%     else
+%       set(obj.Table, 'Visible', false);
+%     end
+%   end
 end
 
 % EOF
