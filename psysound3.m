@@ -84,7 +84,7 @@ try
   subdir = genpath(pwd);
 	%% Do not add .svn paths
 
-  if ismac||isunix
+  if isunix
   colons = findstr(subdir,':');
   elseif ispc
   colons = findstr(subdir,';');
