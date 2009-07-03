@@ -25,5 +25,5 @@ if nargin<3
 elseif isempty(varargin{1})
     handles = eval([newmfile '(handles)']);
 else
-   handles = eval([newmfile '(handles, varargin)']);
+   handles = eval([newmfile '(handles, varargin{:})']);
 end
