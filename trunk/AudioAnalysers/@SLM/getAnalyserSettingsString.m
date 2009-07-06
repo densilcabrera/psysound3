@@ -16,17 +16,14 @@ end
 % line feed
 str{2} = sprintf('\nIntegration time(s): ');
 
-strInt = [];
-
 if ischar(obj.iChoices)
 	for i = 1:length(obj.iChoices)
-	 iChoices(i) = obj.iChoices(i);
+	 iChoices(i) = {obj.iChoices(i)};
 	end
-else
-	iChoices = obj.iChoices;
 end
 
 
+strInt = [];
 for i = 1:length(iChoices)
   if i > 1  
     strInt = [strInt ', '];
@@ -42,7 +39,6 @@ for i = 1:length(iChoices)
     case 'p'
       strInt = [strInt 'Peak'];
     otherwise
-      % do nothing
       strInt = [strInt str2num(iChoices{i})]; % This has not been tested
   end
 end
