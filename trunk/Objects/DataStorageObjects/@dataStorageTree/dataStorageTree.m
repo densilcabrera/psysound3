@@ -12,7 +12,7 @@ switch nargin
     p = getPsysound3Prefs;		% Load root object
     ind = 1;
     treeArray = [];
-		[treeArray] = recurseTree(p.dataDir, treeArray, ind);
+		treeArray = recurseTree(p.dataDir, treeArray, ind, p.dataDir);
 	otherwise
     error('Invalid argument(s) in constructor of dataStorageTree');
 end
@@ -21,26 +21,40 @@ obj = struct('tree',treeArray);
 obj = class(obj,'dataStorageTree');
 
 % Assign out
-function [treeArray,ind] = recurseTree(dataDir, treeArray, ind)
+function [treeArray,ind] = recurseTree(dataDir, treeArray, ind, rootDir)
 % Recursive function to build array of tree elements.
-
+try
 	load(fullfile(dataDir, filesep, 'dataInfo.mat'));
-	 for i = 1:getNumChildren(dsArr)
+catch
+  treeArray(ind).name = 'No Data';
+  return;
+end
+  
+  for i = 1:getNumChildren(dsArr)
 		if dsArr(i).isLeaf == 1  
       treeArray(ind).name = dsArr(i).name;
-			treeArray(ind).dObj = dsArr(i);
+			treeArray(ind).date = dsArr(i).date;
       treeArray(ind).nodeType = dsArr(i).nodeType; 
 			treeArray(ind).isLeaf = 1;
       treeArray(ind).filename = [dataDir filesep dsArr(i).filename];
       treeArray(ind).children = length(dsArr);
+      audiofilename = strrep(treeArray(ind).filename,rootDir,'');
+      fileseps = strfind(audiofilename,filesep);
+      if length(fileseps)==1; fileseps(2) = length(audiofilename)+1;   end
+      treeArray(ind).audiofile = audiofilename(fileseps(1)+1:fileseps(2)-1);
       ind = ind+1;
     else
       treeArray(ind).name = dsArr(i).name;
       treeArray(ind).nodeType = dsArr(i).nodeType;
+			treeArray(ind).date = dsArr(i).date;
       treeArray(ind).isLeaf = 0;
       treeArray(ind).filename = [dataDir filesep dsArr(i).filename];
       treeArray(ind).children = length(dsArr);
-      [treeArray,ind] = recurseTree(treeArray(ind).filename, treeArray, ind+1);
+      audiofilename = strrep(treeArray(ind).filename,rootDir,'');
+      fileseps = strfind(audiofilename,filesep);
+      if length(fileseps)==1; fileseps(2) = length(audiofilename)+1;   end
+      treeArray(ind).audiofile = audiofilename(fileseps(1)+1:fileseps(2)-1);
+      [treeArray,ind] = recurseTree(treeArray(ind).filename, treeArray, ind+1, rootDir);
     end
   end
 
