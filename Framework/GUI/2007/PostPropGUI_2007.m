@@ -61,7 +61,7 @@ handles.PostPropTreeHead = uitHead;
 handles.PostPropFileInfo = [];
 
 % tabs
-utg = uitabgroup('Parent', h, ...
+utg = uicontainer('Parent', h, ...
                  'BackGroundColor', bgColor, ...
                  'UserData', uit, ...
                  'Units', 'normalized', ...
@@ -72,7 +72,7 @@ prop = schema.prop(uit, 'uitabgroup', 'mxArray');
 uit.uitabgroup = utg;
 
 % See comments in function for more info
-set(utg, 'SelectionChangeFcn', @uitabCallback);
+%set(utg, 'SelectionChangeFcn', @uitabCallback);
 
 % ... and the file info panel
 %prop = schema.prop(uit, 'fileInfo', 'mxArray');
@@ -93,18 +93,18 @@ tabStrs = { ...
 
 % Get the list of all the data Analysers
 dAnalysers = getDataAnalysers;
+   dAforThisGroup = {};
 
-for i=1:length(tabStrs);
-  group = tabStrs{i};
-  
-  % Create a tab for this group
-  utb = uitab('Parent', utg, ...
-              'title',  group);
-  
   dAObjs         = {};
-  dAforThisGroup = {};
   dAHandles      = [];
   firstPanel     = true;
+  
+for i=1:length(tabStrs);
+  group = tabStrs{i};
+%   
+%   % Create a tab for this group
+%   utb = uipanel('Parent', utg, ...
+%               'title',  group);
   
   % Populate this group with all of its data analysers
   for j=1:length(dAnalysers)
@@ -113,7 +113,7 @@ for i=1:length(tabStrs);
     
     if strcmp(dAObj.Group, group)
       % Create the two panels
-      panel = uipanel('Parent', utb, ...
+      panel = uipanel('Parent', utg, ...
                       'units', 'normalized', ...
                       'BackGroundColor', bgColor, ...              
                       'Visible', 'off', ...
@@ -138,8 +138,10 @@ for i=1:length(tabStrs);
       % Call its ui method to populate any GUI items
       dAObj = ui(dAObj, panel);
       
+			set(panel,'Visible','off');
+
       % Keep a running list for the popup
-      dAforThisGroup{end+1} = dAObj.name;
+      dAforThisGroup{end+1} = [dAObj.group ' - ' dAObj.name];
       
       % Also keep track of the panel handles and data analyser objects
       dAHandles(end+1) = panel;
@@ -154,12 +156,17 @@ for i=1:length(tabStrs);
     dAforThisGroup = ' ';
   end
   
+
+  
+end
+
+
   % Create struct for user data
   ud.PanelHandles = dAHandles;
   ud.DataObjs     = dAObjs;
   ud.Tree         = uit;
   
-  pH = uicontrol('Parent', utb, ...
+  pH = uicontrol('Parent', utg, ...
                  'Style', 'popup', ...
                  'String', dAforThisGroup, ...
                  'Enable', en, ...
@@ -169,10 +176,10 @@ for i=1:length(tabStrs);
                  'Tag',     'DataAnalyserPopup', ...
                  'Callback', @popupCallback, ...
                  'Position', [0.01 4/5 1/3 1/5]);
-  
+
   % Cache the popup handle onto the uitab
-  set(utb, 'UserData', pH);
-end
+  set(utg, 'UserData', pH);
+
 
 % Expand the first level
 uit.Tree.expandRow(0);
@@ -228,7 +235,7 @@ function popupCallback(hObj, varargin)
   set(handles(value), 'Visible', 'on');
 
   % Run the update function
-  updateDataAnalyser(ud.Tree, []);
+%   updateDataAnalyser(ud.Tree, []);
 
   % Execute any embedded callbacks - I think this will be needed
   %                                   for uitables
@@ -298,11 +305,12 @@ function updateDataAnalyser(tree, value, varargin)
   utg = tree.uitabgroup;
 
   % Get the tabs
-  tabs = get(utg, 'Children');
-  ind  = get(utg, 'SelectedIndex');
+  dApanel = get(utg, 'Children');
   
+  ind  = get(get(utg,'UserData'),'Value');
+
   % Get the handle to the data Analyser popup
-  pH = get(tabs(ind), 'UserData');
+  pH = get(utg, 'UserData');
 
   if strcmp(get(pH, 'Enable'), 'on')
     val = get(pH, 'Value');

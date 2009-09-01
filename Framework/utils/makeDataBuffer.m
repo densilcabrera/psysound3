@@ -55,7 +55,7 @@ function dataBuf = makeDataBuffer(nRows, nCols)
         finish = start + newValsLen - 1;
         
         % Check row bounds
-        if finish > size(data, 1) + 1
+        if finish > size(data, 1) + 20
           error(['assignData: adding ' num2str(finish - size(data, 1)) ' extra row(s)!']);
         end
         
