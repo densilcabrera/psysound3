@@ -12,8 +12,8 @@ function addSubjectiveData(dObj,targetaudiofile)
 %
 % Strip .wav, .aiff, .aif, .au
 targetaudiofile = strrep(targetaudiofile,'.wav','');
-targetaudiofile = strrep(targetaudiofile,'.aif','');
 targetaudiofile = strrep(targetaudiofile,'.aiff','');
+targetaudiofile = strrep(targetaudiofile,'.aif','');
 targetaudiofile = strrep(targetaudiofile,'.au','');
 
 % get data dir
@@ -28,7 +28,7 @@ for i = 1:getNumChildren(dsArr)
     break;
   end
 end
-  audiofilenum = i;
+
 % Break out if no audio file found
 if ~exist('audiofilenum')
   return;
@@ -63,19 +63,18 @@ if ~exist('subdatafoldernum')
        error(m);
      end
    end
-  
 end
 
 path = fullfile(path,'SubjectiveData');
 
 %% Format data object into a dataObjS
-DObj = createDataObject('tSeries', dObj.data,dObj.time);
+DObj = createDataObject('tSeries', dObj.data);
+DObj = set(DObj,'time',dObj.time);
 DObj.Name = dObj.Name;
+
 % Add Analyser Object (subclass from analyser)
-%
 AObj = Analyser;
 AObj.Name = 'Subjective Data';
-
 
 % Create struct ...
 dataObjS.DataObj     = DObj;
@@ -90,7 +89,7 @@ dataSaveName = genvarname(dataName);
 dataFileName = fullfile(path, dataSaveName);
 
 % getDataStorage
-dsArrObj = getDataStorageArrObj(dataFileName);
+dsArrObj = getDataStorageArrObj(path);
 
 % and Save
 save(dataFileName, 'dataObjS');
@@ -101,10 +100,10 @@ dsObjData = dataStorage(dataName, dataSaveName, class(DObj), 1);
 dsArrObj  = addNode(dsArrObj, dsObjData);
 
 % Build up the full path - the dir should already exist
-saveDir = fullfile(path, 'dataInfo.mat');
+saveDir = fullfile(path, 'dataInfo.mat'); 
 
 % Sort
 dsArr = sort(dsArrObj);
 
-% ... and save
+% ... and Save
 save(saveDir, 'dsArr');

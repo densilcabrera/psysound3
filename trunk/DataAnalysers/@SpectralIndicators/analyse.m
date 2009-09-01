@@ -1,8 +1,8 @@
-function out = analyse(TSObj)
+function out = analyse(obj, TSObj)
 
-specdata = TSObj.data;
-f   = TSObj.Freq;
-t = TSObj.Time;
+specdata = TSObj.DataObj.data;
+f   = TSObj.DataObj.Freq;
+t = TSObj.DataObj.Time;
 
 % 
 [ER, SPR, Alpha, SB] = Spectrality(specdata, f, t);
