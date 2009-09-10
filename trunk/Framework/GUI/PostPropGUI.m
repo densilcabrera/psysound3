@@ -27,6 +27,26 @@ dataDir  = psyPrefs.dataDir;
 
 bgColor = [0.9 0.9 0.9];
 
+
+verStruct = ver;
+versionDate = verStruct(1).Date;
+if datenum(versionDate)>=733788
+
+% Create the root node
+root = uitreenode('v0',dataDir, 'PsySoundData', [], false);
+% treeModel = DefaultTreeModel(root);
+
+% Create the tree and set some properties
+uit = uitree('v0',h, 'Root', root, 'ExpandFcn', @treeExpfcn,'position',[10 100 300 440]);
+% uit.Units = 'normalized';
+% uit.Position = [0.02 0.15 0.3 0.78];
+uit.MultipleSelectionEnabled = 1;
+uit.NodeSelectedCallback = @updateDataAnalyser;
+% uit.Visible = 0;
+% uit.setModel(treeModel);
+
+elseif datenum(versionDate)>=733408
+
 % Create the root node
 root = uitreenode(dataDir, 'PsySoundData', [], false);
 % treeModel = DefaultTreeModel(root);
@@ -39,6 +59,9 @@ uit.MultipleSelectionEnabled = 1;
 uit.NodeSelectedCallback = @updateDataAnalyser;
 uit.Visible = 0;
 % uit.setModel(treeModel);
+
+end
+
 
  % Add mouse clicked
 set(uit.tree, 'MouseClickedCallback', {@mouse_click_cb, uit});
@@ -394,7 +417,7 @@ function nodes = treeExpfcn(tree, value)
         end
         
         % Stick the full file name as the value
-        nodes(i) = uitreenode(fullName,        ...
+        nodes(i) = uitreenode('v0',fullName,        ...
                               dsNode.name,     ...
                               iconpath,        ...
                               dsNode.isLeaf);
