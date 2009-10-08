@@ -26,6 +26,13 @@ Y    = get(obj, 'data');
 Fs   = obj.Fs;
 bits = obj.bits;
 
+% Bits on unix and mac can only be 16. Bits on windows can be 24. (Not 32) 
+if isunix && bits > 16
+    bits = 16;
+elseif bits>24 
+    bits = 24;
+end
+
 % Create player object
 playObj = audioplayer(Y, Fs, bits);
 

@@ -460,16 +460,26 @@ function out = createAudioTSeriesPopup(fName,tree)
   
   playObj = [];
   function playAudio(src, ev, fName)
-    if isempty(playObj)
+      
+    if isempty(playObj) 
       D  = load(fName);
       CB.stopFcn = @(a_src, a_ev)set(src, 'Text', 'Play audio');
       playObj = createPlayerObj(D.dataObjS.DataObj, CB);
       set(src, 'Text', 'Stop audio');
       play(playObj);
-    else
+    elseif strcmp(playObj.Running,'off')
       stop(playObj);
       playObj  = [];
+      D  = load(fName);
+      CB.stopFcn = @(a_src, a_ev)set(src, 'Text', 'Play audio');
+      playObj = createPlayerObj(D.dataObjS.DataObj, CB);
+      set(src, 'Text', 'Stop audio');
+      play(playObj); 
+    else
+      stop(playObj);
+      playObj  = [];        
     end
+    
   end
 
   function exportAudio(src, ev, fName)
