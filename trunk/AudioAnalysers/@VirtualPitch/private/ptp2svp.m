@@ -339,17 +339,17 @@ function vpp=sortintovp(i, m, vpw,vpp,spp,VPMAX)
 %disp(sprintf('\tenter sortintovp'));
 TRUE=1; FALSE=0;
 vnom=spp.freq(i)/m;
-iv=1; pc=FALSE; %/* pc = near coincidence of pitches */
-while ~(pc || (iv > vpp.count+1))
+iv=0; pc=FALSE; %/* pc = near coincidence of pitches */
+while ~(pc || (iv > vpp.count))
     %disp(sprintf('\tHERE A\n'));
-    if (abs(vpp.nomp(iv)-vnom)<(0.03*vnom))
+    if (abs(vpp.nomp(iv+1)-vnom)<(0.03*vnom))
         %disp(sprintf('\tHERE B\n'));
         pc=TRUE;     %/* yes, near coincidence */
         %/* if new weight > weight of old coinciding pitch, replace: */
-        if(vpw > vpp.weight(iv))
+        if(vpw > vpp.weight(iv+1))
           % disp(sprintf('\tHERE C\n'));
-            vpp.weight(iv)= vpw;
-            vpp.nomp(iv)= vnom;
+            vpp.weight(iv+1)= vpw;
+            vpp.nomp(iv+1)= vnom;
             %if (shiftflag)
             %    %disp(sprintf('\tHERE D\n'));
             %    vpp.trup(iv)=truvp(vnom, i, m);
@@ -378,7 +378,7 @@ if (vpp.count == VPMAX-1)
     end
 else
     %            disp(sprintf('\tHERE J\n'));
-    if vpp.count==-1; vpp.count=1;
+    if vpp.count==-1; vpp.count=0;
     else vpp.count=vpp.count+1; end
     vpp.weight(vpp.count+1)=vpw;
     vpp.nomp(vpp.count+1)=vnom;
