@@ -51,7 +51,7 @@ statNumber = statNumber + 1;
 axes(ax);
 eval([popupChoice '(cell2mat(col(statNumber,2:end)))']);
 set(ax,'XTickLabel',col(1,2:end));
-ylabel([s.DataObj, ' ', s.DataObj.Units.Unit]);
+ylabel([s.AnalyserObj.Name, ' ', s.DataObj.tsObj.DataInfo.Unit]);
 xlabel('Sound File');
 
 

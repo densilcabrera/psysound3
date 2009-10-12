@@ -1,6 +1,6 @@
 function out = analyse(obj, TSObj)
 
-specdata = TSObj.DataObj.data;
+specdata = TSObj.DataObj.Data;
 f   = TSObj.DataObj.Freq;
 t = TSObj.DataObj.Time;
 

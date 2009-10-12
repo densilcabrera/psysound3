@@ -74,8 +74,11 @@ dsDataObj = dataStorage(dataObjName,     ...
 dsArr = addNode(dsArr, dsDataObj);
 saveDataStorageArrObj(dsObjDASfolder, dsArr);
 
-% Update the UITree dynamically (see below)
-addToTree(daObj, dsArr, uit)
+
+if ~isempty(uit)
+    % Update the UITree dynamically (see below)
+    addToTree(daObj, dsArr, uit)
+end
 
 % Assign output
 out = dsObjDASfolder;

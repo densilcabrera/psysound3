@@ -302,7 +302,10 @@ catch
   [s, w] = system(str);
   
   % Make sure sox succeeded
-  if s ~= 0; error(w); end
+  if s ~= 0; 
+      fH.name  = fullfile(pathName, fileName);
+      disp('Your file does not work with Matlab''s file reading utility. '); 
+  end
 end
 % end setupWavFileName
 
