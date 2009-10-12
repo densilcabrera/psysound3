@@ -37,9 +37,13 @@ end
     
 % replace the Headers with current handles.TableHeaders
 try
-    setColumnNames(handles.Table, handles.DataHeaders);
+    if length(handles.DataHeaders) > 1
+        setColumnNames(handles.Table, handles.DataHeaders);
+    end
 catch
-    handles.mtable.setColumnNames(handles.DataHeaders);
+    if length(handles.DataHeaders) > 1
+        handles.mtable.setColumnNames(handles.DataHeaders);
+    end
 end
 
 

@@ -8,7 +8,7 @@ if nargin > 1
   if varargin{1} == 1
     theTree  = handles.PostPropTree;
     rootNode = theTree.getRoot;
-    
+    if ~isempty (rootNode)
     % Collapse the root node and set the loaded flag to false so
     % that the expansion callback is triggered
     theTree.Tree.collapseRow(0);
@@ -16,7 +16,7 @@ if nargin > 1
 
     % Expand the first level
     theTree.Tree.expandRow(0);
-    
+    end
     return;
   end
 end
@@ -46,6 +46,21 @@ uit.NodeSelectedCallback = @updateDataAnalyser;
 % uit.setModel(treeModel);
 
 elseif datenum(versionDate)>=733408
+
+% Create the root node
+root = uitreenode(dataDir, 'PsySoundData', [], false);
+% treeModel = DefaultTreeModel(root);
+
+% Create the tree and set some properties
+uit = uitree(h, 'Root', root, 'ExpandFcn', @treeExpfcn);
+uit.Units = 'normalized';
+uit.Position = [0.02 0.15 0.3 0.78];
+uit.MultipleSelectionEnabled = 1;
+uit.NodeSelectedCallback = @updateDataAnalyser;
+uit.Visible = 0;
+% uit.setModel(treeModel);
+
+else 
 
 % Create the root node
 root = uitreenode(dataDir, 'PsySoundData', [], false);
@@ -415,12 +430,14 @@ function nodes = treeExpfcn(tree, value)
           % Don't know so just whack in a page
           iconpath = [psyIconDir, filesep, 'pageicon.gif'];
         end
-        
+        args = {fullName, dsNode.name, iconpath, dsNode.isLeaf};
+        verStruct = ver;
+        versionDate = verStruct(1).Date;
+        if datenum(versionDate) >= 733788 
+          args = {'v0' args{:}};
+        end
         % Stick the full file name as the value
-        nodes(i) = uitreenode('v0',fullName,        ...
-                              dsNode.name,     ...
-                              iconpath,        ...
-                              dsNode.isLeaf);
+        nodes(i) = uitreenode(args{:});
 
         % Add menu as a property
         setUserObject(nodes(i), ctxMenu);

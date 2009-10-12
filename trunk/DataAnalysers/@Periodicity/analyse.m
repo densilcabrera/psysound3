@@ -3,8 +3,18 @@ function out = analyse(obj, DObj, varargin)
 % is the actual analysis and the process method is the wrapper around it.
 %
 
-TSObj = DObj.DataObj;
-data = TSObj.data;
+
+if strcmp(class(DObj),'struct')
+    TSObj = DObj.DataObj;
+    data = TSObj.data;
+elseif strcmp(class(DObj),'tSeries')
+    TSObj = DObj;
+    data = DObj.data;
+elseif strcmp(class(DObj),'double')
+    TSObj = timeseries(DObj);
+    TSObj.TimeInfo.Increment = 1/varargin{1};
+    data = DObj;
+end
 
 %There could be NaNs at the start or end. 
 % It shouldn't be more than 2/3 of the sample.
@@ -22,7 +32,8 @@ data = data(firstfinite+1:lastfinite-2);
 time = TSObj.time;
 fs =1/TSObj.TimeInfo.Increment;
 wl = floor(fs /2);
-if nargin > 2
+
+if nargin == 4
   pRa = varargin{1};
   pSm = varargin{2};
 else 
@@ -30,8 +41,8 @@ else
   pSm = 0;
 end
 
-% use a 20Hz lowpass 2nd order butterworth filter
-[b,a] = butter(2,20/(fs/2),'low');
+% use a 2/20Hz bandpass 4th order butterworth filter
+[b,a] = butter(4, 10/(fs/2),'low');
 datafilt = filtfilt(b,a,data);
 
 
@@ -43,51 +54,46 @@ if strcmp(TSObj.DataInfo.Units,'Hz')
 else
   units = TSObj.DataInfo.Units;
 end
-
+units = 'Hz';
 [RateTS,ExtentTS] = RateExtentZeroX(datafilt, time, fs, wl);
 
 RateStatsI = find(isfinite(RateTS));
 RateStats = RateTS(RateStatsI); % Finite only
 RateMed = median(RateStats); 
-RateStD = std(RateStats);
+RateStD = tsprctile(RateStats,75) - tsprctile(RateStats,25);
 
 ExtentStatsI = find(isfinite(ExtentTS));
 ExtentStats = abs(ExtentTS(ExtentStatsI));
 ExtentMed = median(ExtentStats);
-ExtentStD = std(ExtentStats);
+ExtentStD = tsprctile(ExtentStats,75) - tsprctile(ExtentStats,25);
 summary1 = {'Median Rate','Hz',RateMed};
 summary2 = {'Std. Dev Rate','Hz',RateStD};
 summary3 = {'Median Extent',units,ExtentMed};
 summary4 = {'Std. Dev Extent',units,ExtentStD};
 
-
 [CentroidHz] = SmoothnessCentroid(datafilt, time, fs, wl, pSm);
-
 summary5 = {'Smoothness Centroid','Hz',CentroidHz};
 
 out = {summary1,summary2,summary3,summary4, summary5};
 
-
 Annotations = find(~isnan(RateTS));
 
-% 
+
 if pRa
   figure; 
   
   h(1) = subplot(2,1,1);
-  plot(time,RateTS,'ro'); hold on;
+  plot(time(1:length(RateTS)),RateTS,'ro'); hold on;
   plot(time(Annotations),RateTS(Annotations),'k'); hold on;
  set(gca,'Box', 'off');
   
   h(2) = subplot(2,1,2);
-  plot(time, data,'k'); hold on;
+  plot(time(1:length(data)), data,'k'); hold on;
   plot(time(Annotations), data(Annotations),'og');
   set(gca, 'Box','off')
   
   linkaxes(h,'x');
 end
-
-
 % EOF
 
 
@@ -300,7 +306,7 @@ CentroidHz = sum(freqscale.*magnitudeData) / (sum(magnitudeData)+eps);
 
 
 if pSm
-  figure; plot(freqscale(1:end/2),10*log10(magnitudeData(1:end/2)));
+  plot(freqscale(1:end/2),10*log10(magnitudeData(1:end/2)));
   axis([0 20 40 100]);
 end
 
