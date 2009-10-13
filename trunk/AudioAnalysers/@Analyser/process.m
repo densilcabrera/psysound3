@@ -359,8 +359,14 @@ for index = 1:numWindows
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   if vLvl | estimate, tic; end
     % Apply the window
-    windowDataRaw = windowDataRaw .* repmat(winFunc(), 1, min(size(windowDataRaw)));
-
+    if length(winFunc()) < 2 && min(size(windowDataRaw)) > 1
+        windowDataRaw = windowDataRaw .* winFunc();
+        % This is most likely just a multiplication by one, but I'll leave
+        % it in anyway. 
+    else
+        windowDataRaw = windowDataRaw .* repmat(winFunc(), 1, min(size(windowDataRaw)));
+    end    
+    
     % Prefiltering (weightings)
     if ~isempty(preFiltFunc)
       windowDataRaw = preFiltFunc(windowDataRaw);

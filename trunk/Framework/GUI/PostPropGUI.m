@@ -224,7 +224,7 @@ uit.Tree.expandRow(0);
     
 % For some reason, lumping this above does not seem to work?
 set(utg, 'Visible', 'off');
-
+set(dAHandles(1),'Visible','on')
 
 
 % 
