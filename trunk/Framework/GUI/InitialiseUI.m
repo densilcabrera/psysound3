@@ -146,6 +146,7 @@ if datenum(v(1).Date) > datenum('01-Jan-2008')
     handles.Table = uitable('v0',handles.figure1, {' ',' ',' '}, {'Files','Level','Adjustment'});
     handles.mtable  = handles.Table.getTable;
     % Java to make table not editable. Otherwise people try to change stuff with the keyboard - not the best way.
+    set(handles.Table,'NumRows',0);
     setEditable(handles.Table,0);
 
     % This is a bit strange, as uitable refuses to take Units as Characters.
