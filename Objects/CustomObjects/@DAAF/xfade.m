@@ -3,6 +3,13 @@ function obj = xfade(obj)
 %
 
 overlap = floor(obj.Overlap * obj.WindowLength);
+if isnan(overlap)
+  overlap = obj.Overlap * 2048;
+end
+
+if (overlap<128)
+  overlap = 256;
+end
 
 
 [r,c] = size(obj.OutputFrames);

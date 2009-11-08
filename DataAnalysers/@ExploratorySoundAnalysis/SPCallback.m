@@ -135,12 +135,12 @@ decFactor = 5;
       DAAFObj = DAAF(tSer, AudioObj,'simple');
       DAAFObj = set(DAAFObj,'Overlap',0.25);
 			% Averaging call
-      DAAFObj = summSpec(DAAFObj,tSer.AnalyserObj.windowLength,'random');
+      DAAFObj = summSpec(DAAFObj,tSer.AnalyserObj.windowLength,'randomwind');
       DAAFObj = xfade(DAAFObj);
       DAAFObj = concatenate(DAAFObj);
 			% play sound, export sound
       sound(DAAFObj);
-      %export(DAAFObj,reprChoice);    
+      export(DAAFObj,reprChoice);    
           
       
     case 'BeatSpectrum'
@@ -155,7 +155,7 @@ decFactor = 5;
         case {'Original'}
           DAAFObj = recreate(DAAFObj);
         case {'CDF'}
-          DAAFObj = CDF(DAAFObj,'Graph',ax);
+          DAAFObj = CDF(DAAFObj);
         case {'Histogram'}
           DAAFObj = hist(DAAFObj,DAAFObj.Duration);
         case {'Median','Max','Min'}
@@ -164,7 +164,7 @@ decFactor = 5;
       DAAFObj = xfade(DAAFObj);
       DAAFObj = concatenate(DAAFObj);
       sound(DAAFObj);
-      %export(DAAFObj,reprChoice);    
+      export(DAAFObj,reprChoice);    
       
       
     case 'BeatSegmentation'

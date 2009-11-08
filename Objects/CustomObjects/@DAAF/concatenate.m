@@ -23,8 +23,20 @@ try
   else
     % Mono
     % Create Matrix (faster)
-    frames = cell2mat(obj.OutputFrames);
-    obj.OutputAudio = reshape(frames,[],1);
+   if length(obj.OutputFrames{1}) == length(obj.OutputFrames{2}) 
+     frames = cell2mat(obj.OutputFrames);
+     obj.OutputAudio = reshape(frames,[],1);
+   else
+     obj.OutputAudio = obj.OutputFrames{1};
+     for i = 2:max([c r])
+       obj.OutputAudio = [obj.OutputAudio; obj.OutputFrames{i}];
+     end
+     win = hann(256);
+
+     obj.OutputAudio(1:128) = obj.OutputAudio(1:128) .* win(1:128); 
+     obj.OutputAudio(end-127:end) = obj.OutputAudio(end-127:end) .* win(129:256); 
+
+   end
   end
 
 catch
@@ -42,9 +54,13 @@ catch
     for i = 2:c
       obj.OutputAudio = [obj.OutputAudio; obj.OutputFrames{i}];
     end
+    
+    win = hann(256);
+
+    obj.OutputAudio(1:128) = obj.OutputAudio(1:128) .* win(1:128); 
+    obj.OutputAudio(end-127:end) = obj.OutputAudio(end-127:end) .* win(129:256); 
+
+
+
   end
 end
-
-
-
-  
