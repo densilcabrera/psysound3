@@ -164,7 +164,7 @@ switch(nargin)
         for i = 1:length(obj.FrameSamples)
           adata               = AudioObj.Data(obj.FrameSamples(i,1):obj.FrameSamples(i,2));
           if strcmp(blurFlag,'Blur')
-            obj.Frames{i}     = blurAudio(adata, 1024, 0.25, decFactor);
+            obj.Frames{i}     = blurAudio2(adata, 2048, 0.25, decFactor);
           else
             obj.Frames{i}     = adata(1:(floor(end/decFactor)));
           end
@@ -186,7 +186,7 @@ switch(nargin)
           end
         end
 
-        if 1 % plotting
+        if 0 % plotting
           figure;
           plot(salience.DataObj); hold on;
           for i = 1:length(beats)-1
@@ -252,8 +252,51 @@ ovFrames = [outFrames((wl - wlr + 1):wl,1:end-1)  .* repmat(wind((end/2+1):end),
 output = reshape([ovFrames; outFrames(wlr+1:wl-wlr, 2:end)] ,[],1);
 output = output(1:floor(length(audio)/dec)); % No really, exactly the same length.
 
-
 % EOF
+
+
+
+function output = blurAudio2(audio, wl, ol, dec)
+%% BLURAUDIO2 Blur Audio and place multiple copies in OutputFrames.
+% New method with randomisation.
+
+
+winNum=512;
+ol = wl * ol;
+win = hann(ol);
+outdur = 0;
+duration = length(audio);
+
+duration = duration /dec+ wl +wl;
+col = 1;
+
+audio = audio - mean(audio); % Remove dc
+while outdur < duration
+  
+  winsizerand = floor(rand * wl) + wl/2; % Choose Random Windowsize
+  avWindows = zeros(winsizerand,512); % Init
+  for i = 1:winNum
+    winstart = floor(rand * (length(audio) - winsizerand*2))+1;
+    avWindows(:,i) = audio(winstart:winstart+winsizerand-1);
+  end
+  
+  % sum and concatenate with an overlap
+  Frames{col} = sum(avWindows,2)/(sqrt(winNum));
+  Frames{col} = Frames{col} - mean(Frames{col}); 
+  outdur = outdur+winsizerand; %in samples
+  col = col + 1;
+end
+
+
+output = Frames{1}(1:end-ol/2);
+for i = 2:length(Frames)
+  olSlice = Frames{i-1}(end-ol/2+1:end) .* win(ol/2+1:end)   + Frames{i}(1:ol/2).* win(1:ol/2);
+  output = [output; olSlice; Frames{i}(ol/2+1:end-ol/2)]; 
+end
+try
+  output = output(1:floor(length(audio)/dec)); % No really, exactly the same length.
+end
+  % EOF
 
 
 
