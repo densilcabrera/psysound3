@@ -71,6 +71,8 @@ path = fullfile(path,'SubjectiveData');
 DObj = createDataObject('tSeries', dObj.data);
 DObj = set(DObj,'time',dObj.time);
 DObj.Name = dObj.Name;
+DObj.DataInfo.UserData = dObj.DataInfo.UserData;
+
 
 % Add Analyser Object (subclass from analyser)
 AObj = Analyser;

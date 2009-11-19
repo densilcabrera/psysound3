@@ -30,7 +30,7 @@ bgColor = [0.9 0.9 0.9];
 
 verStruct = ver;
 versionDate = verStruct(1).Date;
-if datenum(versionDate)>=733788
+if datenum(versionDate)>=733560
 
 % Create the root node
 root = uitreenode('v0',dataDir, 'PsySoundData', [], false);
