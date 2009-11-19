@@ -27,6 +27,8 @@ for w=1:length(wChoices)
     dBoffset = 94.89;
    case 'D'
     dBoffset = 94.89;
+   case 'R'
+    dBoffset = 95.89;
    case 'Z'
     % unweighted
     dBoffset = 94.89;
