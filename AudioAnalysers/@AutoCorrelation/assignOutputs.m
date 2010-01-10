@@ -6,6 +6,6 @@ function obj = assignOutputs(obj, dataIn, dataBuf, s)
 %               needed is assignment
 
 % Assign ACF
-dataBuf.specData.assign(dataIn);
+dataBuf.specData.assign(dataIn');
 
 % end assignOutputs
