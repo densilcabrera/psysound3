@@ -12,8 +12,12 @@ for i = 1:length(IECFreqs)
 end
 IECFreqs = IECFreqsStr;
 
-% Get the time spectrum data
-tData = dataBuffer.data.get();
+try 
+  % Get the time spectrum data
+  tData = dataBuffer.data.get();
+catch
+  tData = dataBuffer;
+end
 
 TimePoints = (0:size(tData, 1)-1)' / get(obj, 'outputDataRate');
 
