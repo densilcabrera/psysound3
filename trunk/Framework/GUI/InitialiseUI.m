@@ -142,7 +142,18 @@ uicontrol('Parent',handles.FileChoicePanel,'Style','text','FontSize',9,'Units','
 % UITable
 v = ver;
 handles.DataHeaders = {'Files'};
-if datenum(v(1).Date) > datenum('01-Jan-2008')
+currentdate = 1;
+verdate = 1;
+dateError = 0;
+
+try 
+  currentdate = datenum(v(1).Date);
+  verdate     = datenum('01-Jan-2008');
+catch
+  dateError = 1;
+end
+
+if (currentdate > verdate || dateError == 1)
     handles.Table = uitable('v0',handles.figure1, {' ',' ',' '}, {'Files','Level','Adjustment'});
     handles.mtable  = handles.Table.getTable;
     % Java to make table not editable. Otherwise people try to change stuff with the keyboard - not the best way.
@@ -156,7 +167,8 @@ if datenum(v(1).Date) > datenum('01-Jan-2008')
     %setColumnWidth(handles.Table,150);    
 else  
     handles.Table = uitable('Parent', handles.figure1);
-    % Java to make table not editable. Otherwise people try to change stuff with the keyboard - not the best way.
+    % Java to make table not editable. Otherwise people try to change stuff
+    % with the keyboard - not the best way.
     setEditable(handles.Table,0);
 
     % This is a bit strange, as uitable refuses to take Units as Characters.

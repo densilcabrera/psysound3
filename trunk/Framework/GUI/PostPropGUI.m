@@ -27,10 +27,16 @@ dataDir  = psyPrefs.dataDir;
 
 bgColor = [0.9 0.9 0.9];
 
-
 verStruct = ver;
 versionDate = verStruct(1).Date;
-if datenum(versionDate)>=733560
+
+try
+  verdate = datenum(versionDate);
+catch
+  verdate = 733561;
+end
+
+if verdate>=733560  
 
 % Create the root node
 root = uitreenode('v0',dataDir, 'PsySoundData', [], false);
@@ -45,7 +51,7 @@ uit.NodeSelectedCallback = @updateDataAnalyser;
 % uit.Visible = 0;
 % uit.setModel(treeModel);
 
-elseif datenum(versionDate)>=733408
+elseif verdate>=733408
 
 % Create the root node
 root = uitreenode(dataDir, 'PsySoundData', [], false);
@@ -433,7 +439,12 @@ function nodes = treeExpfcn(tree, value)
         args = {fullName, dsNode.name, iconpath, dsNode.isLeaf};
         verStruct = ver;
         versionDate = verStruct(1).Date;
-        if datenum(versionDate) >= 733788 
+        try 
+          verdate = datenum(versionDate);
+        if verdate >= 733788
+          args = {'v0' args{:}};
+        end
+        catch
           args = {'v0' args{:}};
         end
         % Stick the full file name as the value
