@@ -9,7 +9,7 @@ if dataIn == 1
   return;
 end
 
-filtermethod = 1; % (or GUI choice)
+filtermethod = get(obj, 'filterMethod'); % (or GUI choice)
 cal = 34.0507; % set to make 1 kHz tone at 40 dB yield 1 sone
 faster = 1; % if you think this analyser is slow, try setting this to 0!
 decay = 5000; % 5 seconds of decay after the end of the file
