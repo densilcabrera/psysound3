@@ -50,8 +50,7 @@ spl=spl(:);
 
 ptp.freq=freq/1e3; % load input into the ptp structure
 ptp.spl=spl;
-ptp.count = 0;
-ptpsubcoincidence=length(freq)-1;
+ptp.count=length(freq)-1;
 
 ptp=sortptp(ptp);
 ptp=compfreqlimit(ptp);
@@ -194,7 +193,6 @@ end
 function [spp,vpp,cbp]=initialise(SPMAX,VPMAX,CPMAX)
 [spp,vpp,cbp]=clearpitchpatterns(SPMAX,VPMAX,CPMAX);
 vpp.count= -1;
-spp.count = 0;
 end
 
 function [spp,vpp,cbp]=clearpitchpatterns(SPMAX,VPMAX,CPMAX)
