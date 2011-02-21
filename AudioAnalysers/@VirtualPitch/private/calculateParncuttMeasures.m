@@ -55,6 +55,6 @@ Multiplicity  = sqrt(multsum / pitches(1,2));
 maxweight = max(pitches(:, 2));
 Salience = pitches(:, 1);
 Salience(:, 2) = pitches(:, 2) / sqrt(maxweight * multsum);
-
+fprintf('Mult: %.3f TOnalness %.3f\n',Multiplicity,PureTonalness);
 
 end % function
