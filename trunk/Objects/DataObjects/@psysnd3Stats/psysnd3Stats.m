@@ -59,11 +59,13 @@ function obj = calcStats(obj, data, dBOffset)
     
   % Remove any nan's
   data(find(isnan(data))) = [];
+%   fprintf('data : %d \n',data)
   
   if dBOffset
     % Convert back to power values before computing the average
     powData   = 10.^((data-dBOffset)/10);
     muPowData = mean(powData);
+    
     
     % Back to decibels
     obj.mean = power2dB(muPowData) + dBOffset;
@@ -75,6 +77,7 @@ function obj = calcStats(obj, data, dBOffset)
   % Works out the percentiles
   pc  = [1:99]';
   len = length(pc);
+
   for i=1:len
     obj.percentiles(pc(i)) = percentile(data, pc(i));
   end

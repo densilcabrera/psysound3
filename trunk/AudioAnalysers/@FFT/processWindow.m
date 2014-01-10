@@ -21,7 +21,9 @@ if ~isempty(obj.cztF)
  f2 = obj.cztF(2);     % in hertz
  R1 = obj.cztF(3);     % z-plane radius
  R2 = obj.cztF(4);     % z-plane radius
-
+% 
+%  [f1,f2,R1,R2] = getCZT(obj)
+ 
  %omega = exp(-j*2*pi*(f2-f1)/(wl*fs));
  %a     = exp(j*2*pi*f1/fs);
  a = R1*exp(j*f1*2*pi/fs);

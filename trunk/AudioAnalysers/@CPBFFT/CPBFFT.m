@@ -1,7 +1,8 @@
 function obj = CPBFFT(varargin)
 % CPBFFT Constructor
 %
-obj = struct;
+
+obj=struct;
 
 % Subclass FFT
 base = FFT(varargin{:});
@@ -22,3 +23,7 @@ obj = set(obj, 'multiChannelSupport', true);
 
 % Set the levelOffset
 obj = setlevelOffset(obj, 0.66);
+
+
+
+end

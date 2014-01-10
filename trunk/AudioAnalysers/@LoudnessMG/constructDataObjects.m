@@ -67,7 +67,8 @@ Loudness = dataBuffer.Loudness.get();
 ts = createDataObject('tSeries', Loudness);
 % Set props
 ts.Name               = 'Loudness';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = 'sone';
 out{end+1} = ts;
 
@@ -76,7 +77,8 @@ SharpnessZ = dataBuffer.SharpnessZ.get();
 ts = createDataObject('tSeries', SharpnessZ);
 % Set props
 ts.Name               = 'SharpnessZ';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = 'acum';
 out{end+1} = ts;
 
@@ -85,7 +87,8 @@ SharpnessA = dataBuffer.SharpnessA.get();
 ts = createDataObject('tSeries', SharpnessA);
 % Set props
 ts.Name               = 'SharpnessA';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = 'acum';
 out{end+1} = ts;
 
@@ -94,7 +97,8 @@ TimbralWidth = dataBuffer.TimbralWidth.get();
 ts = createDataObject('tSeries', TimbralWidth);
 % Set props
 ts.Name               = 'Timbral Width';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = '';
 out{end+1} = ts;
 
@@ -103,7 +107,8 @@ Volume = dataBuffer.Volume.get();
 ts = createDataObject('tSeries', Volume);
 % Set props
 ts.Name               = 'Volume';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = 'vol';
 out{end+1} = ts;
 
@@ -112,7 +117,8 @@ DissonanceHK = dataBuffer.DissonanceHK.get();
 ts = createDataObject('tSeries', DissonanceHK);
 % Set props
 ts.Name               = 'Tonal Dissonance (HK)';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = '';
 out{end+1} = ts;
 
@@ -121,7 +127,8 @@ DissonanceS = dataBuffer.DissonanceS.get();
 ts = createDataObject('tSeries', DissonanceS);
 % Set props
 ts.Name               = 'Tonal Dissonance (S)';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = '';
 out{end+1} = ts;
 
@@ -130,7 +137,8 @@ SpectDissHK = dataBuffer.SpectDissHK.get();
 ts = createDataObject('tSeries', SpectDissHK);
 % Set props
 ts.Name               = 'Spectral Dissonance (HK)';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = '';
 out{end+1} = ts;
 
@@ -139,7 +147,8 @@ SpectDissS = dataBuffer.SpectDissS.get();
 ts = createDataObject('tSeries', SpectDissS);
 % Set props
 ts.Name               = 'Spectral Dissonance (S)';
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 ts.DataInfo.Units     = '';
 out{end+1} = ts;
 

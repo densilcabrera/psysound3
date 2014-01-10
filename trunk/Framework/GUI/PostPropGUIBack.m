@@ -38,7 +38,9 @@ uit.NodeSelectedCallback = @updateDataAnalyser;
 uit.Visible = 0;
 
 % Add mouse clicked
-set(uit.tree, 'MouseClickedCallback', {@mouse_click_cb, uit});
+%set(uit.tree, 'MouseClickedCallback', {@mouse_click_cb, uit});
+TreeHandle = handle(uit.tree,'CallbackProperties');
+set(TreeHandle, 'MouseClickedCallback', {@mouse_click_cb, uit});
 
 uitHead = uicontrol('Parent', h, ...
                     'Style' , 'text', ...

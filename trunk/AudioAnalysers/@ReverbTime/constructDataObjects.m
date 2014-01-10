@@ -26,7 +26,8 @@ oDataRate = get(obj,'outputDataRate');
 tsRT = createDataObject('tSeries',ReverbTime,Time);
 tsRT.Name = 'Schroeder Integration';
 tsRT.DataInfo.Unit = 'dB';
-tsRT.TimeInfo.Increment= 1/fs;
+tsRT1=setuniformtime(tsRT.tsObj,'Interval',1/fs);
+tsRT=set(tsRT,'time',get(tsRT1,'time'));
 output{1} = tsRT;
 
 %Assign outputs to the object

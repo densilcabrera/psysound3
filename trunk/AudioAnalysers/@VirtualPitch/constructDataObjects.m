@@ -37,21 +37,24 @@ tstep = 1/get(obj, 'outputDataRate');
 timeSeriesOutput = createDataObject('tSeries', PT);
 timeSeriesOutput.DataInfo.Unit = '';
 timeSeriesOutput.Name = 'Pure Tonalness'; 
-timeSeriesOutput.TimeInfo.Increment = tstep;
+timeSeriesOutput1=setuniformtime(timeSeriesOutput.tsObj,'Interval',tstep);
+timeSeriesOutput=set(timeSeriesOutput,'time',get(timeSeriesOutput1,'time'));
 out{end+1} = timeSeriesOutput;
 
 % format for TimeSeries
 timeSeriesOutput = createDataObject('tSeries', CT);
 timeSeriesOutput.DataInfo.Unit = '';
 timeSeriesOutput.Name = 'Complex Tonalness'; 
-timeSeriesOutput.TimeInfo.Increment = tstep;
+timeSeriesOutput1=setuniformtime(timeSeriesOutput.tsObj,'Interval',tstep);
+timeSeriesOutput=set(timeSeriesOutput,'time',get(timeSeriesOutput1,'time'));
 out{end+1} = timeSeriesOutput;
 
 % format for TimeSeries
 timeSeriesOutput = createDataObject('tSeries', M);
 timeSeriesOutput.DataInfo.Unit = '';
 timeSeriesOutput.Name = 'Multiplicity'; 
-timeSeriesOutput.TimeInfo.Increment = tstep;
+timeSeriesOutput1=setuniformtime(timeSeriesOutput.tsObj,'Interval',tstep);
+timeSeriesOutput=set(timeSeriesOutput,'time',get(timeSeriesOutput1,'time'));
 out{end+1} = timeSeriesOutput;
 
 CombinedVPTS = createDataObject('tSpectrum', (1:size(S, 2)), S, timePoints);

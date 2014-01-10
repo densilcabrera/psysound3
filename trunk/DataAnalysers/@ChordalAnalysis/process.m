@@ -3,7 +3,7 @@ function process(obj, hObj)
 %
 % Get the tree nodes
 p     = get(hObj,'Parent');
-nodes = getSelectedTreeNodes(obj, p);
+[nodes, uit] = getSelectedTreeNodes(obj, p);
 
 % Bail out if only one node is not selected
 if length(nodes) ~= 2
@@ -58,7 +58,7 @@ ts.Name = 'Chord Estimation R2';
 ts.Events    = beatEvents; ts.Time = times;
 dataObjS.DataObj = ts; dataObjS.AnalyserObj = AnalyserObj;   % Repackage
 % Add to salience node in tree
-out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS);
+out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS,uit);
 
 clear('dataObjS','ts');
 ts = createDataObject('tSeries', root');
@@ -66,7 +66,7 @@ ts.Name = 'Root Index';
 ts.Events    = beatEvents; ts.Time = times;
 dataObjS.DataObj = ts; dataObjS.AnalyserObj = AnalyserObj;   % Repackage
 % Add to salience node in tree
-out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS);
+out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS,uit);
 
 clear('dataObjS','ts');
 ts = createDataObject('tSeries', chordDistance');
@@ -74,8 +74,8 @@ ts.Name = 'Chord Distance';
 ts.Events    = beatEvents; ts.Time = times;
 dataObjS.DataObj = ts; dataObjS.AnalyserObj = AnalyserObj;   % Repackage
 % Add to salience node in tree
-out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS);
+out = addToDataAnalysisFolder(obj, getValue(nodes(salienceNode)), dataObjS,uit);
 
-collapseAndUnLoadTree(obj, p); % Reset Tree
+% collapseAndUnLoadTree(obj, p); % Reset Tree
 
 % EOF

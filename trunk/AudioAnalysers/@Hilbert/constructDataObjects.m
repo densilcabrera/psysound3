@@ -31,7 +31,9 @@ out{3}.DataInfo.Units = 'Hz';
 
 % Set the proper sampling rate
 for i=1:length(out)
-  out{i}.TimeInfo.Increment = 1/get(obj, 'outputDataRate');
+    out1{i}=setuniformtime(out{i}.tsObj,'Interval',1/get(obj, 'outputDataRate'));
+    out{i}=set(out{i},'time',get(out1{i},'time'));
+%   out{i}.TimeInfo.Increment = 1/get(obj, 'outputDataRate');
 end
 
 % Set the output property

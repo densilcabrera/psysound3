@@ -8,6 +8,7 @@ main_N  = dataBuffer.main_N.get();
 spec_N  = dataBuffer.spec_N.get();
 
 output = {};
+SummOut = {};
 
 % Check for synchronisation
 if get(obj, 'synch')
@@ -16,7 +17,7 @@ if get(obj, 'synch')
   tstep   = 1/get(obj, 'outputDataRate');
 else
   % Nominal
-  tPeriod = 2e-3;
+  tPeriod = 2e-3; % 2 ms
   tstep   = TimePoints(2)-TimePoints(1);
 end
 timePoints = (0:length(N)-1)' * tPeriod;
@@ -25,13 +26,14 @@ timePoints = (0:length(N)-1)' * tPeriod;
 ts = createDataObject('tSeries', N);
 ts.DataInfo.Unit = 'sones';
 ts.Name          = 'Loudness'; 
-ts.TimeInfo.Increment = tPeriod;
+ts1=setuniformtime(ts.tsObj,'Interval',tPeriod);
+ts=set(ts,'time',get(ts1,'time'));
 output{end+1} = ts;
-
+% 
 % % format for TimeSeries
 % ts = createDataObject('tSeries', Fl);
-% ts.DataInfo.Unit = 'vacils';
-% ts.Name = 'Fluctuation'; 
+% ts.DataInfo.Unit = 'units';
+% ts.Name = 'Loudness Fluctuation'; 
 % ts.TimeInfo.Increment = tstep;
 % output{end+1} = ts;
 
@@ -87,10 +89,22 @@ end
 ts = createDataObject('tSeries', Sh);
 ts.DataInfo.Unit = 'acums';
 ts.Name = 'Sharpness'; 
-ts.TimeInfo.Increment = tPeriod;
+ts1=setuniformtime(ts.tsObj,'Interval',tPeriod);
+ts=set(ts,'time',get(ts1,'time'));
 output{end+1} = ts;
 
-% Set the output property on the object
+% Overall loudness fluctuation
+lf=fluct(main_N);
+
+lf_all.Data = lf;
+lf_all.Name = 'Loudness Fluctuation';
+lf_all.Unit = '';
+
+SummOut{end+1} = lf_all;
+
+% Set the output properties on the object
+obj = set(obj, 'SummaryOutput', SummOut);
 obj = set(obj, 'output', output);
+
 
 % end constructDataObjects

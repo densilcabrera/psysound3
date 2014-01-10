@@ -5,7 +5,7 @@ function process(obj, hObj)
 
 % Get the tree nodes
 panel = get(hObj,'Parent');
-nodes = getSelectedTreeNodes(obj, panel);
+[nodes, uit] = getSelectedTreeNodes(obj, panel);
 
 % Bail out if two nodes are not selected
 if length(nodes) ~= 2
@@ -43,7 +43,7 @@ TSObj1.Name = NewName;
 dataObjS1.DataObj = TSObj1;
 
 % Add to node in tree
-out = addToDataAnalysisFolder(obj, getValue(nodes(1)), dataObjS1);
+out = addToDataAnalysisFolder(obj, getValue(nodes(1)), dataObjS1,uit);
 
 collapseAndUnLoadTree(obj, panel);
 % Try this instead of the above collapse

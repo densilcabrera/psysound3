@@ -13,10 +13,12 @@ end
  fs = get(obj, 'fs');
  wl = get(obj, 'windowLength');
  
- f1 = obj.cztF(1);     % in hertz
- f2 = obj.cztF(2);     % in hertz
- R1 = obj.cztF(3);     % z-plane radius
- R2 = obj.cztF(4);     % z-plane radius
+%  f1 = obj.cztF(1);     % in hertz
+%  f2 = obj.cztF(2);     % in hertz
+%  R1 = obj.cztF(3);     % z-plane radius
+%  R2 = obj.cztF(4);     % z-plane radius
+
+[f1,f2,R1,R2] = getCZT(obj);
 
  a = R1*exp(j*f1*2*pi/fs);
  omega = ( R2/R1 )^(-1/(wl-1)) * exp(-j*(f2-f1)*2*pi/fs/(wl-1)) ;

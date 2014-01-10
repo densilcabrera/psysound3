@@ -10,7 +10,7 @@ ax{1} = findobj(uip, 'Type','Axes','Tag','ESAAxesTop');
 ax{2} = findobj(uip, 'Type','Axes','Tag','ESAAxesBottom');
 
 % Get the tree nodes
-nodes = getSelectedTreeNodes(obj, uip);
+[nodes, uit] = getSelectedTreeNodes(obj, uip);
 
 % Find the UVCAllback so we can call it once we've thresholded.
 ESAChildren = get(uip,'Children');
@@ -135,7 +135,7 @@ switch (reprChoice)
     ts.DataInfo = nodeObj{1}.DataObj.tsObj.DataInfo;
 		nObjCopy = nodeObj{1};
     nObjCopy.DataObj = ts; % Repackage and deposit
-   	out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nObjCopy);
+   	out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nObjCopy,uit);
 		clear('nObjCopy');
     
 		ts = createDataObject('tSeries', corSeries);
@@ -149,7 +149,7 @@ switch (reprChoice)
 		ts.DataInfo = nodeObj{1}.DataObj.tsObj.DataInfo;
     nObjCopy = nodeObj{1};
 		nObjCopy .DataObj = ts; % Repackage and deposit
-   	out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nObjCopy);
+   	out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nObjCopy,uit);
 
 		ts = createDataObject('tSeries', d2flSeries);
 		% Copy over some attributes
@@ -161,7 +161,7 @@ switch (reprChoice)
      end
     ts.DataInfo = nodeObj{2}.DataObj.tsObj.DataInfo;
 		nodeObj{2}.DataObj = ts; % Repackage and deposit
-		out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nodeObj{2});
+		out = addToDataAnalysisFolder(obj, getValue(nodes(1)), nodeObj{2},uit);
 
 		% Reload tree
 	  collapseAndUnLoadTree(obj, uip);
