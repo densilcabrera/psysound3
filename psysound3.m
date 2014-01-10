@@ -16,6 +16,22 @@ if ~isempty(findstr(p, 'psysound3'))
   disp('Starting PsySound3. ');
   disp('Please read README File distributed with Software.');
   disp('PsySound is BETA Software. Use at your own risk.');
+
+sigV = ver('signal');
+  if isempty(sigV)
+    warning(['Signal Processing Toolbox not found. PsySound3 may ', ...
+             'not function correctly']);
+  else
+      fprintf('Signal Processing Toolbox OK.\n');
+  end
+
+
+  if isempty(ver('distcomp'))
+ warning(['Parallel Computing Toolbox not found. You wont be able to use', ...
+                'parallel computing features in Psysound3']);
+  else
+      fprintf('Parallel Computing ToolBox Toolbox OK.\n');
+  end
   
   PsySoundGUI;
 else
@@ -39,29 +55,35 @@ try
 
   reqVer = '7.3';
   
-  % First check required ML version
-  v = ver('matlab');
-  
-  vPrts  = getParts(v.Version);
-  rvPrts = getParts(reqVer);
-  
-  if any(vPrts < rvPrts)
-    error(['PsySound requires a minimum Matlab version of ', ...
-           reqVer]);
-  else
-       fprintf('Matlab Version (> 7.3) OK.\n');
-  end
+%   % First check required ML version
+%   v = ver('matlab');
+%   
+%   vPrts  = getParts(v.Version);
+%   rvPrts = getParts(reqVer);
+%   
+%   if any(vPrts < rvPrts)
+%     error(['PsySound requires a minimum Matlab version of ', ...
+%            reqVer]);
+%   else
+%        fprintf('Matlab Version (> 7.3) OK.\n');
+%   end
 
   % Warn for the signal processing toolbox
   sigV = ver('signal');
   if isempty(sigV)
-    warning(['Signal Processing Toolbox not found. PsySound may ', ...
+    warning(['Signal Processing Toolbox not found. PsySound3 may ', ...
              'not function correctly']);
   else
       fprintf('Signal Processing Toolbox OK.\n');
   end
 
 
+  if isempty(ver('distcomp'))
+ warning(['Parallel Computing Toolbox not found. You wont be able to use', ...
+                'parallel computing features in Psysound3']);
+  else
+      fprintf('Parallel Computing ToolBox Toolbox OK.\n');
+  end
 
   fprintf('Setting up Paths...\n');
 

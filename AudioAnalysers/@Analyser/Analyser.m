@@ -23,6 +23,8 @@ switch nargin
   obj.windowFunc   = 'rect';
   obj.overlap      = struct('size', -1, 'type', 'samples');
   obj.output       = {};
+  obj.SummaryOutput = {}; %Added New release
+  obj.OptionStr = {}; %Added New release
 
   % 
   % This field specifies the Analyser type in terms of how the data
@@ -58,9 +60,9 @@ switch nargin
   % if single argument of struct, then initialise fields using the
   %                                    file handle
   arg1 = varargin{1};
-  if isa(arg1, 'Analyser')
+  if isa(arg1, 'Analyser') 
     obj = arg1;
-  elseif isstruct(arg1)
+  elseif isstruct(arg1) 
     fh  = arg1;
     obj = Analyser;
 

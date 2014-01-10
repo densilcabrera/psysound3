@@ -1,5 +1,11 @@
-function obj = set(obj, propName, propVal)
+function obj = set(obj,varargin)
 % SET Sets the value of the property
+
+%modified for MirToolbox
+propName=varargin{1};
+propVal=varargin{2};
+
+
 
 % Set field
 switch(propName)
@@ -43,13 +49,39 @@ switch(propName)
   obj.multiChannelSupport = propVal;
  case 'output'
   obj.output = propVal;
+ case 'SummaryOutput'
+  obj.SummaryOutput = propVal;
+ case 'OptionStr'
+  obj.OptionStr = propVal;
+     
+        
  otherwise
   % See if a specialised set method for the property value exists
-  m = ['set', propName];
-  try
-    obj = eval([m, '(obj, propVal)']);
-  catch
-    error(['Analyser: set: ', propName, ' is not a field of the Analyser', ...
+ 
+ 
+  
+     try
+        m = ['set', propName];
+        obj = eval([m, '(obj, propVal)']);
+     catch ME1
+            
+            if regexp(class(obj),'mir','ignorecase','start')==1
+    
+                try
+                    obj=setMir(obj,varargin{:});
+                catch ME2
+                    error(['Problem with the name (regexp()), or with setMir for class ',class(obj),...
+                    ' or ',propName, ' might be an unknown field of this class'])
+                    
+                end
+            
+            else
+        error(['Analyser: set: ', propName, ' is not a field of the Analyser', ...
            ' class.  Could not resolve ', m, ' for class ', class(obj)]);
+            end
+     end
   end
+
+
 end
+

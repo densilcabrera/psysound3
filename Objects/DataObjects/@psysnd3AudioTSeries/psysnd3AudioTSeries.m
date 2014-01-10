@@ -60,8 +60,10 @@ switch(nargin)
       obj.psysnd3tSeries = createDataObject('tSeries', Y);
       
       % Set the appropriate sampling time
-      obj.psysnd3tSeries.TimeInfo.Increment = 1/Fs;
-      
+%        obj.psysnd3tSeries.TimeInfo.Increment = 1/Fs;
+      fs1=setuniformtime(obj.psysnd3tSeries.tsObj,'Interval',1/Fs);
+      obj.psysnd3tSeries=set(obj.psysnd3tSeries,'time',get(fs1,'time'));
+
       % Set the wav-file name as the name
       [pStr, name] = fileparts(arg1);
       obj = set(obj, 'Name', name);

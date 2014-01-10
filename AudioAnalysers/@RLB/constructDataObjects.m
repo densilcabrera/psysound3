@@ -27,7 +27,8 @@ for i=1:len
   
   ts = createDataObject('tSeries', logData, 'dB', dBOffset);
   ts.Name = ['Loudness level - ', num2str(rc(i)), 's']; 
-  ts.TimeInfo.Increment = 1/winRate;
+  ts1=setuniformtime(ts.tsObj,'Interval',1/winRate);
+  ts=set(ts,'time',get(ts1,'time'));
   output{i} = ts;
 end
 

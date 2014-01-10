@@ -967,16 +967,22 @@ set(handles.SynchronisationText, 'Enable', PopupEnable);
 % Loop over all Analysis panels and disable all window/overlap controls
 for i=1:length(handles.SettingsPanel)
   panel = handles.SettingsPanel(i);
-  h     = findobj(panel, '-regexp', 'Tag', ['(OverlapSize|OverlapType)']);
+  h     = findobj(panel, '-regexp', 'Tag', ['(OverlapSize|OverlapType|Frame3)']);
 
-  set(h, 'Enable', AnalyserSetting);
   
+  j=get(h,'Tag');
+ 
+  if ~(strcmp(j,'MIRPITCHFrame3'))
+  set(h, 'Enable', AnalyserSetting);
+  h  = findobj(panel, '-regexp', 'Tag', 'WindowSize', 'Style', 'popupmenu');
+  end 
   % Find popup and run its callback
   % Same code for tickbox and popupmenu
-  h  = findobj(panel, '-regexp', 'Tag', 'WindowSize', 'Style', 'popupmenu');
   try
     cb = get(h, 'Callback');
     cb(h);
+  catch 
+      error('error1')
   end
 end
   
@@ -987,10 +993,13 @@ for i=1:length(handles.SettingsPanel)
  
   % Find popup and run its callback
   % Same code for tickbox and popupmenu
-  h  = findobj(panel, '-regexp', 'Tag', 'WindowSize', 'Style', 'popupmenu');
+%   h  = findobj(panel, '-regexp', 'Tag', 'WindowSize', 'Style', 'popupmenu');
+  h = findobj(panel, '-regexp', 'Tag', ['(Frame3|WindowSize)'],{'Style','edit','-or','Style','popupmenu'});
   try
     cb = get(h, 'Callback');
     cb(h);
+    catch 
+      error('error2')
   end
 end
 
@@ -2041,7 +2050,7 @@ txt = {' ', ...
        '  Emery Schubert (University of New South Wales)',  ...
        ' ',  ...
        'Acknowledgements',  ...
-       '  PsPsySound3 was developed with financial support from:', ...
+       '  PsySound3 was developed with financial support from:', ...
        '  Australian Research Council LIEF grant LE0668448 and', ...
        '  The University of New South Wales via its', ...
        '  Strategic Investment in Research Scheme.',  ...

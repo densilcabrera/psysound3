@@ -16,9 +16,12 @@ end
 % line feed
 str{2} = sprintf('\nIntegration time(s): ');
 
-if ischar(obj.iChoices)
-	for i = 1:length(obj.iChoices)
-	 iChoices(i) = {obj.iChoices(i)};
+
+iChoices = obj.iChoices;
+% iChoices = iChoices{:};
+if ischar(iChoices)
+	for i = 1:length(iChoices)
+	 iChoices(i) = {iChoices(i)};
 	end
 end
 

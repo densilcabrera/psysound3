@@ -113,6 +113,8 @@ function setStringAnalyserNode(h, node)
     
     str{2} = sprintf('\n%s:\n', data.Name);
     str{3} = getAnalyserSettingsString(data);
+    str{4} = sprintf('\nOther Outputs \n');
+    str{5} = getAnalyserSummaryOutput(data); 
     set(h, 'String', str);
   end
 end

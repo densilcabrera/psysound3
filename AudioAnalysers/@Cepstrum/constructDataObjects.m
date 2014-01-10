@@ -54,8 +54,9 @@ for i=1:length(tags)
   ts = set(ts, 'Name', tags{i, 1});
   
   % Set the increment
-  ts.TimeInfo.Increment = tstep;
-
+%   ts.TimeInfo.Increment = tstep;
+  ts1 = setuniformtime(ts.tsObj,'Interval',tstep);
+  ts=set(ts,'time',get(ts1,'time'));
   % Stick this tag in the data info so that we pick it up as ylabel
   % in PlotResult
   ts.DataInfo.Units = tags{i, 2};

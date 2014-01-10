@@ -1,9 +1,13 @@
-\documentclass{article}
-\usepackage{helvet,palatino,geometry,graphicx,titlesec,wrapfig}
+\documentclass[a4paper, french, english]{article}
+\usepackage{helvet,palatino,geometry,graphicx,titlesec,wrapfig,float}
 \sffamily
+\usepackage{url}
+\usepackage[T1]{fontenc} 
+\usepackage{babel} 
+
 \title{PsySound3 User Manual \\ DRAFT}
 \graphicspath{{./images/}}
-\author{Sam Ferguson, Densil Cabrera, Emery Schubert and Farhan Rizwi}
+\author{Sam Ferguson, Densil Cabrera, Emery Schubert, Farhan Rizwi, and Félix Gendre}
 \begin{document}
 
 	\maketitle
@@ -41,18 +45,17 @@ To install the program within the Matlab environment you should:
 \begin{itemize} 
 	\item download and unzip the archive; 
 	\item change directory within Matlab to the archive's directory;
-	\item run the \texttt{psysound3} file to configure the installation and start the Graphical User Interface.
+	\item run the \texttt{psysound3} file to configure the installation and start the Graphical User Interface. Note that PsySound3 can do parallel computing, but this option requires the Matlab Parallel Computing Toolbox. If you don't have this toolbox, a warning will be displayed on the screen when opening PsySound3 but you can still use PsySound3. The procedure to enable parallel computing is dealt with in a later section. 
 	\item check the \texttt{File >> Preferences} window to set your preferences. 
 \end{itemize}
 
-\clearpage
 \section{Basic Program Usage}
 
-This section will take you through the four stages of using the program,
+This section will take you through the stages of using the program,
 \begin{itemize}
 	\item File selection; 
 	\item File calibration; 
-	\item AudioAnalyser configuration and file analysis;
+	\item AudioAnalyser configuration and file analysis, with or without parallel computing;
 	\item and output data analysis with DataAnalysers.
 \end{itemize}
 
@@ -60,14 +63,14 @@ This section will take you through the four stages of using the program,
 
 To analyse some files it is necessary to choose some files from your directory. We recommend setting aside a directory that contains all the audio files and calibration files you will be using in this analysis session, and it will be less confusing if the directory only contains these files to begin with. 
 
-\begin{figure}[htbp]
+\begin{figure}[htbp!]
 	\centering
 		\includegraphics[width=3in]{Step1-AddingFiles.jpg}
 	\caption{Choose files from the left column and then click `Add files' to add them to the list of files you have chosen to analyse.}
 	\label{fig:stage01}
 \end{figure}
 
-You now can use the `Change Directory' button to choose this directory. PsySound will look at each file and find out a little information about each. It will then present you with all of the files in the box to your left.
+You now can use the `Change Directory' button to choose this directory. PsySound will look at each file and find out a little information about each. It will then present you with all of the files in the box to your left (Figure 1).
 
 You then need to add the files you wish to analyse. You can choose them and add them one by one, or you can select multiple files (with shift clicking, control clicking  or command clicking depending on platform) and add them all. You can remove files as well if you wish.
 
@@ -84,11 +87,11 @@ To do this we can either calibrate the microphone exactly, or estimate the sound
 	\label{fig:stage03}
 \end{figure}
 
-In PsySound3 these two methods are avilable, and you must choose between them when you begin the second stage. When you click on Step 2 you are asked to choose between calibration `With Files', and calibration `Without Files'. These two options represent the two possible ways of calibrating PsySound3 discussed above. 
+In PsySound3 these two methods are available, and you must choose between them when you begin the second stage. When you click on Step 2 you are asked to choose between calibration `With Files', and calibration `Without Files'. These two options represent the two possible ways of calibrating PsySound3 discussed above. 
 
-If you choose the option `With Files' you will then be presented with a similar layout to the file selection you used in step 1, however, this time you will be associating calibration files with their respective audio files. It is common to calibrate the microphone at the beginning of the recording session and make multiple recordings in the session -- so it may be that you will have only one calibration file for a large set of recordings. However, the recording process involves many separate recording sessions then it is likely the microphone would be calibrated at the beginning of each recording session, and thus there may be a calibration file for each file to be analysed.
+If you choose the option `With Files' you will then be presented with a similar layout to the file selection you used in step 1, however, this time you will be associating calibration files with their respective audio files (Figure 2). It is common to calibrate the microphone at the beginning of the recording session and make multiple recordings in the session -- so it may be that you will have only one calibration file for a large set of recordings. However, the recording process involves many separate recording sessions then it is likely the microphone would be calibrated at the beginning of each recording session, and thus there may be a calibration file for each file to be analysed.
 
-Each of the files to be analysed needs to be associated with its respective calibration file, and then the known sound pressure level that was recorded needs to be provided in each case. 
+Each of the files to be analysed needs to be associated with its respective calibration file, and then the known sound pressure level that was recorded needs to be provided in each case (Figure 3). 
 
 \begin{figure}[htbp]
 	\centering
@@ -100,8 +103,8 @@ Each of the files to be analysed needs to be associated with its respective cali
 If you choose the second option, `Without Files' you will need to decide how you want to control the level of the files. There are a few options, you can:
 
 \begin{itemize} 
-\item Choose to change all the file's sound pressure levels to one specific  level -- this will mean comparisons are based on factors other than average level. In this case you will need to specify a level and a weighting scheme to use to calculate the level.
-\item Choose to change all the file's sound pressure levels to the file with  either the greatest, the median, or the smallest sound pressure level.
+\item Choose to change all the file's sound pressure levels to one specific  level -- this will mean comparisons are based on factors other than average level. In this case you will need to specify a level and a weighting scheme to use to calculate the level (Figure 4).
+\item Choose to change all the file's sound pressure levels to the file with either the greatest, the median, or the smallest sound pressure level.
 \item Choose to make no change to the levels. 
 \end{itemize}
 
@@ -115,28 +118,57 @@ If you choose the second option, `Without Files' you will need to decide how you
 Remember that if you change all the files to an average level (eg. 70dB) you then cannot compare the differences between sound pressure level and other similar algorithms, as these factors have been specifically controlled. Understanding calibration is essential, because if the wrong method is chosen then all results produced will be corrupted for some of the algorithms. Specifically, at least the the Terhardt Virtual Pitch algorithm, and all of the Loudness algorithms will be non-linearly affected by incorrect calibration - many of the other pitch and spectral analysers may only be linearly affected. Different procedures require different approaches to calibration, so there is no one method that can be recommended.
 
 When a method is chosen and the standardise button is pressed, the program calculates the current average level (using the chosen weighting scheme) of each file, and the adjustment necessary to calibrate the file for use.
-
+`
 \subsection{Step 3 - Analysis with AudioAnalysers} 
-
-AudioAnalysers are our name for the analysis modules that work with audio files in PsySound3. The available AudioAnalysers are presented to you in the box to your left in Step 3. 
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=3in]{Step3-ChooseAnalyser.jpg}
+		\includegraphics[width=3in]{Step3-ChooseAnalyser1.jpg}
 	\caption{Choosing an AudioAnalyser.}
 	\label{fig:stage08}
 \end{figure}
 
+AudioAnalysers are our name for the analysis modules that work with audio files in PsySound3. The available AudioAnalysers are presented to you in the box to your left in Step 3 (Figure 5). 
+
 When you click on one of the AudioAnalysers you will be presented with a user interface for that AudioAnalyser, including the box you need to tick to enable that AudioAnalyser for this analysis session. Once you have selected the appropriate AudioAnalysers you will need to set the analysis going. 
 
-You can click the `Time Estimate' button to get an estimate of how long it will take, and this may be useful as various AudioAnalysers will take different amounts of time depending on both their alogorithm's complexity, and the settings you have chosen to use. Finally when you are prepared to begin audio analysis you should click the `Run Analysis' button. The three progress bars will indicate the progress of the analysis process. When the analysis process is finished you will be moved on to Step 4, where you can see the results of your analysis.
+As mentioned before, PsySound3 has the option of parallel computing, if you have the parallel computing toolbox. We'll go through the steps to enable this feature. 
+
+\begin{itemize}
+\item Firstly, you need to validate the \emph{cluster profile}, which is accessible from the 'Parallel' option in Matlab's main window (Figure 6). Please refer to the documentation for 'Cluster Profiles' for additional information. At this stage, there is a known issue, which is not due to PsySound. With the new R2013a release of Matlab (and maybe with older ones too), there is a Java error that can occur even at the validation stage of the cluster profile. Mathworks have published a solution on their website, which works well to fix this issue. Please connect to your mathworks.com account (or create one for free) by visiting  \url{http://www.mathworks.com/support/bugreports/919688} and follow the instructions. 
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=3in]{Step3-TimeEstimate.jpg}
-	\caption{Getting an estimate of how long it will take to process the files you have chosen to analyse.}
+		\includegraphics[width=3in]{Step3-ClusterProfile.jpg}
+	\caption{Cluster profile manager with a validated profile.}
+	\label{fig:stage08}
+\end{figure}
+
+\item As seen in 'Analysis Action' section in the lower-right portion of the PsySound3 window, the 'Parallel Computing' dropdown menu has three options (Figure 5). The option 'None' would not do parallel computation. If you have more files to analyse than analysers selected, chose the 'On Files' option. Otherwise, if you have more analysers selected than files  (e.g., to analyse 2 files with 10 analysers) choose "On Analysers".
+\item PsySound3 will then automatically detect whether or not a \texttt{matlabpool} (Please refer to the documentation for \texttt{matlabpool} for more information) is already open, and open one if necessary, using the  configuration of the clusters profiles. You can have as many workers (separate units of computation) as cores you have on your computer. Note that sometimes Matlab open lesser number of workers than the cores on your computer, e.g., on a 12 core computer, Matlab may only open 6 workers. You will then have to modify the default number of workers that open simultaneously, which is called 'Numworkers' in Matlab R2013a (or 'ClusterSize' on older versions of Matlab) in the cluster profile, in order to have 12 of them. A \texttt{matlabpool} connected to 12 workers is able to launch 12 analyses at the same time (that is to say either analysing 12 files simultaneously with one analyser at a time, or 1 file with 12 different analysers, depending on the option you chose) , each of them running on a different core. Don't forget to
+check the cooling system of your processors first!
+\end{itemize}
+
+Finally when you are prepared to begin audio analysis you should click the `Run Analysis' button. The three progress bars will indicate the progress of the analysis process. The time estimation is to be trusted only if you use the option 'On Files', and if the files have approximately the same size (Figure 7). Also, the more files (or more Analysers) you select, the more precise the progress percentage will be.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=3in]{Step3-TimeEstimate1.jpg}
+	\caption{With 'On Analysers' selected, the runtime window estimates how long it will take to process the files you have chosen to analyse.}
 	\label{fig:stage10}
 \end{figure}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=3in]{Step3-TimeEstimate2.jpg}
+	\caption{The progress seen in the Matlab command window of the files you have chosen to analyse.}
+	\label{fig:stage10}
+\end{figure}
+
+
+Simultaneously, in the Matlab command window, you shall see the progress of the analysis, and notification when the analysis is done and the time taken (Figure 8).
+
+When the analysis process is finished you will be moved on to Step 4, where you can see the results of your analysis.
 
 For each audio file that is analysed there will be an AudioAnalyser result saved (on your hard drive), which will contain a set of various data objects that have been produced by the AudioAnalyser. 
 
@@ -149,22 +181,30 @@ There are three main types of data object used in PsySound3,
 
 \subsection{Step 4 - AudioAnalyser Output Analysis with DataAnalysers}
 
-Once the audio analysis process is completed there will be an interface presented that allows you to apply various DataAnalysers to the data. These data analysers can consist of processes that allow you to graph, export or further transform and analyse the data in various ways. 
+Once the audio analysis process is completed there will be an interface presented that allows you to apply various DataAnalysers to the data. These data analysers can consist of processes that allow you to graph, export or further transform and analyse the data in various ways (Figure 9). 
 
-To begin with, open the tree node on on the left, and you will be shown the various files in the dataset. You can then progress to open the node that will show the AudioAnalysers that have been run on this file. You can then choose an AudioAnalyser result to work with and you will be shown the various data objects. You can then choose to further visualise or sonify the data objects you have chosen by choosing options from the tabs on the right. 
+To begin with, open the tree node on on the left, and you will be shown the various files in the dataset. You can then progress to open the node that will show the AudioAnalysers that have been run on this file. You can then choose an AudioAnalyser result to work with and you will be shown the various data objects. You can then choose to further visualise or sonify the data objects you have chosen by choosing options from the drop-down menu. 
 
 Each Data Analyser falls into one of the five categories, Visualisation, Sonification, Statistics, DataExport or DataAnalysis. There is also a summary page that shows you simple information about each file, Analyser or Data Object. 
 
-When you click on each of the tabs a new DataAnalyser panel should open below. Between the tabs and the panel should be a popup menu which allows you to choose other DataAnalysers within that category. Usually the default DataAnalyser should be enough to begin with. Ideally buttons will be disabled unless you have selected the right combination of data objects to allow the command to be processed. For instance, the Multi-Graph button should only be available if two objects of the same type are selected.
+When you click on each of the menu options, a new DataAnalyser panel should open below. Usually the default DataAnalyser should be enough to begin with. Ideally buttons will be disabled unless you have selected the right combination of data objects to allow the command to be processed. For instance, the Multi-Graph button should only be available if two objects of the same type are selected.
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=3in]{Step4-NodeOpen.jpg}
+		\includegraphics[width=3in]{Step4-Graphing1.jpg}
 	\caption{Choosing a timeseries data object and graphing it.}
 	\label{fig:stage12}
 \end{figure}
 
-\clearpage
+The "Other Output" provides summary data without doing any post-processing computation (where applicable), and displays a single value calculated by an analyser that would describe the whole file. For example, in Figure 10, it is the 'Loudness Fluctuation'. calculated by the analyser Loudness C\&F.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=3in]{Step4-OtherOutput.jpg}
+	\caption{Summary output}
+	\label{fig:stage12}
+\end{figure}
+
 \section{Command Line Interface}
 
 PsySound3 also has a command line interface that is useful for scripting analysis processes. It is used by the Graphical User Interface, and thus the algorithms and results are identical. 
@@ -420,7 +460,7 @@ There are built-in methods for finding which of the data objects from the output
 
 This will produce an array of names that can then be loaded specifically thus: 
 
-\textt{dataObj = getDataObjectFromTreeNode(obj, nodes(1))}
+\texttt{dataObj = getDataObjectFromTreeNode(obj, nodes(1))}
 
 In this case, dataObj is the first node from the the array of selected data Objects.
 

@@ -28,7 +28,9 @@ timestep = timestep(1);
 
 % Repackage
 dataObjS.DataObj = createDataObject('tSeries',ER');
-dataObjS.DataObj.TimeInfo.Increment = timestep;
+ts1 = setuniformtime(dataObjS.DataObj.tsObj,'Interval',timestep);
+dataObjS.DataObj=set(dataObjS.DataObj,'time',get(ts1,'time'));
+% dataObjS.DataObj.TimeInfo.Increment = timestep;
 dataObjS.DataObj.Name = 'Energy Ratio';
 dataObjS.DataObj.DataInfo.Unit = 'dB';
 % Add to node in tree
@@ -37,7 +39,9 @@ out = addToDataAnalysisFolder(obj, getValue(node), dataObjS, uit);
 
 % Repackage
 dataObjS.DataObj = createDataObject('tSeries',SPR');
-dataObjS.DataObj.TimeInfo.Increment = timestep;
+ts1 = setuniformtime(dataObjS.DataObj.tsObj,'Interval',timestep);
+dataObjS.DataObj=set(dataObjS.DataObj,'time',get(ts1,'time'));
+% dataObjS.DataObj.TimeInfo.Increment = timestep;
 dataObjS.DataObj.Name = 'Singing Power Ratio';
 dataObjS.DataObj.DataInfo.Unit = 'dB';
 % Add to node in tree
@@ -45,7 +49,9 @@ out = addToDataAnalysisFolder(obj, getValue(node), dataObjS, uit);
 
 % Repackage
 dataObjS.DataObj = createDataObject('tSeries',Alpha');
-dataObjS.DataObj.TimeInfo.Increment = timestep;
+ts1 = setuniformtime(dataObjS.DataObj.tsObj,'Interval',timestep);
+dataObjS.DataObj=set(dataObjS.DataObj,'time',get(ts1,'time'));
+% dataObjS.DataObj.TimeInfo.Increment = timestep;
 dataObjS.DataObj.Name = 'Alpha';
 dataObjS.DataObj.DataInfo.Unit = 'dB';
 % Add to node in tree
@@ -53,7 +59,9 @@ out = addToDataAnalysisFolder(obj, getValue(node), dataObjS, uit);
 
 % Repackage
 dataObjS.DataObj = createDataObject('tSeries', SB' );
-dataObjS.DataObj.TimeInfo.Increment = timestep;
+ts1 = setuniformtime(dataObjS.DataObj.tsObj,'Interval',timestep);
+dataObjS.DataObj=set(dataObjS.DataObj,'time',get(ts1,'time'));
+% dataObjS.DataObj.TimeInfo.Increment = timestep;
 dataObjS.DataObj.Name = 'Spectral Balance';
 dataObjS.DataObj.DataInfo.Unit = 'dB';
 % Add to node in tree

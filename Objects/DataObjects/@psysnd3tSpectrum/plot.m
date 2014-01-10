@@ -29,8 +29,22 @@ switch(option)
  case 'image'
 
    if isnumeric(freq)
-     h = imagesc(time, freq, data'); % Transpose data
-     set(gca,'YDir','normal');
+       
+Name = get(obj,'Name');
+str = 'Spectrogram ( "Frame" only)';
+
+if strcmp(Name,str)
+    
+   h=surface(time,freq,zeros(size(freq,2),size(time,1)),data','EdgeColor','none'); %works for Mirpitch (see below)
+     
+else
+     h = imagesc(time, freq, data'); % (Transpose data)
+     
+% Doesn't work for non linearly-scpaced abscissae!! (not working for
+% MirPitch and maybe for other algorithms from MirToolbox (change line 34 or 36 if needed))
+    
+end
+set(gca,'YDir','normal');
    else
      h = imagesc(data'); % Transpose data
      setFreqAxis(obj,freq,time,gca);

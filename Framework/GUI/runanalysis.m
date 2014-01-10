@@ -11,17 +11,53 @@ function out = runanalysis(fileHandles, analysers, syncPeriod, wH, varargin)
 %
 %
 % Retreive PsySound settings
-prefs        = getPsysound3Prefs;
-dataSaveDir  = prefs.dataDir;
-dataSaveName = 'dataInfo.mat';
+%
+% The file has been modified in order to allow parallell computing features
+% 
+%
+%
 
 fLen = length(fileHandles);
 aLen = length(analysers);
+
+
+
+% MirOptionStr=getMirStr(analysers);
+% 
+% Frame=[];
+% Name='';
+% if ~isempty(MirOptionStr)
+%     obj=MIRPITCH();
+%    [ Frame,Name  ] = getMirPlotType(obj); 
+% end
+
+
+
+[parallell,parOnFiles] = getParrSettings();
+
+switch parallell
+    
+    case 1
+
+if matlabpool('size')==0
+fprintf('Initialising the parallel computing features, please wait...\n')
+matlabpool open
+end     
+  
+    runanalysisParr(fileHandles, analysers, syncPeriod, wH,parOnFiles,varargin);
+
+    case 0
+        
+prefs        = getPsysound3Prefs;
+dataSaveDir  = prefs.dataDir;
+dataSaveName = 'dataInfo.mat';
 
 % default states
 verb        = 0;
 estimate    = 0;
 summaryBoxH = [];
+MirOptStr   = varargin{end};
+
 if ~isempty(varargin)
   str = varargin{1};
   
@@ -58,6 +94,7 @@ if ~isempty(varargin)
     end
   elseif strcmp(str, 'verbose')
     verb = 1;
+    
   else
     % do nothing, I guess
   end
@@ -100,6 +137,8 @@ if ~estimate
   % Set properties
   dsArrAudio = set(dsArrAudio, 'type', 'root');
 end
+
+t0 = tic();
 
 % for each file
 for i = 1:fLen
@@ -211,6 +250,16 @@ for i = 1:fLen
       %%%%%%%%%%%%%%%%%%%%%
       % Run the analysers %
       %%%%%%%%%%%%%%%%%%%%%
+      
+      
+%       obj = set(obj,'OptionStr',MirOptionStr);
+%       
+%               if isa(obj,'MIRPITCH')           
+%           obj = setMir(obj,'Frame',Frame);
+%           obj = setMir(obj,'SpectrumType',Name);
+%               end
+              
+        
       if verb
         fprintf('    %-20s    ', analyserStr);
         % Create progress function handle
@@ -219,6 +268,8 @@ for i = 1:fLen
         
         % Run the analyser, giving it the function handle for
         % progress
+
+        
         if ~isempty(syncPeriod)
           obj = process(obj, fh, progress, 'synchronise', ...
                         syncPeriod);
@@ -328,6 +379,8 @@ for i = 1:fLen
   end  
 end % foreach filehandle
 
+total_time = toc(t0)
+
 if verb
   fprintf('\n');
 end
@@ -386,6 +439,8 @@ resetWaitBars(wBars, wText);
   %
   % Nested local function for progress reporting
   %
+  
+end
   function pfh = progressFunc(arg)
     switch(pChar)
      case '-'
@@ -399,6 +454,7 @@ resetWaitBars(wBars, wText);
     end
     fprintf('\b%s', pChar);
   end
+
 
 end % runanalysis
 
@@ -530,4 +586,46 @@ end
 
 errStr = str;
 end
+
+function [MirOptionStr]=getMirStr(analysers)
+
+
+aLen=length(analysers);
+MirOptionStr={};
+
+for k=1:aLen
+    analyser = analysers{k};
+    
+    if strcmp('MIRPITCH',analyser)
+        obj = MIRPITCH();
+        MirOptionStr= getMirOptions(obj);              
+    end
+    
+end
+
+    
+end
+
+function [parallell,parOnFiles] = getParrSettings()
+
+h=findobj('Tag','ParallellPopup');
+val = get(h,'Value');
+
+
+switch val
+
+case 1
+parallell = 0;
+parOnFiles = 0;
+case 2 
+parallell = 1;
+parOnFiles = 1;
+case 3
+parallell = 1;
+parOnFiles = 0;
+end
+
+
+end
+
 % [EOF]

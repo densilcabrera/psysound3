@@ -3,7 +3,7 @@ function process(obj, hObj)
 %
 % Get the tree nodes
 p     = get(hObj,'Parent');
-nodes = getSelectedTreeNodes(obj, p);
+[nodes, uit] = getSelectedTreeNodes(obj, p);
 
 % Bail out if only one node is not selected
 if length(nodes) ~= 2
@@ -39,10 +39,10 @@ dataObjS.AnalyserObj = {dataObjS1.AnalyserObj; dataObjS2.AnalyserObj};
 % Add to node in tree
 out = addToDataAnalysisFolder(obj, ...
                               {getValue(node1), getValue(node2)}, ...
-                              dataObjS);
+                              dataObjS,uit);
 
-collapseAndUnLoadTree(obj, p);
+  collapseAndUnLoadTree(obj, p);
 % Try this instead of the above collapse
-% openTree(obj, p, out);
+%  openTree(obj, p, out);
 
 % EOF

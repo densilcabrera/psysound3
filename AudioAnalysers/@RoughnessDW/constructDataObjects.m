@@ -15,7 +15,8 @@ tstep = 1/get(obj, 'outputDataRate');
 ts = createDataObject('tSeries', R);
 ts.DataInfo.Unit = 'aspers';
 ts.Name = 'Roughness'; 
-ts.TimeInfo.Increment = tstep;
+ts1=setuniformtime(ts.tsObj,'Interval',tstep);
+ts=set(ts,'time',get(ts1,'time'));
 out{end+1} = ts;
 
 % format for TimeSpectrum

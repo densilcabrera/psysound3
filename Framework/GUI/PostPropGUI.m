@@ -83,10 +83,13 @@ uit.Visible = 0;
 
 end
 
-
  % Add mouse clicked
-set(uit.tree, 'MouseClickedCallback', {@mouse_click_cb, uit});
 
+     set(uit.tree, 'MouseClickedCallback', {@mouse_click_cb, uit}); 
+%   tree=uit.getTree;
+%   TreeHandle = handle(tree,'CallbackProperties');
+%    set(TreeHandle, 'MouseClickedCallback', {@mouse_click_cb, uit});
+  
 uitHead = uicontrol('Parent', h, ...
                     'Style' , 'text', ...
                     'FontSize', 9, ...
@@ -395,67 +398,75 @@ function nodes = treeExpfcn(tree, value)
       S = load(dataInfoFname);
 
       defaultContextMenu = createDefaultPopup(tree);
-      for i=1:getNumChildren(S.dsArr)
-        dsNode   = S.dsArr(i);
-        nodeType = dsNode.nodeType;
-        fullName = fullfile(value, filesep, dsNode.filename);
-        ctxMenu  = defaultContextMenu;
-  
-        if strcmp(nodeType, 'AudioFileFolder')
-          nodeType = 'BaseAudioTSeries';
-        end
-        
-        if ~isempty(findstr(nodeType, 'Folder'))
-          nodeType = 'Folder';
-        end
-        
-        switch nodeType
-         case 'Folder'
-          iconpath = [psyIconDir, filesep, 'foldericon.gif'];
-          
-          % The data objects
-         case 'Spectrum'
-          iconpath = [psyIconDir, filesep, 'Spec.gif'];
-          
-         case 'tSpectrum'
-          iconpath = [psyIconDir, filesep, 'tSpec.gif'];
-          
-         case 'tSeries'
-          iconpath = [psyIconDir, filesep, 'tSeries.gif'];
-          
-         case 'BaseAudioTSeries'
-          iconpath = [psyIconDir, filesep, 'mnote12.png'];
-          ctxMenu  = createAudioTSeriesPopup(fullfile(fullName, dsNode.name), tree);
-         
-         case 'AudioTSeries'
-          iconpath = [psyIconDir, filesep, 'mnote12.png'];
-          ctxMenu  = createAudioTSeriesPopup(fullName, tree);
-        
-          
-         otherwise
-          % Don't know so just whack in a page
-          iconpath = [psyIconDir, filesep, 'pageicon.gif'];
-        end
-        args = {fullName, dsNode.name, iconpath, dsNode.isLeaf};
-        verStruct = ver;
-        versionDate = verStruct(1).Date;
-        try 
-          verdate = datenum(versionDate);
-        if verdate >= 733788
-          args = {'v0' args{:}};
-        end
-        catch
-          args = {'v0' args{:}};
-        end
-        % Stick the full file name as the value
-        nodes(i) = uitreenode(args{:});
+      
+            if getNumChildren(S.dsArr) == 0
+          nodes = [];
+            else
+      
+              for i=1:getNumChildren(S.dsArr)
+                dsNode   = S.dsArr(i);
+                nodeType = dsNode.nodeType;
+                fullName = fullfile(value, filesep, dsNode.filename);
+                ctxMenu  = defaultContextMenu;
 
-        % Add menu as a property
-        setUserObject(nodes(i), ctxMenu);
-      end
+                if strcmp(nodeType, 'AudioFileFolder')
+                  nodeType = 'BaseAudioTSeries';
+                end
+
+                if ~isempty(findstr(nodeType, 'Folder'))
+                  nodeType = 'Folder';
+                end
+
+                switch nodeType
+                 case 'Folder'
+                  iconpath = [psyIconDir, filesep, 'foldericon.gif'];
+
+                  % The data objects
+                 case 'Spectrum'
+                  iconpath = [psyIconDir, filesep, 'Spec.gif'];
+
+                 case 'tSpectrum'
+                  iconpath = [psyIconDir, filesep, 'tSpec.gif'];
+
+                 case 'tSeries'
+                  iconpath = [psyIconDir, filesep, 'tSeries.gif'];
+
+                 case 'BaseAudioTSeries'
+                  iconpath = [psyIconDir, filesep, 'mnote12.png'];
+                  ctxMenu  = createAudioTSeriesPopup(fullfile(fullName, dsNode.name), tree);
+
+                 case 'AudioTSeries'
+                  iconpath = [psyIconDir, filesep, 'mnote12.png'];
+                  ctxMenu  = createAudioTSeriesPopup(fullName, tree);
+
+
+                 otherwise
+                  % Don't know so just whack in a page
+                  iconpath = [psyIconDir, filesep, 'pageicon.gif'];
+                end
+                args = {fullName, dsNode.name, iconpath, dsNode.isLeaf};
+                verStruct = ver;
+                versionDate = verStruct(1).Date;
+                try 
+                  verdate = datenum(versionDate);
+                if verdate >= 733788
+                  args = {'v0' args{:}};
+                end
+                catch
+                  args = {'v0' args{:}};
+                end
+                % Stick the full file name as the value
+                nodes(i) = uitreenode(args{:});
+
+                % Add menu as a property
+                setUserObject(nodes(i), ctxMenu);
+              end
+            end
     else
       nodes = [];
+      
     end
+    
   else
     % Return empty so that no error is generated
     nodes = [];
@@ -477,11 +488,14 @@ function out = createAudioTSeriesPopup(fName,tree)
   
   % Define the context menu items
   item1 = javax.swing.JMenuItem('Play audio');
+  item11 = handle(item1,'CallbackProperties');
   item2 = javax.swing.JMenuItem('Export audio');
+  item22 = handle(item2,'CallbackProperties');
+
   
   % Add callback
-  set(item1, 'ActionPerformedCallback', {@playAudio, fName});
-  set(item2, 'ActionPerformedCallback', {@exportAudio, fName})
+  set(item11, 'ActionPerformedCallback', {@playAudio, fName});
+  set(item22, 'ActionPerformedCallback', {@exportAudio, fName})
   % Add item to menu
   contextMenu.add(item1);
   contextMenu.add(item2);
@@ -539,7 +553,8 @@ function out = createDefaultPopup(tree)
   
   % Define the context menu items
   item1 = javax.swing.JMenuItem('Delete this node');
-  set(item1, 'ActionPerformedCallback', {@removeCurrentNode, tree});
+  item11 = handle(item1,'CallbackProperties');
+  set(item11, 'ActionPerformedCallback', {@removeCurrentNode, tree});
   
 
   

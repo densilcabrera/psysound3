@@ -43,16 +43,16 @@ else
     return;
   end
   
-%   % Add dataAnalysis dir, if needed
-%   dsArr = getDataStorageArrObj(fPath);
-%   
-%   % Make associated dataStorage node for it
-%   dsObj = dataStorage('dataAnalysis', ...
-%                       'dataAnalysis', ...
-%                       'DataAnalysisFolder', ...
-%                       0);
-%   % Add and save
-%   dsArr = addNode(dsArr, dsObj);
+  % Add dataAnalysis dir, if needed
+  dsArr = getDataStorageArrObj(fPath);
+  
+  % Make associated dataStorage node for it
+  dsObj = dataStorage('dataAnalysis', ...
+                      'dataAnalysis', ...
+                      'DataAnalysisFolder', ...
+                      0);
+  % Add and save
+  dsArr = addNode(dsArr, dsObj);
   saveDataStorageArrObj(fPath, dsArr);
 
 %   % Check if dataAnalysis already exists

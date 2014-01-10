@@ -34,8 +34,10 @@ if isempty(nodes)
 end
 
 % Clear up some things
+
 axes(ax);
 cla; legend off; colorbar off;
+% legend off; colorbar off;
 axis auto;
 set(ax, 'UserData', []);
 set(ax, 'XLimMode', 'auto');

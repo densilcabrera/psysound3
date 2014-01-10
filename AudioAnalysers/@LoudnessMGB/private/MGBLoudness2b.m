@@ -178,6 +178,8 @@ function  [InstantaneousLoudness, ShortTermLoudness, LongTermLoudness, times] = 
 % Modelling Binaural Loudness
 % J. Acoust. Soc. Am. 121: 1604-1612
 
+
+
 if nargin<7, doplot=0; end
 if nargin<6, decay=0; end
 if nargin<5, faster=0; end
@@ -409,6 +411,7 @@ w4 = repmat([zeros(896,1);hann(256);zeros(896,1)],1,nchan);
 w5 = repmat([zeros(960,1);hann(128);zeros(960,1)],1,nchan);
 w6 = repmat([zeros(992,1);hann(64);zeros(992,1)],1,nchan);
 
+
 f1 = ((2:961)-1)*fs/2048; % frequencies from FFTs in Hz
 % nfreq1 = length(f1); % number of frequencies
 % below are frequencies used in loudness calculation
@@ -428,9 +431,13 @@ if faster ==1, IX = I; end
 % roex component levels
 erb = 24.673 * (4.368 .* f./1000 + 1);
 p = 4 .* f ./ erb;
+
 g = abs((repmat(f',1,nfreq)-repmat(f,nfreq,1))./repmat(f,nfreq,1)); %memory hungry but fast
+
 [row col] = find(g <= 2);
 indg = find(g <= 2);
+l1=length(indg);
+
 % row is "component" in the old code
 % col is "i" in the old code
 
@@ -498,8 +505,9 @@ LongTermLoudness = ones(nwindows+2,1) .* minloud;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spectrum analysis as described in Glasberg and Moore (2002)
-for windowcount = 1:nwindows
 
+
+for windowcount = 1:nwindows
     % acquire window of data
     x = signal((windowcount-1)*32+1:(windowcount-1)*32+2048,:);
     
@@ -653,15 +661,21 @@ for windowcount = 1:nwindows
 
     % use if you wish to monitor the sound pressure level here
     % level = 10*log10(sum(I)+eps)
+    
+
+    
     for channel=1:nchan
         % roex component levels
         % this is slow due to the large number of spectrum components
-        %tic
-        intensity = zeros(nfreq,nfreq);
-        intensity(indg) = (1+p(col)'.*(g(indg))).* exp(-p(col)'.*(g(indg))) .* I(row,channel);
-        RoexL = 10.*log10(sum(intensity,1)+eps);
-        %toc
 
+                    
+        intensity(indg) = (1+p(col)'.*(g(indg))).* exp(-p(col)'.*(g(indg))) .* I(row,channel);
+
+
+      RoexL = 10.*log10(sum(intensity,1)+eps);
+
+
+%         toc
         % excitation pattern
         p2(g2neg) = p51(g2neg)-0.35.*(p51(g2neg)./p511k) .* (RoexL(row_g2_neg(:))-51)';
         if p2(g2lessthan2) <0.1, p2(g2lessthan2) = 0.1; end
@@ -740,6 +754,7 @@ for windowcount = 1:nwindows
     end %if
 
 end % for windowcount = 1:nwindows
+
 
 % clear some memory in case it is needed for the figure
 clear intensity g g2 p2

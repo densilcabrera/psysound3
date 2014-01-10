@@ -103,7 +103,9 @@ ts = createDataObject('tSeries', Data);
 
 % Copy over some attributes
 ts.tsObj.Name = sprintf('%s, fs = %.2f Hz', tsObj.Name, Fs);
-ts.tsObj.TimeInfo.Increment = Inc;
+ts1 = setuniformtime(ts.tsObj,'Interval',Inc);
+ts=set(ts,'time',get(ts1,'time'));
+% ts.tsObj.TimeInfo.Increment = Inc;
 ts.tsObj.DataInfo = tsObj.DataInfo;
 
 % end do_downsample
