@@ -667,11 +667,10 @@ for windowcount = 1:nwindows
     for channel=1:nchan
         % roex component levels
         % this is slow due to the large number of spectrum components
-        
-        
-        intensity(indg) = (1+p(col)'.*(g(indg))).* exp(-p(col)'.*(g(indg))) .* I(row,channel);
         %tic
         intensity = zeros(nfreq,nfreq);
+        
+        intensity(indg) = (1+p(col)'.*(g(indg))).* exp(-p(col)'.*(g(indg))) .* I(row,channel);
         
         RoexL = 10.*log10(sum(intensity,1)+eps);
         
