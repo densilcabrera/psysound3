@@ -121,22 +121,27 @@ fH.loc          = 0;  % Uninitialised data buffer
 fH.windowLength = DWINDOWLENGTH;
   
 % work out the size and channel count
-temp = wavread(fH.name, 'size');
+%temp = wavread(fH.name, 'size');
+info = audioinfo(fH.name);
 
 % This is by convention - see help wavread
-fH.samples  = temp(1);
-fH.channels = temp(2);
+%fH.samples  = temp(1);
+%fH.channels = temp(2);
+fH.samples = info.TotalSamples;
+fH.channels = info.NumChannels;
   
 % read the first sample of data and find the sample rate / wordsize and
 % file comment.wavread for the sample rate, bitsPerSample, info
-[Y, sampleRate, bitsPerSample, OPTS] = wavread(fH.name, 1);
+%[Y, sampleRate, bitsPerSample, OPTS] = wavread(fH.name, 1);
 
 % The memory for the data will never be declared by readData as
 % such.  The call to wavread creates it and transfers ownership
 % upon assignment.
 fH.data          = []; % no data as yet
-fH.sampleRate    = sampleRate;
-fH.bitsPerSample = bitsPerSample;
+%fH.sampleRate    = sampleRate;
+%fH.bitsPerSample = bitsPerSample;
+fH.sampleRate    = info.SampleRate;
+fH.bitsPerSample = info.BitsPerSample;
   
 if exist('OPTS.info', 'var')
   fH.info = OPTS.info;
@@ -243,7 +248,7 @@ fH.winDataEnd = fH.windowLength - pad;
 
 % Read data from file, padding as neccessary
 fH.data = [padInFront; ... 
-           wavread(fH.name, [startIndex endIndex]); ...
+           audioread(fH.name, [startIndex endIndex]); ... % formerly wavread
            padAtRear];
 
 % Consistecy checking - startIndex must always be inside the
@@ -283,12 +288,9 @@ fileHandle = fH;
 function fH = setupWavFileName(fH, pathName, fileName)
 % Here we only try sox if wavread errors
 
-try
-  % just try to get the size
-  wavread(fH.name, 'size');
-catch
-  % We may want to catch specific errors here
-  
+[~, ~, ext] = fileparts(fH.name);
+if(strcmpi(ext, '.wav') == false)
+    
   % This is where the converted wav file will live
   tempPath = tempdir;
     
