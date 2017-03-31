@@ -16,7 +16,6 @@ if isempty(wPsy)
   error(err);
 end
 
-%[pathStr, junk1, junk2, junk3] = fileparts(wPsy);
 [pathStr, ~, ~] = fileparts(wPsy);
 
 % The sox dir for PC's is called win32

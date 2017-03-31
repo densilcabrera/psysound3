@@ -120,28 +120,17 @@ DWINDOWLENGTH = 2^17; % 131072 samples
 fH.loc          = 0;  % Uninitialised data buffer
 fH.windowLength = DWINDOWLENGTH;
   
-% work out the size and channel count
-%temp = wavread(fH.name, 'size');
+% Get sample and channel info.
 info = audioinfo(fH.name);
-
-% This is by convention - see help wavread
-%fH.samples  = temp(1);
-%fH.channels = temp(2);
 fH.samples = info.TotalSamples;
 fH.channels = info.NumChannels;
-  
-% read the first sample of data and find the sample rate / wordsize and
-% file comment.wavread for the sample rate, bitsPerSample, info
-%[Y, sampleRate, bitsPerSample, OPTS] = wavread(fH.name, 1);
+fH.sampleRate = info.SampleRate;
+fH.bitsPerSample = info.BitsPerSample;
 
 % The memory for the data will never be declared by readData as
 % such.  The call to wavread creates it and transfers ownership
 % upon assignment.
 fH.data          = []; % no data as yet
-%fH.sampleRate    = sampleRate;
-%fH.bitsPerSample = bitsPerSample;
-fH.sampleRate    = info.SampleRate;
-fH.bitsPerSample = info.BitsPerSample;
   
 if exist('OPTS.info', 'var')
   fH.info = OPTS.info;
@@ -290,7 +279,7 @@ function fH = setupWavFileName(fH, pathName, fileName)
 
 [~, ~, ext] = fileparts(fH.name);
 if(strcmpi(ext, '.wav') == false)
-    
+  % File must be converted to wav.
   % This is where the converted wav file will live
   tempPath = tempdir;
     
