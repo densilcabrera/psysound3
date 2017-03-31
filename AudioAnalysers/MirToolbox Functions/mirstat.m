@@ -26,10 +26,10 @@ elseif isstruct(f)
         for i = 1:length(fields)
             field = fields{i};
             ff = f.(field);
-            if iscell(ff) && isa(ff{1},'mirdata')
+            if iscell(ff) && isa(ff{1},'psydata')
                 ff = ff{1};
             end
-            if isa(ff,'mirdata')
+            if isa(ff,'psydata')
                 if i == 1 
                     la = get(ff,'Label');
                     if not(isempty(la) || isempty(la{1}))
@@ -282,9 +282,9 @@ function b = isdesign(f)
 if iscell(f)
     f = f{1};
 end
-if isa(f,'mirdesign') || isa(f,'mirstruct')
+if isa(f,'psydesign') || isa(f,'mirstruct')
     b = 1;
-elseif isa(f,'mirdata') || not(isstruct(f))
+elseif isa(f,'psydata') || not(isstruct(f))
     b = 0;
 else
     fields = fieldnames(f);

@@ -48,7 +48,7 @@ sr = get(o,'Sampling');
 d = get(o,'Data');
 sl = mircompute(@algo,po,pa,pou,pau,d,option.meth,sr);
 fp = mircompute(@frampose,pau,pou);
-sl = mirscalar(o,'Data',sl,'FramePos',fp,'Title','Attack Slope');
+sl = psyscalar(o,'Data',sl,'FramePos',fp,'Title','Attack Slope');
 sl = {sl,o};
 
 

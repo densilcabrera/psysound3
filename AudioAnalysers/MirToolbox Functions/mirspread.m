@@ -9,10 +9,10 @@ varargout = mirfunction(@mirspread,orig,varargin,nargout,struct,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'mirdata')) || isamir(x,'miraudio')
-    x = mirspectrum(x);
+if not(isamir(x,'psydata')) || isamir(x,'psyaudio')
+    x = psyspectrum(x);
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function S = main(x,option,postoption)
@@ -22,14 +22,14 @@ end
 y = peaksegments(@spread,get(x,'Data'),...
                          get(x,'Pos'),...
                          get(mircentroid(x),'Data'));
-if isa(x,'mirspectrum')
+if isa(x,'psyspectrum')
     t = 'Spectral spread';
 elseif isa(x,'mirenvelope')
     t = 'Temporal spread';
 else
     t = ['Spread of ',get(x,'Title')];
 end
-S = mirscalar(x,'Data',y,'Title',t);
+S = psyscalar(x,'Data',y,'Title',t);
 
 
 function s = spread(d,p,c)

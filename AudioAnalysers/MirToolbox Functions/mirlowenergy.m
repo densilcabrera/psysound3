@@ -50,7 +50,7 @@ function [x type] = init(x,option)
 if option.asr
     option.root = 0;
 end
-if isamir(x,'miraudio')
+if isamir(x,'psyaudio')
     if isframed(x)
         x = mirrms(x,'Root',option.root);
     else
@@ -59,7 +59,7 @@ if isamir(x,'miraudio')
                              'Root',option.root);
     end
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function e = main(r,option,postoption)
@@ -75,7 +75,7 @@ if isnan(option.thr)
 end
 v = mircompute(@algo,get(r,'Data'),option.thr);
 fp = mircompute(@noframe,get(r,'FramePos'));
-e = mirscalar(r,'Data',v,'Title','Low energy','Unit','/1','FramePos',fp);
+e = psyscalar(r,'Data',v,'Title','Low energy','Unit','/1','FramePos',fp);
 e = {e,r};
 
 

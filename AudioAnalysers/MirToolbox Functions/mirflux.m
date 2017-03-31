@@ -84,18 +84,18 @@ varargout = mirfunction(@mirflux,orig,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if isamir(x,'miraudio') 
+if isamir(x,'psyaudio') 
     if isframed(x)
-        x = mirspectrum(x);
+        x = psyspectrum(x);
     else
-        x = mirspectrum(x,'Frame',option.frame.length.val,option.frame.length.unit,...
+        x = psyspectrum(x,'Frame',option.frame.length.val,option.frame.length.unit,...
                                   option.frame.hop.val,option.frame.hop.unit);
     end
 end
-if isa(x,'mirdesign')
+if isa(x,'psydesign')
     x = set(x,'Overlap',1);
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function f = main(s,option,postoption)
@@ -103,7 +103,7 @@ if iscell(s)
     s = s{1};
 end
 t = get(s,'Title');
-if isa(s,'mirscalar') && ...
+if isa(s,'psyscalar') && ...
         (strcmp(t,'Harmonic Change Detection Function') || ...
          (length(t)>4 && strcmp(t(end-3:end),'flux')) || ...
          (length(t)>5 && strcmp(t(end-4:end-1),'flux')))
@@ -111,12 +111,12 @@ if isa(s,'mirscalar') && ...
         f = modif(s,postoption);
     end
 else
-    if isa(s,'mirspectrum')
+    if isa(s,'psyspectrum')
         t = 'Spectral';
     end
     m = get(s,'Data'); 
     if option.complex
-        if not(isa(s,'mirspectrum'))
+        if not(isa(s,'psyspectrum'))
             error('ERROR IN MIRFLUX: ''Complex'' option only defined for spectral flux.');
         end
         ph = get(s,'Phase');
@@ -191,7 +191,7 @@ else
             newsr{h} = 1/(fpi(1,2)-fpi(1,1));
         end
     end
-    f = mirscalar(s,'Data',ff,'FramePos',fp,'Sampling',newsr,...
+    f = psyscalar(s,'Data',ff,'FramePos',fp,'Sampling',newsr,...
                         'Title',t,'Parameter',param); %,'Tmp',tmp);
     %f = settmp(f,tmp);
     if not(isempty(postoption))

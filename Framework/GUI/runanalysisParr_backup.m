@@ -275,7 +275,7 @@ fprintf(' \n The Analyser "%s" (%d/%d) is processing the file (%d/%d): \n ',get(
       
 %       obj = set(obj,'OptionStr',MirOptionStr); 
 %       
-%       if isa(obj,'MIRPITCH')
+%       if isa(obj,'PSYPITCH')
 %           
 %           obj = setMir(obj,'Frame',Frame);
 %           obj = setMir(obj,'SpectrumType',Name);
@@ -745,7 +745,7 @@ fprintf(' \n The Analyser "%s" (%d/%d) is processing the file (%d/%d): \n ',get(
       
 %       obj = set(obj,'OptionStr',MirOptionStr);
 %       
-%       if isa(obj,'MIRPITCH')
+%       if isa(obj,'PSYPITCH')
 %             
 %            obj = setMir(obj,'Frame',Frame);
 %            obj = setMir(obj,'SpectrumType',Name);          

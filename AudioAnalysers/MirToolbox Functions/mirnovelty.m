@@ -55,12 +55,12 @@ varargout = mirfunction(@mirnovelty,orig,varargin,nargout,specif,@init,@main);
     
 
 function [x type] = init(x,option)
-type = 'mirscalar';
-if not(isamir(x,'mirscalar') && strcmp(get(x,'Title'),'Novelty'))
+type = 'psyscalar';
+if not(isamir(x,'psyscalar') && strcmp(get(x,'Title'),'Novelty'))
     x = mirsimatrix(x,'Distance',option.dist,'Similarity',option.sm,...
                       'Width',option.K,option.transf);
 end
-if isa(x,'mirdesign')
+if isa(x,'psydesign')
     x = set(x,'Overlap',ceil(option.K));
 end
 
@@ -69,7 +69,7 @@ function y = main(orig,option,postoption)
 if iscell(orig)
     orig = orig{1};
 end
-if not(isa(orig,'mirscalar'))
+if not(isa(orig,'psyscalar'))
     s = get(orig,'Data');
     dw = get(orig,'DiagWidth');
     for k = 1:length(s)
@@ -139,7 +139,7 @@ if not(isempty(postoption)) && postoption.normal
         end
     end
 end
-n = mirscalar(orig,'Data',score,'Title','Novelty'); 
+n = psyscalar(orig,'Data',score,'Title','Novelty'); 
 y = {n orig};
 
 
