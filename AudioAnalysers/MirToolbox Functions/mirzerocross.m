@@ -39,7 +39,7 @@ varargout = mirfunction(@mirzerocross,orig,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata'))
+if not(isamir(x,'mirdata'))
     x = miraudio(x);
 end
 type = 'mirscalar';

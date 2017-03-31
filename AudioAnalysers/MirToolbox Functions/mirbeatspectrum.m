@@ -32,7 +32,7 @@ varargout = mirfunction(@mirbeatspectrum,orig,varargin,nargout,specif,@init,@mai
 function [x type] = init(x,option)
 if not(isamir(x,'mirscalar'))
     if isamir(x,'miraudio')
-        x = psyspectrum(x,'frame',.025,'s',.01,'s'); % should be mirmfcc (not available in Matlab Central Version)
+        x = mirspectrum(x,'frame',.025,'s',.01,'s'); % should be mirmfcc (not available in Matlab Central Version)
     end
     x = mirsimatrix(x,'Distance',option.dist,'Similarity');
 end

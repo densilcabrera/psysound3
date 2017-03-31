@@ -19,7 +19,7 @@ if nargin==0 % In order for Psysound to get the Name field with PossAnalyser
     s.phase = [];
     s.freq=[];
     
-base=psydata();
+base=mirdata();
 s=class(s,'mircepstrum',base);
 s=set(s,'Name','Mirtoolbox (mircepstrum)');
 varargout={s};
@@ -34,7 +34,7 @@ else
     cl.phase = [];
     cl.freq=[];
     
-base=psydata(orig);
+base=mirdata(orig);
 cl=class(cl,'mircepstrum',base);
 cl=set(cl,'Name','Mirtoolbox (mircepstrum)'); 
 
@@ -79,7 +79,7 @@ end %For Psysound3
 
 function [x type] = init(x,option)
 if not(isamir(x,'mircepstrum'))
-    x = psyspectrum(x);
+    x = mirspectrum(x);
 end
 type = 'mircepstrum';
 
@@ -94,7 +94,7 @@ if isa(orig,'mircepstrum')
 else
     c.freq = 0;
 end
-c = class(c,'mircepstrum',psydata(orig));
+c = class(c,'mircepstrum',mirdata(orig));
 c = purgedata(c);
 c = set(c,'Title','Cepstrum','Abs','quefrency (s)','Ord','magnitude');
 c=set(c,'Name','Mirtoolbox (mircepstrum)'); %For Psysound3
@@ -121,7 +121,7 @@ if isa(orig,'mircepstrum')
         c = set(c,'Magnitude',mag,'Phase',pha,'Quefrency',que,'FreqDomain',0);
     end
     c = modif(c,option);
-elseif isa(orig,'psyspectrum')
+elseif isa(orig,'mirspectrum')
     mag = get(orig,'Magnitude');
     pha = get(orig,'Phase');
     f = get(orig,'Sampling');

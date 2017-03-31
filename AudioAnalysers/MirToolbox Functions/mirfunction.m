@@ -146,7 +146,7 @@ end
 
 % Performs the 'main' part of the MIRtoolbox function.
 if not(iscell(orig) && not(ischar(orig{1}))) && ...
-        not(isa(orig,'mirdesign') || isa(orig,'psydata'))
+        not(isa(orig,'mirdesign') || isa(orig,'mirdata'))
     o = {orig};
     return
 end

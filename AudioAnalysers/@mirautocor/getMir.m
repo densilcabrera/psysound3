@@ -4,11 +4,11 @@ function val = getMir(a, propName)
 
 switch propName
     case 'Coeff'
-        val = get(psydata(a),'Data');
+        val = get(mirdata(a),'Data');
     case 'Delay'
-        val = get(psydata(a),'Pos');
+        val = get(mirdata(a),'Pos');
     case 'Lag'
-        val = get(psydata(a),'Pos');
+        val = get(mirdata(a),'Pos');
     case 'FreqDomain'
         val = a.freq;
     case 'OfSpectrum'
@@ -16,5 +16,5 @@ switch propName
     case 'Window'
         val = a.window;
     otherwise
-        val = get(psydata(a),propName);
+        val = get(mirdata(a),propName);
 end

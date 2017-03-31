@@ -2,7 +2,7 @@ function val = getMir(a, propName)
 % GET Get properties from the MIRdata object
 % and return the value
 
-if strcmp(class(a),'psydata')
+if strcmp(class(a),'mirdata')
 switch propName
     case 'Pos'
         val = a.pos;
@@ -232,10 +232,10 @@ error('getMir : specialized methods?')
 
 %  
 %  try % ismethod is not going to work in a class hierarchy
-%         m = ['get', propName]; % put sp meths in psydata folder?
+%         m = ['get', propName]; % put sp meths in mirdata folder?
 %     val = eval([m, '(obj)']);
 %     catch
-%     error(['Put sp meths in psydata folder? Analyser: get: ', propName, ' is not a field of the Analyser', ...
+%     error(['Put sp meths in mirdata folder? Analyser: get: ', propName, ' is not a field of the Analyser', ...
 %            ' class.  Could not resolve ', m, ' for class ', class(a)]);
 %   end
 end
@@ -251,7 +251,7 @@ switch propName
     case 'Parameter'
         val = a.parameter;
     otherwise
-        val = get(psydata(a),propName);
+        val = get(mirdata(a),propName);
 end
 
    else

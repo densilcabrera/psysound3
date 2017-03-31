@@ -90,7 +90,7 @@ end
 
 
 % MIRDATA/DISPLAY display of a MIR data
-% Section 2 : related to the class psydata 
+% Section 2 : related to the class mirdata 
 
 disp(' ');
 

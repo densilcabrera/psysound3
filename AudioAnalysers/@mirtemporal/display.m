@@ -4,4 +4,4 @@ function display(d)
 if d.centered
     d = set(d,'Title',[get(d,'Title'),' (centered)']);
 end
-mirdisplay(psydata(d),inputname(1));
+mirdisplay(mirdata(d),inputname(1));

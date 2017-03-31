@@ -153,7 +153,7 @@ if isstruct(data)
             newname = checkname(newname,name);
         end
     end
-elseif isa(data,'psydata')
+elseif isa(data,'mirdata')
     newinput.data = mirstat(data);
     if isfield(newinput.data,'FileNames')
         newinput.data = rmfield(newinput.data,'FileNames');

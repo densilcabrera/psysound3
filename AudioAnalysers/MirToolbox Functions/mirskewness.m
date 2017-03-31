@@ -11,8 +11,8 @@ varargout = mirfunction(@mirskewness,orig,varargin,nargout,struct,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'miraudio')
-    x = psyspectrum(x);
+if not(isamir(x,'mirdata')) || isamir(x,'miraudio')
+    x = mirspectrum(x);
 end
 type = 'mirscalar';
 
@@ -25,7 +25,7 @@ y = peaksegments(@skewness,get(x,'Data'),...
                            get(x,'Pos'),...
                            get(mircentroid(x),'Data'),...
                            get(mirspread(x),'Data'));
-if isa(x,'psyspectrum')
+if isa(x,'mirspectrum')
     t = 'Spectral skewness';
 elseif isa(x,'mirenvelope')
     t = 'Temporal skewness';

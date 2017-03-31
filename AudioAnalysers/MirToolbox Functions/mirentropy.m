@@ -16,7 +16,7 @@ varargout = mirfunction(@mirentropy,x,varargin,nargout,specif,@init,@main);
 
 function [x type] = init(x,option)
 if isamir(x,'miraudio')
-    x = psyspectrum(x);
+    x = mirspectrum(x);
 end
 type = 'mirscalar';
 

@@ -16,10 +16,10 @@ function d = mirdist(x,y,dist)
 % The Earth Mover Distance is based on the implementation by Yossi Rubner,
 % wrapped for Matlab by Elias Pampalk.
 
-if not(isa(x,'psydata'))
+if not(isa(x,'mirdata'))
     x = miraudio(x);
 end
-if not(isa(y,'psydata'))
+if not(isa(y,'mirdata'))
     y = miraudio(y);
 end
 

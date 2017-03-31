@@ -10,7 +10,7 @@ varargout = mirfunction(@mirflatness,orig,varargin,nargout,struct,@init,@main);
 
 function [x type] = init(x,option)
 if not(isamir(x,'mirenvelope') || isamir(x,'mirhisto'))
-    x = psyspectrum(x);
+    x = mirspectrum(x);
 end
 type = 'mirscalar';
 
@@ -45,7 +45,7 @@ for h = 1:length(m)
 end
 if isa(x,'mirenvelope')
     t = 'Temporal flatness';
-elseif isa(x,'psyspectrum')
+elseif isa(x,'mirspectrum')
     t = 'Spectral flatness';
 else
     t = ['Flatness of ',get(x,'Title')];

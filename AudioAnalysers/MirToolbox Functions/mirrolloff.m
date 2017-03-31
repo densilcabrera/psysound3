@@ -27,7 +27,7 @@ varargout = mirfunction(@mirrolloff,x,varargin,nargout,specif,@init,@main);
 
 
 function [s type] = init(x,option)
-s = psyspectrum(x);
+s = mirspectrum(x);
 type = 'mirscalar';
 
 

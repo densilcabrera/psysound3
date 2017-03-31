@@ -181,7 +181,7 @@ if isa(x,'mirdesign')
         end
         p = x;
     end
-elseif isa(x,'psydata')
+elseif isa(x,'mirdata')
     [unused option] = miroptions(@mirframe,x,specif,varargin);
     if ischar(option.strat)
         dx = get(x,'Data');
@@ -206,7 +206,7 @@ elseif isa(x,'psydata')
             if 0 %not(isequal(option.mfc,0)) % not in Matlab Central version
                 fe = mirmfcc(fr,'Rank',option.mfc);
             elseif strcmpi(option.ana,'Spectrum')
-                fe = psyspectrum(fr,'Min',option.mi,'Max',option.ma,...
+                fe = mirspectrum(fr,'Min',option.mi,'Max',option.ma,...
                                     'Normal',option.norm,option.band,...
                                     'Window',option.win);
             elseif strcmpi(option.ana,'Keystrength')
@@ -251,7 +251,7 @@ elseif isa(x,'psydata')
         if isa(option.strat,'mirscalar')
             ds = get(option.strat,'PeakPos');
             fp = get(option.strat,'FramePos');
-        elseif isa(option.strat,'psydata')
+        elseif isa(option.strat,'mirdata')
             ds = get(option.strat,'AttackPos');
             if isempty(ds) || isempty(ds{1})
                 ds = get(option.strat,'PeakPos');
@@ -267,7 +267,7 @@ elseif isa(x,'psydata')
         for k = 1:length(dx)
             dxk = dx{k}{1}; % values in kth audio file
             dtk = dt{k}{1}; % time positions in kth audio file
-            if isa(option.strat,'psydata')
+            if isa(option.strat,'mirdata')
                 dsk = ds{k}{1}; % segmentation times in kth audio file
             else
                 dsk = {ds};
@@ -275,7 +275,7 @@ elseif isa(x,'psydata')
             fsk = [];   % the structured array of segmentation times 
                          % needs to be flatten
             for j = 1:length(dsk)
-                if isa(option.strat,'psydata')
+                if isa(option.strat,'mirdata')
                     dsj = dsk{j}; % segmentation times in jth segment
                 else
                     dsj = ds;
@@ -287,7 +287,7 @@ elseif isa(x,'psydata')
                     % segmentation times in mth bank channel
                     if isa(option.strat,'mirscalar')
                         dsm = mean(fp{k}{m}(:,dsj{m}));
-                    elseif isa(option.strat,'psydata')
+                    elseif isa(option.strat,'mirdata')
                         dsm = xx{k}{m}(dsj{m});
                     else
                         dsm = dsj{m};

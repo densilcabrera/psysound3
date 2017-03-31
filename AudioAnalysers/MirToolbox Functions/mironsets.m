@@ -13,7 +13,7 @@ function varargout = mironsets(x,varargin)
 %                       between 0 and 1)
 %                       Default values: fl = .1 s., fh = .1
 %                    the frequency reassigment method can be specified:
-%                    'Freq' (default), 'Mel', 'Bark' or 'Cents' (cf. psyspectrum).
+%                    'Freq' (default), 'Mel', 'Bark' or 'Cents' (cf. mirspectrum).
 %               mironsets(...,'Filter'):
 %                   mironsets(...,'Filterbank',nc) specifies a preliminary
 %                       filterbank decomposition into nc channels. If nc = 0,

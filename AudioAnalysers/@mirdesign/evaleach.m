@@ -170,7 +170,7 @@ elseif isempty(fr) || frnochunk || not(isempty(sg)) %% WHAT ABOUT CHANNELS?
                     diffchunks = diff(chunks); % Usual chunk size
                     d2.postoption = max(diffchunks) -  diffchunks(i);
                         % Reduction of the current chunk size to be taken into
-                        % consideration in psyspectrum, for instance, using
+                        % consideration in mirspectrum, for instance, using
                         % zeropadding
                end
             end
@@ -544,7 +544,7 @@ for var = 1:length(new)
             [ov omatch nmatch] = combinedata(ov,nv,'Time',[],[],@modiftime);
         else
             [ov omatch nmatch] = combinedata(ov,nv,'Pos',[],[]);
-            if isa(ov,'psyspectrum')
+            if isa(ov,'mirspectrum')
                 [ov omatch nmatch] = combinedata(ov,nv,'Phase',[],[]);
             end
         end
@@ -625,7 +625,7 @@ for i = 1:length(argin)
     if not(d.ascending)
         a.ascending = 0;
     end
-    if isa(a,'psydata')
+    if isa(a,'mirdata')
         % Input already computed
         tmpfile = get(a,'TmpFile');
         if not(isempty(tmpfile)) && tmpfile.fid > 0

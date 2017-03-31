@@ -83,7 +83,7 @@ elseif isa(x,'mirdesign')
             f = mirframe(e,varargin{:});
         end
     end
-elseif isa(x,'psydata')
+elseif isa(x,'mirdata')
     if isframed(x)
         warning('WARNING IN MIRFRAME: The input data is already decomposed into frames. No more frame decomposition.');
         f = x;

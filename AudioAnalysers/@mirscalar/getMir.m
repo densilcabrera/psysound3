@@ -8,7 +8,7 @@ switch propName
     case 'Parameter'
         val = a.parameter;
     otherwise
-        val = getMir(psydata(a),propName);
+        val = getMir(mirdata(a),propName);
 end
 
 end

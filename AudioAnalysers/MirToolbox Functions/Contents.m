@@ -20,7 +20,7 @@
 % mirplay          - Plays audio and other temporal data
 %
 %ANALYTICAL OPERATORS
-% psyspectrum      - FFT spectrum with many post-processing operations
+% mirspectrum      - FFT spectrum with many post-processing operations
 % mirautocor       - Autocorrelation function
 % mirfilterbank    - Decomposes into channels via a bank of filters
 % mirsum           - Sums the channels of a filterbank

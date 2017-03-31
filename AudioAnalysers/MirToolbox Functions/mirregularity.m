@@ -38,8 +38,8 @@ varargout = mirfunction(@mirregularity,orig,varargin,nargout,specif,@init,@main)
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'miraudio')
-    x = psyspectrum(x);
+if not(isamir(x,'mirdata')) || isamir(x,'miraudio')
+    x = mirspectrum(x);
 end
 if not(haspeaks(x))
     x = mirpeaks(x,'Reso','SemiTone','Contrast',option.cthr);  %% FIND BETTER
@@ -81,7 +81,7 @@ for h = 1:length(m)
         end
     end
 end
-if isa(x,'psyspectrum')
+if isa(x,'mirspectrum')
     t = 'Spectral irregularity';
 else
     t = ['Irregularity of ',get(x,'Title')];;

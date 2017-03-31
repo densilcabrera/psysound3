@@ -63,7 +63,7 @@ for i = 1:length(fields)
                after.(field) = 'Peaks';
            %end
         elseif isfield(specif,'title')
-            if isa(orig,'psydata')
+            if isa(orig,'mirdata')
                 title = get(orig,'Title');
                 sameclass = (length(title) > length(specif.title) && ...
                     strcmp(title(1:length(specif.title)),specif.title));

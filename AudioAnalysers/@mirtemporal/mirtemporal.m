@@ -15,13 +15,13 @@ end
 if nargin==0 
 
 
-base=psydata();
+base=mirdata();
 t = class(t,'mirtemporal',base);
 
 
 else
 
-base=psydata(orig);
+base=mirdata(orig);
 t = class(t,'mirtemporal',base);
 
 end
