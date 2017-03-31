@@ -68,7 +68,7 @@ if nargin==0 %position of the ''end''?
     a.ofspectrum = [];
     a.window = {};
     a.normalwindow = []; 
-a = class(a,'mirautocor', mirdata() );
+a = class(a,'mirautocor', psydata() );
 a=set(a,'Name','MirToolbox (mirautocor)');
 varargout={a};
 
@@ -76,7 +76,7 @@ else
         min.key = 'Min';
         min.type = 'Integer';
         min.unit = {'s','Hz'};
-        if isamir(orig,'mirspectrum')
+        if isamir(orig,'psyspectrum')
             min.defaultunit = 'Hz';
         else
             min.defaultunit = 's';
@@ -88,7 +88,7 @@ else
         max.key = 'Max';
         max.type = 'Integer';
         max.unit = {'s','Hz'};
-        if isamir(orig,'mirspectrum')
+        if isamir(orig,'psyspectrum')
             max.defaultunit = 'Hz';
         else
             max.defaultunit = 's';
@@ -156,7 +156,7 @@ else
         
         nw.key = 'NormalWindow';
         nw.when = 'Both';
-        if isamir(orig,'mirspectrum')
+        if isamir(orig,'psyspectrum')
             nw.default = 0;
         elseif isamir(orig,'mirenvelope')
             nw.default = 'rectangular';
@@ -229,11 +229,11 @@ else
     a.ofspectrum = 0;
     a.window = {};
     a.normalwindow = 0;
-    a = class(a,'mirautocor',mirdata(orig));
+    a = class(a,'mirautocor',psydata(orig));
     a = purgedata(a);
 a=set(a,'Name','MirToolbox (mirautocor)'); % Adapted for Psysound3
     sig = get(orig,'Data');
-    if isa(orig,'mirspectrum')
+    if isa(orig,'psyspectrum')
         a = set(a,'Title','Spectrum autocorrelation','OfSpectrum',1,...
                   'Abs','frequency (Hz)');
         pos = get(orig,'Pos');

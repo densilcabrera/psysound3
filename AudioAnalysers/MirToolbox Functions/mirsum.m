@@ -182,8 +182,8 @@ function [y orig] = eachtemporalchunk(orig,option,missing)
 %        
         
 function y = combinechunk(old,new)
-if isa(old,'mirspectrum')
-    warning('WARNING IN MIRSUM: not yet fully generalized to mirspectrum')
+if isa(old,'psyspectrum')
+    warning('WARNING IN MIRSUM: not yet fully generalized to psyspectrum')
 end
 do = get(old,'Data');
 do = do{1}{1};

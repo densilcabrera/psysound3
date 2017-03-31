@@ -4,13 +4,13 @@ function val = get(a, propName)
 
 switch propName
     case 'Magnitude'
-        val = get(mirdata(a),'Data');
+        val = get(psydata(a),'Data');
     case 'Phase'
         val = a.phase;
     case 'Quefrency'
-        val = get(mirdata(a),'Pos');
+        val = get(psydata(a),'Pos');
     case 'FreqDomain'
         val = a.freq;
     otherwise
-        val = get(mirdata(a),propName);
+        val = get(psydata(a),propName);
 end

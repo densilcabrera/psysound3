@@ -1,6 +1,6 @@
-function obj = mirdata(orig,varargin)
-%   d = mirdata(x) creates a MIR object.
-% mirdata Constructor
+function obj = psydata(orig,varargin)
+%   d = psydata(x) creates a MIR object.
+% psydata Constructor
 %for the Psysound-style classes (adapted from MirToolbox)
 
 
@@ -16,15 +16,15 @@ obj = struct;
   % This should be a file handle
      base = Analyser(arg1);
      initObj(nargin,0);
-     obj = class(obj, 'mirdata', base);
+     obj = class(obj, 'psydata', base);
 %      
      elseif isempty(orig)
    base = Analyser();
    initObj(nargin,0); 
-   obj = class(obj, 'mirdata', base);
+   obj = class(obj, 'psydata', base);
    
    
-     elseif isa(orig,'mirdata')
+     elseif isa(orig,'psydata')
          
          % necessary to do such a twisted 'cache', because of purgedata.m 
 %          to avoid the "invalid wav file" error
@@ -49,7 +49,7 @@ obj = struct;
   
   initObj(nargin,orig); 
   base=Analyser();
-  obj = class(obj, 'mirdata', base);
+  obj = class(obj, 'psydata', base);
    
   obj=set(obj,'Name',obj2.Name);
   obj=set(obj,'filename',obj2.filename);
@@ -73,7 +73,7 @@ obj = struct;
          display('check if error?')
           base = Analyser();
    initObj(nargin,orig); 
-   obj = class(obj, 'mirdata', base);
+   obj = class(obj, 'psydata', base);
      end
     
      case 0
@@ -82,14 +82,14 @@ obj = struct;
          
    base = Analyser();
    initObj(nargin,0); 
-   obj = class(obj, 'mirdata', base);
+   obj = class(obj, 'psydata', base);
 otherwise
-errror('mirdata takes 2 arguments')
+errror('psydata takes 2 arguments')
 
   end
 
   
-% Specify analyser type (mirdata is a base class)
+% Specify analyser type (psydata is a base class)
 % ????
 obj = set(obj, 'type', 'Raw');
 
@@ -103,13 +103,13 @@ obj = set(obj, 'windowLength', numSamples);
 % 
 
 % Set name
-obj = set(obj, 'Name', 'MirToolbox (mirdata)');
+obj = set(obj, 'Name', 'MirToolbox (psydata)');
 obj = setMir(obj,varargin{:}); 
 
 function initObj(n,varargin)
   
 
-if n > 0 && isa(orig,'mirdata')
+if n > 0 && isa(orig,'psydata')
 orig=varargin{1};
     obj.pos = orig.pos;
     obj.data = orig.data;
@@ -177,4 +177,4 @@ end
 
 
   end % initObj
-end % mirdata
+end % psydata

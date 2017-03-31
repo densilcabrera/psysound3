@@ -10,5 +10,5 @@ switch propName
     case 'NBits'
         val = a.nbits;
     otherwise
-        val = get(mirdata(a),propName);
+        val = get(psydata(a),propName);
 end

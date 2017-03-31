@@ -32,8 +32,8 @@ varargout = mirfunction(@mirbrightness,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'mirspectrum'))
-    x = mirspectrum(x);
+if not(isamir(x,'psyspectrum'))
+    x = psyspectrum(x);
 end
 type = 'mirscalar';
 

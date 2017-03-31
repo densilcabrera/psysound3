@@ -21,8 +21,8 @@ function varargout = mirtempo(x,varargin)
 %                   'Enhanced' (toggled on by default here)
 %           s = 'Spectrum': Approach based on the computation of the
 %               spectrum .
-%               Option associated to the mirspectrum function can be
-%               passed here as well (see help mirspectrum):
+%               Option associated to the psyspectrum function can be
+%               passed here as well (see help psyspectrum):
 %                   'ZeroPad' (set by default to 10000 samples)
 %                   'Prod' (toggled off by default)
 %           These two strategies can be combined: the autocorrelation
@@ -215,7 +215,7 @@ function varargout = mirtempo(x,varargin)
     option.r = r;
 
 
-%% options related to mirspectrum:
+%% options related to psyspectrum:
     
         spe.key = 'Spectrum';
         spe.type = 'Integer';
@@ -289,7 +289,7 @@ if option.perio
     option.m = 3;
     option.enh = 2:10;
 end
-if not(isamir(x,'mirautocor')) && not(isamir(x,'mirspectrum'))
+if not(isamir(x,'mirautocor')) && not(isamir(x,'psyspectrum'))
     if isframed(x) && strcmpi(option.fea,'Envelope') && not(isamir(x,'mirscalar'))
         warning('WARNING IN MIRTEMPO: The input should not be already decomposed into frames.');
         disp(['Suggestion: Use the ''Frame'' option instead.'])
@@ -340,15 +340,15 @@ if isamir(x,'mirautocor') || (option.aut && not(option.spe))
     y = mirautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
           'Enhanced',option.enh,...'NormalInput','coeff',...
           'Resonance',option.r,'NormalWindow',option.nw);
-elseif isamir(x,'mirspectrum') || (option.spe && not(option.aut))
-    y = mirspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
+elseif isamir(x,'psyspectrum') || (option.spe && not(option.aut))
+    y = psyspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
                        'Prod',option.prod,...'NormalInput',...
                        'ZeroPad',option.zp,'Resonance',option.r);
 elseif option.spe && option.aut
     ac = mirautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
           'Enhanced',option.enh,...'NormalInput','coeff',...
           'Resonance',option.r);
-    sp = mirspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
+    sp = psyspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
                        'Prod',option.prod,...'NormalInput',...
                        'ZeroPad',option.zp,'Resonance',option.r);
     y = ac*sp;

@@ -1,63 +1,63 @@
-function varargout = mirspectrum(orig,varargin)
-%   s = mirspectrum(x) computes the spectrum of the audio signal x, showing
+function varargout = psyspectrum(orig,varargin)
+%   s = psyspectrum(x) computes the spectrum of the audio signal x, showing
 %       the distribution of the energy along the frequencies.
 %       (x can be the name of an audio file as well.)
 %   Optional argument:
-%       mirspectrum(...,'Frame',l,h) computes spectrogram, using frames of
+%       psyspectrum(...,'Frame',l,h) computes spectrogram, using frames of
 %           length l seconds and a hop rate h.
 %           Default values: l = .05 s, h = .5.
-%       mirspectrum(...,'Min',mi) indicates the lowest frequency taken into
+%       psyspectrum(...,'Min',mi) indicates the lowest frequency taken into
 %           consideration, expressed in Hz.
 %           Default value: 0 Hz.
-%       mirspectrum(...,'Max',ma) indicates the highest frequency taken into
+%       psyspectrum(...,'Max',ma) indicates the highest frequency taken into
 %           consideration, expressed in Hz.
 %           Default value: the maximal possible frequency, corresponding to
 %           the sampling rate of x divided by 2.
-%       mirspectrum(...,'Window',w): windowing method:
+%       psyspectrum(...,'Window',w): windowing method:
 %           either w = 0 (no windowing) or any windowing function proposed
 %               in the Signal Processing Toolbox (help window).
 %           default value: w = 'hamming'
 %
-%       mirspectrum(...,'Cents'): decomposes the energy in cents.
-%       mirspectrum(...,'Collapsed'): collapses the spectrum into one
+%       psyspectrum(...,'Cents'): decomposes the energy in cents.
+%       psyspectrum(...,'Collapsed'): collapses the spectrum into one
 %           octave divided into 1200 cents.
 %       Redistribution of the frequencies into bands:
-%           mirspectrum(...,'Mel'): Mel bands.
+%           psyspectrum(...,'Mel'): Mel bands.
 %               (Requires the Auditory Toolbox.)
 %           If the audio signal was frame decomposed, the output s is a
 %               band-decomposed spectrogram. It is then possible to compute
 %               the spectrum of the temporal signal in each band,
 %               using the following syntax:
-%                   mirspectrum(s,'AlongBands')
+%                   psyspectrum(s,'AlongBands')
 %               This corresponds to fluctuation (cf. mirfluctuation).
-%       mirspectrum(...,'Normal'): normalizes with respect to energy.
-%       mirspectrum(...,'NormalLength'): normalizes with respect to input length.
-%       mirspectrum(...,'NormalInput'): input signal is normalized from 0 to 1.
-%       mirspectrum(...,'Power'): squares the energy.
-%       mirspectrum(...,'dB'): represents the spectrum energy in decibel scale.
-%       mirspectrum(...,'dB',th): keeps only the highest energy over a
+%       psyspectrum(...,'Normal'): normalizes with respect to energy.
+%       psyspectrum(...,'NormalLength'): normalizes with respect to input length.
+%       psyspectrum(...,'NormalInput'): input signal is normalized from 0 to 1.
+%       psyspectrum(...,'Power'): squares the energy.
+%       psyspectrum(...,'dB'): represents the spectrum energy in decibel scale.
+%       psyspectrum(...,'dB',th): keeps only the highest energy over a
 %           range of th dB.
-%       mirspectrum(...,'Resonance',r): multiplies the spectrum with a 
+%       psyspectrum(...,'Resonance',r): multiplies the spectrum with a 
 %           resonance curve. Possible value for r:
 %               'ToiviainenSnyder': highlights best perceived meter 
 %                       (Toiviainen & Snyder 2003)
 %                   (default value for spectrum of envelopes)
 %               'Fluctuation': fluctuation strength (Fastl 1982)
 %                   (default value for spectrum of band channels)
-%       mirspectrum(...,'Prod',m): Enhances components that have harmonics
+%       psyspectrum(...,'Prod',m): Enhances components that have harmonics
 %           located at multiples of range(s) m of the signal's fundamental 
 %           frequency. Computed by compressing the signal by the list of
 %           factors m, and by multiplying all the results with the original 
 %           signa (Alonso et al, 2003).
-%       mirspectrum(...,'Sum',s): Similar option using summation instead of
+%       psyspectrum(...,'Sum',s): Similar option using summation instead of
 %           product.
 %
-%       mirspectrum(...,'MinRes',mr): Indicates a minimal accepted
+%       psyspectrum(...,'MinRes',mr): Indicates a minimal accepted
 %           frequency resolution, in Hz. The audio signal is zero-padded in
 %           order to reach the desired resolution.
 %           If the 'Mel' option is toggled on, 'MinRes' is set by default
 %               to 66 Hz.
-%       mirspectrum(...,'MinRes',mr,'OctaveRatio',tol): Indicates the
+%       psyspectrum(...,'MinRes',mr,'OctaveRatio',tol): Indicates the
 %           minimal accepted resolution in terms of number of divisions of 
 %           the octave. Low  frequencies are ignored in order to reach the
 %           desired resolution.
@@ -65,26 +65,26 @@ function varargout = mirspectrum(orig,varargin)
 %               the difference between the first frequency bins, multiplied
 %               by the constraining multiplicative factor tol (set by
 %               default to .75).
-%       mirspectrum(...,'Res',r): Indicates the required precise frequency
+%       psyspectrum(...,'Res',r): Indicates the required precise frequency
 %           resolution, in Hz. The audio signal is zero-padded in order to
 %           reach the desired resolution.
-%       mirspectrum(...,'Length',l): Specifies the length of the FFT,
+%       psyspectrum(...,'Length',l): Specifies the length of the FFT,
 %           overriding the FFT length initially planned.
-%       mirspectrum(...,'ZeroPad',s): Zero-padding of s samples.
-%       mirspectrum(...,'WarningRes',s): Indicates a required frequency
+%       psyspectrum(...,'ZeroPad',s): Zero-padding of s samples.
+%       psyspectrum(...,'WarningRes',s): Indicates a required frequency
 %           resolution, in Hz, for the input signal. If the resolution does
 %           not reach that prerequisite, a warning is displayed.
-%       mirspectrum(...,'ConstantQ',nb): Carries out a Constant Q Transform
+%       psyspectrum(...,'ConstantQ',nb): Carries out a Constant Q Transform
 %           instead of a FFT, with a number of bins per octave fixed to nb.
 %           Default value for nb: 12 bins per octave.
 %
-%       mirspectrum(...,'Smooth',o): smooths the envelope using a movering
+%       psyspectrum(...,'Smooth',o): smooths the envelope using a movering
 %           average of order o.
 %           Default value when the option is toggled on: o=10
-%       mirspectrum(...,'Gauss',o): smooths the envelope using a gaussian
+%       psyspectrum(...,'Gauss',o): smooths the envelope using a gaussian
 %           of standard deviation o samples.
 %           Default value when the option is toggled on: o=10
-%       mirspectrum(...,'Phase',0): do not compute the FFT phase.
+%       psyspectrum(...,'Phase',0): do not compute the FFT phase.
     
 
 
@@ -94,9 +94,9 @@ if nargin==0 % In order for Psysound to get the Name field with PossAnalyser
     s.log = [];
     s.xscale = '';
     s.pow = [];
-base=mirdata();
-s=class(s,'mirspectrum',base);
-s=set(s,'Name','Mirtoolbox (mirspectrum)');
+base=psydata();
+s=class(s,'psyspectrum',base);
+s=set(s,'Name','Mirtoolbox (psyspectrum)');
 varargout={s};
 
 else
@@ -110,9 +110,9 @@ else
     cl.log = [];
     cl.xscale = '';
     cl.pow = [];
-base=mirdata(orig);
-cl=class(cl,'mirspectrum',base);
-cl=set(cl,'Name','Mirtoolbox (mirspectrum)'); 
+base=psydata(orig);
+cl=class(cl,'psyspectrum',base);
+cl=set(cl,'Name','Mirtoolbox (psyspectrum)'); 
 
 varargout = {cl};
 
@@ -305,13 +305,13 @@ if isamir(orig,'mirscalar') || isamir(orig,'mirenvelope')
     specif.nochunk = 1;
 end
 
-varargout = mirfunction(@mirspectrum,orig,varargin,nargout,specif,@init,@main);
+varargout = mirfunction(@psyspectrum,orig,varargin,nargout,specif,@init,@main);
           end
 end
 
 
 function [x type] = init(x,option)
-type = 'mirspectrum';
+type = 'psyspectrum';
 
 
 function s = main(orig,option,postoption)
@@ -334,7 +334,7 @@ end
 if iscell(orig)
     orig = orig{1};
 end
-if isa(orig,'mirspectrum') && ...
+if isa(orig,'psyspectrum') && ...
         not(isfield(option,'alongbands') && option.alongbands)
     s = orig;
     if isfield(option,'min') && ...
@@ -369,7 +369,7 @@ if isa(orig,'mirspectrum') && ...
         s = post(s,postoption);
     end
 elseif ischar(orig)
-    s = mirspectrum(miraudio(orig),option,postoption);
+    s = psyspectrum(miraudio(orig),option,postoption);
 else
     if nargin == 0
         orig = [];
@@ -378,10 +378,10 @@ else
     s.log = 0;
     s.xscale = 'Freq';
     s.pow = 1;
-    s = class(s,'mirspectrum',mirdata(orig));
+    s = class(s,'psyspectrum',psydata(orig));
     s = purgedata(s);
     s = set(s,'Title','Spectrum','Abs','frequency (Hz)','Ord','magnitude');
-    s=set(s,'Name','MirToolbox (mirspectrum)');
+    s=set(s,'Name','MirToolbox (psyspectrum)');
     %disp('Computing spectrum...')
     sig = get(orig,'Data');
     t = get(orig,'Pos');
@@ -674,7 +674,7 @@ if strcmp(s.xscale,'Freq')
                 isgood = fi(:,1,1)*(2^(1/1200)-1) >= fi(2,1,1)-fi(1,1,1);
                 good = find(isgood);
                 if isempty(good)
-                    mirerror('mirspectrum',...
+                    mirerror('psyspectrum',...
                         'The frequency resolution of the spectrum is too low to be decomposed into cents.');
                     display('Hint: if you specify a minimum value for the frequency range (''Min'' option)');
                     display('      and if you do not specify any frequency resolution (''Res'' option), ');
@@ -731,7 +731,7 @@ if option.collapsed
     s = set(s,'Abs','Cents','XScale','Cents(Collapsed)');
 end
 if option.log || option.db
-    if not(isa(s,'mirspectrum') && s.log)
+    if not(isa(s,'psyspectrum') && s.log)
         for k = 1:length(m)
             if not(iscell(m{k}))
                 m{k} = {m{k}};
@@ -747,7 +747,7 @@ if option.log || option.db
                 end
             end
         end
-    elseif isa(s,'mirspectrum') && option.db && s.log<10
+    elseif isa(s,'psyspectrum') && option.db && s.log<10
         for k = 1:length(m)
             for l = 1:length(m{k})
                 m{k}{l} = 10*m{k}{l};
@@ -822,7 +822,7 @@ end
 
 function [y orig] = eachchunk(orig,option,missing,postchunk)
 option.zp = option.zp+missing;
-y = mirspectrum(orig,option);
+y = psyspectrum(orig,option);
 
 
 function y = combinechunk(old,new)

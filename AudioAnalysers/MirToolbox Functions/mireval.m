@@ -333,7 +333,7 @@ if ischar(c)
     c = varargin;
     return
 end
-if (not(iscell(c)) && not(isa(c,'mirdata')))
+if (not(iscell(c)) && not(isa(c,'psydata')))
     for j = 1:length(varargin)
         if j == 1
             lv = size(varargin{j},1);
@@ -349,7 +349,7 @@ if (not(iscell(c)) && not(isa(c,'mirdata')))
     end
     return
 end
-if (iscell(c) && not(isa(c{1},'mirdata')))
+if (iscell(c) && not(isa(c{1},'psydata')))
     for i = 1:length(c)
         v = cell(1,nargin-2);
         for j = 1:nargin-2

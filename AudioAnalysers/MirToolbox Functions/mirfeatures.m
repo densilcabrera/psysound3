@@ -65,7 +65,7 @@ r.rhythm.attack.slope = mirattackslope(attacks);
 
 f = mirframe(a,.05,.5);
 r.spectral = mirstruct;
-r.spectral.tmp.s = mirspectrum(f);
+r.spectral.tmp.s = psyspectrum(f);
 %pitch = mirpitch(a,'Frame',.05,.5);
 
 r.spectral.centroid = mircentroid(r.spectral.tmp.s);

@@ -93,7 +93,7 @@ else
         if iscell(argin)
             argin = argin{1};
         end
-        if (strcmp(func2str(orig),'mirspectrum') && d.option.alongbands) ...
+        if (strcmp(func2str(orig),'psyspectrum') && d.option.alongbands) ...
             || (isfield(specif,'nochunk') && specif.nochunk)
             d.frame = [];
             if isfield(d.specif,'eachchunk')

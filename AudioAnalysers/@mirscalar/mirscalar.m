@@ -17,7 +17,7 @@ else
     s.parameter = struct;
 end
 
-base=mirdata(orig);
+base=psydata(orig);
 s = class(s,'mirscalar',base);
 
 

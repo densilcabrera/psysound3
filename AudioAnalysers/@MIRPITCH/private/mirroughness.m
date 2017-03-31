@@ -44,7 +44,7 @@ function [x type] = init(x,option)
 if isamir(x,'miraudio') && not(isframed(x))
     x = mirframenow(x,option);
 end
-x = mirspectrum(x);
+x = psyspectrum(x);
 if not(haspeaks(x))
     x = mirpeaks(x,'Contrast',option.cthr);
 end

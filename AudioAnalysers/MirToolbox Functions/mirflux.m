@@ -86,9 +86,9 @@ varargout = mirfunction(@mirflux,orig,varargin,nargout,specif,@init,@main);
 function [x type] = init(x,option)
 if isamir(x,'miraudio') 
     if isframed(x)
-        x = mirspectrum(x);
+        x = psyspectrum(x);
     else
-        x = mirspectrum(x,'Frame',option.frame.length.val,option.frame.length.unit,...
+        x = psyspectrum(x,'Frame',option.frame.length.val,option.frame.length.unit,...
                                   option.frame.hop.val,option.frame.hop.unit);
     end
 end
@@ -111,12 +111,12 @@ if isa(s,'mirscalar') && ...
         f = modif(s,postoption);
     end
 else
-    if isa(s,'mirspectrum')
+    if isa(s,'psyspectrum')
         t = 'Spectral';
     end
     m = get(s,'Data'); 
     if option.complex
-        if not(isa(s,'mirspectrum'))
+        if not(isa(s,'psyspectrum'))
             error('ERROR IN MIRFLUX: ''Complex'' option only defined for spectral flux.');
         end
         ph = get(s,'Phase');

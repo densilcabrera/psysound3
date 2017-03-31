@@ -23,8 +23,8 @@ varargout = mirfunction(@mircentroid,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'mirdata')) || isamir(x,'miraudio')
-    x = mirspectrum(x);
+if not(isamir(x,'psydata')) || isamir(x,'miraudio')
+    x = psyspectrum(x);
 end
 type = 'mirscalar';
 
@@ -66,7 +66,7 @@ if option.peaks
 else
     cx = peaksegments(@centroid,get(x,'Data'),get(x,'Pos'));
 end
-if isa(x,'mirspectrum')
+if isa(x,'psyspectrum')
     t = 'Spectral centroid';
 elseif isa(x,'mirenvelope')
     t = 'Temporal centroid';

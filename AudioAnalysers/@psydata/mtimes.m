@@ -5,14 +5,14 @@ f = cell(1,length(d));
 n = get(a,'Name');
 t = get(a,'Title');
 if not(isa(a,'miraudio'))
-    if isa(b,'mirdata')
+    if isa(b,'psydata')
         t = [t,' * ',get(b,'Title')];
     else
         t = [t,' * ',num2str(b)];
     end
 end
 
-if isa(b,'mirdata')
+if isa(b,'psydata')
     e = get(b,'Data');
     m = get(b,'Name');
 else

@@ -5,7 +5,7 @@ f = cell(1,length(d));
 n = get(a,'Name');
 t = get(a,'Title');
 
-if isa(b,'mirdata')
+if isa(b,'psydata')
     e = get(b,'Data');
     m = get(b,'Name');
     u = get(b,'Title');

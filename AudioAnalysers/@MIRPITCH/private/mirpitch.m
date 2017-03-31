@@ -256,7 +256,7 @@ else
         y = mirautocor(orig,'Min',option.mi,'Hz','Max',option.ma,'Hz','Freq');
     elseif isamir(orig,'mircepstrum')
         y = orig;
-    elseif isamir(orig,'mirspectrum')
+    elseif isamir(orig,'psyspectrum')
         if not(option.as) && not(option.ce) && not(option.s)
             option.ce = 1;
         end
@@ -289,7 +289,7 @@ else
         end
         if option.as || option.ce || option.s
             x = mirframenow(orig,option);
-            y = mirspectrum(x);
+            y = psyspectrum(x);
             if option.as
                 as = mirautocor(y,...
                                 'Min',option.mi,'Hz','Max',option.ma,'Hz');

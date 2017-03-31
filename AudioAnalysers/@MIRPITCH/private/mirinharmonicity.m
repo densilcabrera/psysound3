@@ -2,7 +2,7 @@ function varargout = mirinharmonicity(orig,varargin)
 %   ih = mirinharmonicity(x) estimates the inharmonicity of x, i.e., the
 %       amount of partials that are not multiples of the fundamental
 %       frequency.
-%       x can be either an audio file, a miraudio or a mirspectrum object.
+%       x can be either an audio file, a miraudio or a psyspectrum object.
 %   WARNING: This function presupposes that there is only one fundamental
 %       frequency.
 %   Optional argument:
@@ -33,12 +33,12 @@ varargout = mirfunction(@mirinharmonicity,orig,varargin,nargout,specif,@init,@ma
 function [i type] = init(x,option)
 if isamir(x,'miraudio')
     if option.frame.length.val
-        s = mirspectrum(x,'Frame',option.frame.length.val,...
+        s = psyspectrum(x,'Frame',option.frame.length.val,...
                                   option.frame.length.unit,...
                                   option.frame.hop.val,...
                                   option.frame.hop.unit);
     else
-        s = mirspectrum(x);
+        s = psyspectrum(x);
     end
 else
     s = x;
@@ -56,7 +56,7 @@ else
     p = option.f0;
 end
 i = {s,p};
-type = {'mirscalar','mirspectrum','mirscalar'};
+type = {'mirscalar','psyspectrum','mirscalar'};
 
 
 function ih = main(x,option,postoption)
@@ -113,7 +113,7 @@ for h = 1:length(m)
     end
 end
 ih = mirscalar(s,'Data',v,'Title','Inharmonicity');
-if isa(p,'mirdata')
+if isa(p,'psydata')
     ih = {ih s p};
 else
     ih = {ih s};
