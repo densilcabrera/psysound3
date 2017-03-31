@@ -1,17 +1,17 @@
-function varargout = mircepstrum(orig,varargin)
-%   s = mircepstrum(x) computes the cepstrum, which indicates
+function varargout = psycepstrum(orig,varargin)
+%   s = psycepstrum(x) computes the cepstrum, which indicates
 %       periodicities, and is used for instance for pitch detection.
 %   x can be either a spectrum, an audio signal, or the name of an audio file.
 %   Optional parameter:
-%       mircepstrum(...,'Min',min) specifies the lowest delay taken into
+%       psycepstrum(...,'Min',min) specifies the lowest delay taken into
 %           consideration, in seconds.
 %           Default value: 0.0002 s (corresponding to a maximum frequency of 
 %               5 kHz).
-%       mircepstrum(...,'Max',max) specifies the highest delay taken into
+%       psycepstrum(...,'Max',max) specifies the highest delay taken into
 %           consideration, in seconds.
 %           Default value: 0.05 s (corresponding to a minimum frequency of 
 %               20 Hz).
-%       mircepstrum(...,'Freq') represents the cepstrum in the frequency 
+%       psycepstrum(...,'Freq') represents the cepstrum in the frequency 
 %           domain.
 
 if nargin==0 % In order for Psysound to get the Name field with PossAnalyser
@@ -20,8 +20,8 @@ if nargin==0 % In order for Psysound to get the Name field with PossAnalyser
     s.freq=[];
     
 base=psydata();
-s=class(s,'mircepstrum',base);
-s=set(s,'Name','Mirtoolbox (mircepstrum)');
+s=class(s,'psycepstrum',base);
+s=set(s,'Name','Mirtoolbox (psycepstrum)');
 varargout={s};
 
 else
@@ -35,8 +35,8 @@ else
     cl.freq=[];
     
 base=psydata(orig);
-cl=class(cl,'mircepstrum',base);
-cl=set(cl,'Name','Mirtoolbox (mircepstrum)'); 
+cl=class(cl,'psycepstrum',base);
+cl=set(cl,'Name','Mirtoolbox (psycepstrum)'); 
 
 varargout = {cl};
     else
@@ -71,17 +71,17 @@ specif.option = option;
 specif.defaultframelength = 0.05;
 specif.defaultframehop = 0.5;
 
-varargout = mirfunction(@mircepstrum,orig,varargin,nargout,specif,@init,@main);
+varargout = mirfunction(@psycepstrum,orig,varargin,nargout,specif,@init,@main);
 
     end %For Psysound3
 end %For Psysound3
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'mircepstrum'))
+if not(isamir(x,'psycepstrum'))
     x = psyspectrum(x);
 end
-type = 'mircepstrum';
+type = 'psycepstrum';
 
 
 function c = main(orig,option,postoption)
@@ -89,17 +89,17 @@ if iscell(orig)
     orig = orig{1};
 end
 c.phase = [];
-if isa(orig,'mircepstrum')
+if isa(orig,'psycepstrum')
     c.freq = orig.freq;
 else
     c.freq = 0;
 end
-c = class(c,'mircepstrum',psydata(orig));
+c = class(c,'psycepstrum',psydata(orig));
 c = purgedata(c);
 c = set(c,'Title','Cepstrum','Abs','quefrency (s)','Ord','magnitude');
-c=set(c,'Name','Mirtoolbox (mircepstrum)'); %For Psysound3
+c=set(c,'Name','Mirtoolbox (psycepstrum)'); %For Psysound3
 
-if isa(orig,'mircepstrum')
+if isa(orig,'psycepstrum')
     if option.ma < Inf || option.mi > 0 || get(orig,'FreqDomain')
         mag = get(orig,'Magnitude');
         pha = get(orig,'Phase');

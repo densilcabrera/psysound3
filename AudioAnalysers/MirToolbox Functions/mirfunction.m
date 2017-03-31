@@ -21,12 +21,12 @@ if ischar(x) % The input is a file name.
     % Starting point of the design process
     design_init = 1;
     filename = x;
-    if strcmpi(func2str(method),'miraudio')
+    if strcmpi(func2str(method),'psyaudio')
         postoption = {};
     else
         postoption.mono = 1;
     end
-    orig = mirdesign(@miraudio,'Design',{varg},postoption,struct,'miraudio'); 
+    orig = psydesign(@psyaudio,'Design',{varg},postoption,struct,'psyaudio'); 
     % Implicitly, the audio file needs to be loaded first.
 elseif isnumeric(x)
     mirerror(func2str(method),'The input should be a file name or a MIRtoolbox object.');
@@ -39,7 +39,7 @@ end
 [orig during after] = miroptions(method,orig,specif,varg);
 
 % Performs the 'init' part of the MIRtoolbox function.
-if isa(orig,'mirdesign')
+if isa(orig,'psydesign')
     if not(get(orig,'Eval'))
         % Top-down construction of the general design flowchart
         
@@ -60,7 +60,7 @@ if isa(orig,'mirdesign')
         % with management of the data types throughout the design process.
         [orig type] = init(orig,during);
                 
-        o = mirdesign(method,orig,during,after,specif,type);
+        o = psydesign(method,orig,during,after,specif,type);
                     
         if design_init && not(strcmpi(filename,'Design'))
             % Now the design flowchart has been completed created.
@@ -103,7 +103,7 @@ else
         i = 0;
         while i<length(orig) && not(design)
             i = i+1;
-            if isa(orig{i},'mirdesign')
+            if isa(orig{i},'psydesign')
                 design = i;
             end
         end
@@ -113,7 +113,7 @@ else
         if design == 1 && not(get(orig{1},'Eval'))
             % Progressive construction of the general design
             [orig type] = init(orig,during);
-            o = mirdesign(method,orig,during,after,specif,type);
+            o = psydesign(method,orig,during,after,specif,type);
             o = set(o,'Size',get(orig{1},'Size'));
             o = returndesign(o,nout);
             return
@@ -121,7 +121,7 @@ else
             % Evaluation of the design.
             % First top-down initiation (evaleach), then bottom-up process.
             for io = 1:length(orig)
-                if isa(orig{io},'mirdesign')
+                if isa(orig{io},'psydesign')
                     o = evaleach(orig{io});
                     if iscell(o)
                         o = o{:};
@@ -146,7 +146,7 @@ end
 
 % Performs the 'main' part of the MIRtoolbox function.
 if not(iscell(orig) && not(ischar(orig{1}))) && ...
-        not(isa(orig,'mirdesign') || isa(orig,'psydata'))
+        not(isa(orig,'psydesign') || isa(orig,'psydata'))
     o = {orig};
     return
 end
@@ -177,7 +177,7 @@ if iscell(orig)
     o = main(orig,during,after);
 else
     d = get(orig,'Data');
-    if isamir(orig,'miraudio') && ...
+    if isamir(orig,'psyaudio') && ...
         length(d) == 1 && length(d{1}) == 1 && isempty(d{1}{1})
         % To solve a problem when MP3read returns empty chunk.
         % Warning: it should not be a cell, because for instance nthoutput can have first input empty... 
@@ -186,9 +186,9 @@ else
         o = main(orig,during,after);
     end
 end
-if not(iscell(o) && length(o)>1) || (isa(x,'mirdesign') && get(x,'Eval'))
+if not(iscell(o) && length(o)>1) || (isa(x,'psydesign') && get(x,'Eval'))
     o = {o x};
-elseif iscell(x) && isa(x{1},'mirdesign') && get(x{1},'Eval')
+elseif iscell(x) && isa(x{1},'psydesign') && get(x{1},'Eval')
     o = {o x{1}};
 elseif not(isempty(varg)) && isstruct(varg{1}) ...
             && not(iscell(o) && iscell(o{1}))

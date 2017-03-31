@@ -241,7 +241,7 @@ error('getMir : specialized methods?')
 end
 
 
-    elseif strcmp(class(a),'mirscalar')
+    elseif strcmp(class(a),'psyscalar')
 
 switch propName
     case 'Mode'

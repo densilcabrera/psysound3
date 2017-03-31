@@ -1,6 +1,6 @@
 function mirsave(d,varargin)
 %   mirsave(d) saves temporal data d in a file.
-%       If d is a miraudio object, the waveform is directly saved.
+%       If d is a psyaudio object, the waveform is directly saved.
 %       mirenvelope data is sonified using modulated white noise.
 %       mirpitch data is sonified using sinusoids.
 %    (cf. User's Manual for more details).
@@ -19,4 +19,4 @@ function mirsave(d,varargin)
 %               different file.
 
 
-mirsave(miraudio(d),varargin{:})
+mirsave(psyaudio(d),varargin{:})

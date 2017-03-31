@@ -59,13 +59,13 @@ if ischar(a)
     
     if isempty(ch)
         % No chunk decomposition
-        y = miraudio(f,'Now',[w(:)' chan]);
+        y = psyaudio(f,'Now',[w(:)' chan]);
     else
         % Chunk decomposition
-        y = miraudio(f,'Now',[ch(1),ch(2) chan]);
+        y = psyaudio(f,'Now',[ch(1),ch(2) chan]);
     end
     if not(isempty(d.postoption)) && d.postoption.mono
-        y = miraudio(y,'Mono',1);
+        y = psyaudio(y,'Mono',1);
     end
     y = set(y,'AcrossChunks',get(d,'AcrossChunks'));
     y = set(y,'Extracted',1);
@@ -533,14 +533,14 @@ end
 for var = 1:length(new)
     ov = old{var};
     nv = new{var};
-    if isa(ov,'mirscalar')
+    if isa(ov,'psyscalar')
         ov = combinedata(ov,nv,'Data');
         ov = combinedata(ov,nv,'Mode');
         if isa(ov,'MIRPITCH')
             ov = combinedata(ov,nv,'Amplitude');
         end
     else
-        if isa(ov,'mirtemporal')
+        if isa(ov,'psytemporal')
             [ov omatch nmatch] = combinedata(ov,nv,'Time',[],[],@modiftime);
         else
             [ov omatch nmatch] = combinedata(ov,nv,'Pos',[],[]);
@@ -656,7 +656,7 @@ for i = 1:length(argin)
             end
             argin{i} = a;
         end
-    elseif isa(a,'mirdesign')
+    elseif isa(a,'psydesign')
         if isempty(a.stored)
             % The design parameters are transfered to the previous component
             % in the design process
@@ -729,7 +729,7 @@ function z = evalbranches(d,y)
 branch = get(d,'Data');
 
 for i = 1:length(branch)
-    if isa(branch{i},'mirdesign') && get(branch{i},'NoChunk') == 1 
+    if isa(branch{i},'psydesign') && get(branch{i},'NoChunk') == 1 
                                         % if the value is 2, it is OK.
         %mirerror('mireval','Flowchart badly designed: mirstruct should not be used if one or several final variables do not accept chunk decomposition.');
     end
@@ -766,7 +766,7 @@ if isequal(b,d)
     b = y;
     return
 end
-if not(isa(b,'mirdesign'))
+if not(isa(b,'psydesign'))
     mirerror('MIRSTRUCT','In the mirstruct object you defined, the final output should only depend on ''tmp'' variables, and should not therefore reuse the ''Design'' keyword.');
 end
 v = get(b,'Stored');
@@ -805,7 +805,7 @@ res = isfield(specif,'combinechunk') && ...
 function d0 = callbeforechunk(d0,d,w,lsz)
 % If necessary, the chunk decomposition is performed a first time for
 % initialisation purposes.
-% Currently used only for miraudio(...,'Normal')
+% Currently used only for psyaudio(...,'Normal')
 if not(ischar(d)) && not(iscell(d))
     specif = d.specif;
     CHUNKLIM = mirchunklim;
@@ -850,7 +850,7 @@ do = get(old,'Data');
 dn = get(new,'Data');
 fpo = get(old,'FramePos');
 fpn = get(new,'FramePos');
-if isa(old,'mirscalar')
+if isa(old,'psyscalar')
     y = set(old,'Data',{{[do{1}{1},dn{1}{1}]}},...
                 'FramePos',{{[fpo{1}{1},fpn{1}{1}]}});
 else

@@ -24,4 +24,4 @@ while length(propertyArgIn) >= 2,
 end
 tt.centered = c;
 tt.nbits = b;
-tt = class(tt,'mirtemporal',d);
+tt = class(tt,'psytemporal',d);

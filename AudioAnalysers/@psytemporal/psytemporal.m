@@ -1,9 +1,9 @@
-function t = mirtemporal(orig,varargin)
-%   t = mirtemporal(x) creates a temporal object from signal x.
+function t = psytemporal(orig,varargin)
+%   t = psytemporal(x) creates a temporal object from signal x.
 %   Optional arguments:
-%       mirtemporal(...,'Center') centers the signal x.
+%       psytemporal(...,'Center') centers the signal x.
 
-if nargin > 0 && isa(orig,'mirtemporal')
+if nargin > 0 && isa(orig,'psytemporal')
     t.centered = orig.centered;
     t.nbits = orig.nbits;
 else
@@ -16,22 +16,22 @@ if nargin==0
 
 
 base=psydata();
-t = class(t,'mirtemporal',base);
+t = class(t,'psytemporal',base);
 
 
 else
 
 base=psydata(orig);
-t = class(t,'mirtemporal',base);
+t = class(t,'psytemporal',base);
 
 end
 
 
 
-t=set(t,'Name','MirToolbox (mirtemporal)');
+t=set(t,'Name','MirToolbox (psytemporal)');
 %
 
-if nargin == 0 || not(isa(orig,'mirtemporal'))
+if nargin == 0 || not(isa(orig,'psytemporal'))
     t = set(t,'Title','Temporal signal','Abs','time (s)','Ord','amplitude');
 end
 if nargin>1
@@ -48,4 +48,4 @@ if nargin>1
     end
     t = setMir(t,varargin{:});
 end
-t=set(t,'Name','MirToolbox (mirtemporal)');
+t=set(t,'Name','MirToolbox (psytemporal)');

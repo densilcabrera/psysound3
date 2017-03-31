@@ -8,7 +8,7 @@ a = p.amplitude;
 c = p.Frame;
 d = p.SpectrumType;
 
-s = mirscalar(p);
+s = psyscalar(p);
 while length(propertyArgIn) >= 2,
    prop = propertyArgIn{1};
    val = propertyArgIn{2};

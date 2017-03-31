@@ -1,4 +1,4 @@
-function d = mirdesign(orig,argin,option,postoption,specif,type)
+function d = psydesign(orig,argin,option,postoption,specif,type)
 
 if nargin == 0
     d.method = {};
@@ -31,7 +31,7 @@ if nargin == 0
     d.index = NaN;
     d.tmpfile = [];
     d.tmpof = [];
-elseif isa(orig,'mirdesign')
+elseif isa(orig,'psydesign')
     d.method = orig.method;
     d.argin = orig.argin;
     d.option = orig.option;
@@ -170,13 +170,13 @@ switch nargin==1 && isstruct(orig)
 
     case 1
             base=Analyser(orig);
-            d = class(d,'mirdesign',base);
+            d = class(d,'psydesign',base);
         
     otherwise
         base=Analyser();
-        d = class(d,'mirdesign',base);
+        d = class(d,'psydesign',base);
 end
-d=set(d,'Name','MirToolbox (mirdesign)');
+d=set(d,'Name','MirToolbox (psydesign)');
         
 
 

@@ -28,7 +28,7 @@ varargout = mirfunction(@mirrolloff,x,varargin,nargout,specif,@init,@main);
 
 function [s type] = init(x,option)
 s = psyspectrum(x);
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function r = main(s,option,postoption)
@@ -41,7 +41,7 @@ if option.p>1
     option.p = option.p/100;
 end
 v = mircompute(@algo,m,f,option.p);
-r = mirscalar(s,'Data',v,'Title','Rolloff','Unit','Hz.');
+r = psyscalar(s,'Data',v,'Title','Rolloff','Unit','Hz.');
 
 
 function v = algo(m,f,p)

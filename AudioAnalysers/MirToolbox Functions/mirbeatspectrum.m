@@ -30,13 +30,13 @@ varargout = mirfunction(@mirbeatspectrum,orig,varargin,nargout,specif,@init,@mai
     
 
 function [x type] = init(x,option)
-if not(isamir(x,'mirscalar'))
-    if isamir(x,'miraudio')
+if not(isamir(x,'psyscalar'))
+    if isamir(x,'psyaudio')
         x = psyspectrum(x,'frame',.025,'s',.01,'s'); % should be mirmfcc (not available in Matlab Central Version)
     end
     x = mirsimatrix(x,'Distance',option.dist,'Similarity');
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function y = main(orig,option,postoption)
@@ -44,7 +44,7 @@ if iscell(orig)
     orig = orig{1};
 end
 fp = get(orig,'FramePos');
-if not(isa(orig,'mirscalar'))
+if not(isa(orig,'psyscalar'))
     s = get(orig,'Data');
     total = cell(1,length(s));
     for k = 1:length(s)
@@ -71,5 +71,5 @@ if not(isa(orig,'mirscalar'))
 else
     total = get(orig,'Data');
 end
-n = mirscalar(orig,'Data',total,'FramePos',fp,'Title','Beat Spectrum'); 
+n = psyscalar(orig,'Data',total,'FramePos',fp,'Title','Beat Spectrum'); 
 y = {n orig};

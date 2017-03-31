@@ -1,24 +1,24 @@
-function varargout = miraudio(orig,varargin)
-%   a = miraudio('filename') loads the sound file 'filename' (in WAV or AU
-%       format) into a miraudio object.
-%   a = miraudio('Folder') loads all the sound files in the CURRENT folder
-%       into a miraudio object.
-%   a = miraudio(v,sr), where v is a column vector, translates the vector v
-%       into a miraudio object. The sampling frequency is set to sr Hertz.
+function varargout = psyaudio(orig,varargin)
+%   a = psyaudio('filename') loads the sound file 'filename' (in WAV or AU
+%       format) into a psyaudio object.
+%   a = psyaudio('Folder') loads all the sound files in the CURRENT folder
+%       into a psyaudio object.
+%   a = psyaudio(v,sr), where v is a column vector, translates the vector v
+%       into a psyaudio object. The sampling frequency is set to sr Hertz.
 %           Default value for sr: 44100 Hz.
-%   a = miraudio(b, ...), where b is already a miraudio object, performs 
+%   a = psyaudio(b, ...), where b is already a psyaudio object, performs 
 %       operations on b specified by the optional arguments (see below).
 %
 %   Transformation options:
-%       miraudio(...,'Mono',0) does not perform the default summing of
+%       psyaudio(...,'Mono',0) does not perform the default summing of
 %           channels into one single mono track, but instead stores each 
 %           channel of the initial soundfile separately.       
-%       miraudio(...,'Center') centers the signals.
-%       miraudio(...,'Sampling',r) resamples at sampling rate r (in Hz).
+%       psyaudio(...,'Center') centers the signals.
+%       psyaudio(...,'Sampling',r) resamples at sampling rate r (in Hz).
 %           (Requires the Signal Processing Toolbox.)
-%       miraudio(...,'Normal') normalizes with respect to RMS energy.
+%       psyaudio(...,'Normal') normalizes with respect to RMS energy.
 %   Extraction options:
-%       miraudio(...,'Extract',t1,t2,u,f) extracts the signal between dates
+%       psyaudio(...,'Extract',t1,t2,u,f) extracts the signal between dates
 %           t1 and t2, expressed in the unit u.
 %           Possible values for u:
 %               's' (seconds, by default),
@@ -31,18 +31,18 @@ function varargout = miraudio(orig,varargin)
 %               When using 'Middle' or 'End', negative values for t1 or t2
 %               indicate values before the middle or the end of the audio
 %               sequence.
-%       miraudio(...,'Trim') trims the pseudo-silence beginning and end off
+%       psyaudio(...,'Trim') trims the pseudo-silence beginning and end off
 %           the audio file. Silent frames are frames with RMS below t times
 %           the medium RMS of the whole audio file.
 %               Default value: t = 0.06
 %           instead of 'Trim':
 %              'TrimStart' only trims the beginning of the audio file,
 %              'TrimEnd' only trims the end.
-%           miraudio(...,'TrimThreshold',t) specifies the trimming threshold t.
-%       miraudio(...,'Channel',c) or miraudio(...,'Channels',c) selects the
+%           psyaudio(...,'TrimThreshold',t) specifies the trimming threshold t.
+%       psyaudio(...,'Channel',c) or psyaudio(...,'Channels',c) selects the
 %           channels indicated by the (array of) integer(s) c.
 %   Labeling option:
-%       miraudio(...,'Label',l) labels the audio signal(s) following the 
+%       psyaudio(...,'Label',l) labels the audio signal(s) following the 
 %           label(s) l.
 %           If l is a (series of) number(s), the audio signal(s) are
 %           labelled using the substring of their respective file name of 
@@ -56,9 +56,9 @@ if nargin==0 % In order for Psysound to get the Name field with PossAnalyser
 cl=struct;
 cl.fresh=[];
 cl.extracted=[];
-base=mirtemporal();
-cl=class(cl,'miraudio',base);
-cl=set(cl,'Name','Mirtoolbox (miraudio)');
+base=psytemporal();
+cl=class(cl,'psyaudio',base);
+cl=set(cl,'Name','Mirtoolbox (psyaudio)');
 varargout={cl};
 
 else
@@ -79,7 +79,7 @@ if isnumeric(orig)
     end
     tp = (0:size(orig,1)-1)'/f;
     l = (size(orig,1)-1)/f;
-    t = mirtemporal([],'Time',{{tp}},'Data',{{orig}},'Length',{{l}},...
+    t = psytemporal([],'Time',{{tp}},'Data',{{orig}},'Length',{{l}},...
                     'FramePos',{{tp([1 end])}},'Sampling',{f},...
                     'Name',{inputname(1)},'Label',{{}},'Clusters',{{}},...
                     'Channels',[],'Centered',0,'NBits',{b},...
@@ -87,9 +87,9 @@ if isnumeric(orig)
                     'PeakPos',{{{}}},'PeakVal',{{{}}},'PeakMode',{{{}}});
     aa.fresh = 1;
     aa.extracted = 0;
-cl=class(aa,'miraudio',t);
+cl=class(aa,'psyaudio',t);
 % Adapted for Psysound3
-cl=set(cl,'Name','Mirtoolbox (miraudio)'); 
+cl=set(cl,'Name','Mirtoolbox (psyaudio)'); 
     varargout = {cl};
 
     return
@@ -101,9 +101,9 @@ end
 cl=struct;
 cl.fresh=[];
 cl.extracted=[];
-base=mirtemporal(orig);
-cl=class(cl,'miraudio',base);
-cl=set(cl,'Name','Mirtoolbox (miraudio)'); 
+base=psytemporal(orig);
+cl=class(cl,'psyaudio',base);
+cl=set(cl,'Name','Mirtoolbox (psyaudio)'); 
     varargout = {cl};
 
             else
@@ -198,7 +198,7 @@ if nargin > 1 && ischar(varargin{1}) && strcmp(varargin{1},'Now')
     para = [];
     varargout = {main(orig,[],para,[],extract)};
 else
-    varargout = mirfunction(@miraudio,orig,varargin,nargout,specif,@init,@main);
+    varargout = mirfunction(@psyaudio,orig,varargin,nargout,specif,@init,@main);
 end
 if isempty(varargout)
     varargout = {{}};
@@ -208,12 +208,12 @@ end
 
 
 function [x type] = init(x,option)
-if isa(x,'mirdesign')
+if isa(x,'psydesign')
     if option.sampling
         x = setresampling(x,option.sampling);
     end
 end
-type = 'miraudio';
+type = 'psyaudio';
 
 
 function a = main(orig,option,after,index,extract)
@@ -225,16 +225,16 @@ if ischar(orig)
         extract = [];
     end
     [d{1},tp{1},fp{1},f{1},l{1},b{1},n{1},ch{1}] = mirread(extract,orig,1,0);
-    t = mirtemporal([],'Time',tp,'Data',d,'FramePos',fp,'Sampling',f,...
+    t = psytemporal([],'Time',tp,'Data',d,'FramePos',fp,'Sampling',f,...
                        'Name',n,'Label',cell(1,length(d)),...
                        'Clusters',cell(1,length(d)),'Length',l,...
                        'Channels',ch,'Centered',0,'NBits',b);
     t = set(t,'Title','Audio waveform');
     a.fresh = 1;
     a.extracted = 1;
-    a = class(a,'miraudio',t);
+    a = class(a,'psyaudio',t);
 % Adapted for Psysound3
-    a=set(a,'Name','Mirtoolbox (miraudio)'); 
+    a=set(a,'Name','Mirtoolbox (psyaudio)'); 
 else
     if not(isempty(option)) && not(isempty(option.extract))
         if not(isstruct(after))
@@ -242,13 +242,13 @@ else
         end
         after.extract = option.extract;
     end
-    if isa(orig,'miraudio')
+    if isa(orig,'psyaudio')
         a = orig;
     else
         a.fresh = 1;
         a.extracted = 0;
-        a = class(a,'miraudio',orig);
-        a=set(a,'Name','Mirtoolbox (miraudio)');
+        a = class(a,'psyaudio',orig);
+        a=set(a,'Name','Mirtoolbox (psyaudio)');
     end
 end      
 if not(isempty(after))
@@ -418,7 +418,7 @@ end
 
 function [new orig] = beforechunk(orig,option,missing)
 option.normal = 0;
-a = miraudio(orig,option);
+a = psyaudio(orig,option);
 d = get(a,'Data');
 old = get(orig,'AcrossChunks');
 if isempty(old)
@@ -437,7 +437,7 @@ s.samples = length(d);
 
 
 function [y orig] = eachchunk(orig,option,missing)
-y = miraudio(orig,option);
+y = psyaudio(orig,option);
 
 
 function y = combinechunk(old,new)

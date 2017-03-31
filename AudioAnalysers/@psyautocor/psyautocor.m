@@ -1,58 +1,58 @@
-function varargout = mirautocor(orig,varargin)
-%   a = mirautocor(x) computes the autocorrelation function related to x.
+function varargout = psyautocor(orig,varargin)
+%   a = psyautocor(x) computes the autocorrelation function related to x.
 %   Optional parameters:
-%       mirautocor(...,'Min',mi) indicates the lowest delay taken into
+%       psyautocor(...,'Min',mi) indicates the lowest delay taken into
 %           consideration. The unit can be precised:
-%               mirautocor(...,'Min',mi,'s') (default unit)
-%               mirautocor(...,'Min',mi,'Hz')
+%               psyautocor(...,'Min',mi,'s') (default unit)
+%               psyautocor(...,'Min',mi,'Hz')
 %           Default value: 0 s.
-%       mirautocor(...,'Max',ma) indicates the highest delay taken into
+%       psyautocor(...,'Max',ma) indicates the highest delay taken into
 %           consideration. The unit can be specified as for 'Min'.
 %           Default value:
 %               if x is a signal, the highest delay is 0.05 s
 %                   (corresponding to a minimum frequency of 20 Hz).
 %               if x is an envelope, the highest delay is 2 s.
-%       mirautocor(...,'Resonance',r) multiplies the autocorrelation function
+%       psyautocor(...,'Resonance',r) multiplies the autocorrelation function
 %           with a resonance curve:
 %           Possible values:
 %               'Toiviainen' from (Toiviainen & Snyder, 2003)
 %               'vanNoorden' from (van Noorden & Moelants, 2001)
-%           mirautocor(...,'Center',c) assigns the center value of the
+%           psyautocor(...,'Center',c) assigns the center value of the
 %               resonance curve, in seconds.
 %               Works mainly with 'Toiviainen' option.
 %               Default value: c = 0.5
-%       mirautocor(...,'Enhanced',a) reduces the effect of subharmonics.
+%       psyautocor(...,'Enhanced',a) reduces the effect of subharmonics.
 %           The original autocorrelation function is half-wave rectified,
 %           time-scaled by the factor a (which can be a factor list as
 %           well), and substracted from the original clipped function.
 %           (Tolonen & Karjalainen)
 %               If the 'Enhanced' option is not followed by any value, 
 %                   default value is a = 2:10
-%       mirautocor(...,'Halfwave') performs a half-wave rectification on the
+%       psyautocor(...,'Halfwave') performs a half-wave rectification on the
 %           result.
-%       mirautocor(...,'Freq') represents the autocorrelation function in the
+%       psyautocor(...,'Freq') represents the autocorrelation function in the
 %           frequency domain.
-%       mirautocor(...,'NormalWindow',w): applies a window to the input 
+%       psyautocor(...,'NormalWindow',w): applies a window to the input 
 %           signal and divides the autocorrelation by the autocorrelation of  
 %           that window (Boersma 1993).
 %           Possible values: any windowing function proposed in the Signal
 %               Processing Toolbox (help window) plus 'rectangle' (no
 %               windowing)
 %           Default value:  w = 'hanning'
-%           mirautocor(...,'NormalWindow',0): toggles off this normalization
+%           psyautocor(...,'NormalWindow',0): toggles off this normalization
 %               (which is on by default).
 %   All the parameters described previously can be applied to an
 %       autocorrelation function itself, in order to arrange the results
 %       after the actual computation of the autocorrelation computations.
-%       For instance: a = mirautocor(a,'Resonance','Enhanced')
+%       For instance: a = psyautocor(a,'Resonance','Enhanced')
 %   Other optional parameter:
-%       mirautocor(...,'Compres',k) computes the autocorrelation in the
+%       psyautocor(...,'Compres',k) computes the autocorrelation in the
 %           frequency domain and includes a magnitude compression of the
 %           spectral representation. A normal autocorrelation corresponds
 %           to the value k=2, but values lower than 2 are suggested by
 %           (Tolonen & Karjalainen, 2000).
 %           Default value: k = 0.67
-%       mirautocor(...,'Normal',n) or simply mirautocor(...,n) specifies
+%       psyautocor(...,'Normal',n) or simply psyautocor(...,n) specifies
 %           the normalization strategy. Accepted values are 'biased',
 %           'unbiased', 'coeff' (default  value) and 'none'.
 %           See help xcorr for an explanation. 
@@ -68,8 +68,8 @@ if nargin==0 %position of the ''end''?
     a.ofspectrum = [];
     a.window = {};
     a.normalwindow = []; 
-a = class(a,'mirautocor', psydata() );
-a=set(a,'Name','MirToolbox (mirautocor)');
+a = class(a,'psyautocor', psydata() );
+a=set(a,'Name','MirToolbox (psyautocor)');
 varargout={a};
 
 else
@@ -95,7 +95,7 @@ else
         end
         if isamir(orig,'mirenvelope') || isamir(orig,'mirdiffenvelope')
             max.default = 2;             % for envelopes, longest period: 2 seconds.
-        elseif isamir(orig,'miraudio')  || ischar(orig)  % for audio signal,lowest frequency: 20 Hz.
+        elseif isamir(orig,'psyaudio')  || ischar(orig)  % for audio signal,lowest frequency: 20 Hz.
             max.default = 1/20; 
         else
             max.default = Inf;
@@ -177,23 +177,23 @@ specif.defaultframehop = 0.5;
 specif.eachchunk = @eachchunk;
 specif.combinechunk = @combinechunk;
 
-if isamir(orig,'mirscalar') || isamir(orig,'mirenvelope')
+if isamir(orig,'psyscalar') || isamir(orig,'mirenvelope')
     specif.nochunk = 1;
 end
 
-varargout = mirfunction(@mirautocor,orig,varargin,nargout,specif,@init,@main);
+varargout = mirfunction(@psyautocor,orig,varargin,nargout,specif,@init,@main);
 end
 
 
 function [x type] = init(x,option)
-type = 'mirautocor';
+type = 'psyautocor';
 
 
 function a = main(orig,option,postoption)
 if iscell(orig)
     orig = orig{1};
 end
-if isa(orig,'mirautocor')
+if isa(orig,'psyautocor')
     a = orig;
     if not(isempty(option)) && ...
             (option.min || iscell(option.max) || option.max < Inf)
@@ -220,7 +220,7 @@ if isa(orig,'mirautocor')
         a = post(a,postoption);
     end
 elseif ischar(orig)
-    a = mirautocor(miraudio(orig),option,postoption);
+    a = psyautocor(psyaudio(orig),option,postoption);
 else
     if nargin == 0
         orig = [];
@@ -229,16 +229,16 @@ else
     a.ofspectrum = 0;
     a.window = {};
     a.normalwindow = 0;
-    a = class(a,'mirautocor',psydata(orig));
+    a = class(a,'psyautocor',psydata(orig));
     a = purgedata(a);
-a=set(a,'Name','MirToolbox (mirautocor)'); % Adapted for Psysound3
+a=set(a,'Name','MirToolbox (psyautocor)'); % Adapted for Psysound3
     sig = get(orig,'Data');
     if isa(orig,'psyspectrum')
         a = set(a,'Title','Spectrum autocorrelation','OfSpectrum',1,...
                   'Abs','frequency (Hz)');
         pos = get(orig,'Pos');
     else
-        if isa(orig,'mirscalar')
+        if isa(orig,'psyscalar')
             a = set(a,'Title',[get(orig,'Title') ' autocorrelation']);
             pos = get(orig,'FramePos');
             for k = 1:length(sig)
@@ -250,7 +250,7 @@ a=set(a,'Name','MirToolbox (mirautocor)'); % Adapted for Psysound3
         else
             if isa(orig,'mirenvelope')
                 a = set(a,'Title','Envelope autocorrelation');
-            elseif not(isa(orig,'mirautocor'))
+            elseif not(isa(orig,'psyautocor'))
                 a = set(a,'Title','Waveform autocorrelation');
             end
             pos = get(orig,'Pos');
@@ -437,7 +437,7 @@ for k = 1:length(coeff)
                     (strcmpi(option.reso,'ToiviainenSnyder') || ...
                     strcmpi(option.reso,'Toiviainen') || ...
                     strcmpi(option.reso,'vanNoorden'))
-                if isa(a,'mirautocor') && get(a,'FreqDomain')
+                if isa(a,'psyautocor') && get(a,'FreqDomain')
                     ll = 1./t;
                 else
                     ll = t;
@@ -604,7 +604,7 @@ end
 
 function [y orig] = eachchunk(orig,option,missing,postchunk)
 option.scaleopt = 'none';
-y = mirautocor(orig,option);
+y = psyautocor(orig,option);
 
 
 function y = combinechunk(old,new)

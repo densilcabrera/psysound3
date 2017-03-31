@@ -11,5 +11,5 @@ switch propName
     case 'SpectrumType'
         val = p.SpectrumType;
     otherwise
-        val = getMir(mirscalar(p),propName);
+        val = getMir(psyscalar(p),propName);
 end

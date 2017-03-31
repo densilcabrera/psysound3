@@ -257,7 +257,7 @@ cha = 0; % Indicates when it is possible to represent as a curve along the
 if isnan(option.first)
     option.first = option.cthr / 2;
 end
-if isa(x,'mirscalar')
+if isa(x,'psyscalar')
     t = get(x,'FramePos');
     for i = 1:length(d)
         for j = 1:length(d{i})
@@ -977,7 +977,7 @@ for i = 1:length(d) % For each audio file,...
             end
         end
         if option.extract % Extracting the positive part of the curve containing the peaks
-            if isa(x,'mirtemporal')
+            if isa(x,'psytemporal')
                 filn = floor(sr{i}/25);
             else
                 filn = 10;

@@ -26,4 +26,4 @@ while length(propertyArgIn) >= 2,
 end
 ss.phase = p;
 ss.freq = f;
-ss = class(ss,'mircepstrum',d);
+ss = class(ss,'psycepstrum',d);

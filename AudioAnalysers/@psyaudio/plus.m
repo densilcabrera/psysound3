@@ -9,9 +9,9 @@ if iscell(sb)
     sb = sb{1};
 end
 if sa>sb
-    b = miraudio(b,'Sampling',sa);
+    b = psyaudio(b,'Sampling',sa);
 elseif sb>sa
-    a = miraudio(a,'Sampling',sb);
+    a = psyaudio(a,'Sampling',sb);
 end
-c = plus(mirtemporal(a),mirtemporal(b));
-c = miraudio(c);
+c = plus(psytemporal(a),psytemporal(b));
+c = psyaudio(c);

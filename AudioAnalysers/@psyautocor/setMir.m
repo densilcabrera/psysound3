@@ -34,4 +34,4 @@ aa.freq = f;
 aa.ofspectrum = s;
 aa.window = w;
 aa.normalwindow = nw;
-aa = class(aa,'mirautocor',d);
+aa = class(aa,'psyautocor',d);

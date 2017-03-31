@@ -41,14 +41,14 @@ varargout = mirfunction(@mirroughness,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if isamir(x,'miraudio') && not(isframed(x))
+if isamir(x,'psyaudio') && not(isframed(x))
     x = mirframenow(x,option);
 end
 x = psyspectrum(x);
 if not(haspeaks(x))
     x = mirpeaks(x,'Contrast',option.cthr);
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function r = main(p,option,postoption)
@@ -86,7 +86,7 @@ if strcmpi(option.meth,'Sethares') || strcmpi(option.meth,'Vassilakis')
     end
 else
 end    
-r = mirscalar(p,'Data',rg,'Title','Roughness');
+r = psyscalar(p,'Data',rg,'Title','Roughness');
 r = {r,p};
 
 

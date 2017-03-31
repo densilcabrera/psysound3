@@ -7,7 +7,7 @@ end
 va = get(a,'PeakVal');
 pa = get(a,'PeakPos');
 ma = get(a,'PeakMode');
-if isa(a,'mirscalar')
+if isa(a,'psyscalar')
     xa = get(a,'FramePos');
 else
     xa = get(a,'Pos');
@@ -15,7 +15,7 @@ end
 vb = get(b,'PeakVal');
 pb = get(b,'PeakPos');
 mb = get(b,'PeakMode');
-if isa(b,'mirscalar')
+if isa(b,'psyscalar')
     xb = get(b,'FramePos');
 else
     xb = get(b,'Pos');
@@ -32,10 +32,10 @@ for j = 1:length(va)
                 [pbcp,ix] = sort(pb{j}{k}{1,c,p});
                 xajk = xa{j}{k};
                 xbjk = xb{j}{k};
-                if isa(a,'mirscalar')
+                if isa(a,'psyscalar')
                     xajk = mean(xajk);
                 end
-                if isa(b,'mirscalar')
+                if isa(b,'psyscalar')
                     xbjk = mean(xbjk);
                 end
                 ia = 1;

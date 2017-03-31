@@ -12,10 +12,10 @@ end
 if isa(x,class)
     b = 1;
     return
-elseif ischar(x) && strcmpi(class,'miraudio')
+elseif ischar(x) && strcmpi(class,'psyaudio')
     b = 1;
     return
-elseif not(isa(x,'mirdesign'))
+elseif not(isa(x,'psydesign'))
     b = 0;
     return
 end
@@ -37,12 +37,12 @@ end
 
 function types = lineage(class)
 switch class
-    case {'miraudio','mirenvelope'}
-        parent = 'mirtemporal';
-    case {'mirautocor','mircepstrum','mirchromagram','mirhisto',...
+    case {'psyaudio','mirenvelope'}
+        parent = 'psytemporal';
+    case {'psyautocor','psycepstrum','mirchromagram','mirhisto',...
           'mirkeysom','mirkeystrength','mirmatrix','mirmfcc',...
-          'mirscalar','mirsimatrix','psyspectrum',...
-          'mirtemporal','mirtonalcentroid'}
+          'psyscalar','mirsimatrix','psyspectrum',...
+          'psytemporal','mirtonalcentroid'}
         parent = 'psydata';
     otherwise
         parent = '';

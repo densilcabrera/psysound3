@@ -2,13 +2,13 @@
 % Version 1.3.4 (Matlab Central version) 14-December-2011
 %
 % A more detailed documentation of each function is available using the
-% help command. For instance, type help miraudio.
+% help command. For instance, type help psyaudio.
 %
 % A complete documentation is available in the downloaded folder and online.
 %			http://www.jyu.fi/music/coe/materials/mirtoolbox
 %
 %BASIC AUDIO OPERATIONS
-% miraudio         - Loads and return waveform
+% psyaudio         - Loads and return waveform
 % mirframe         - Decomposes into successive frames
 % mirsegment       - Decomposes into successive segments
 % mirlength        - Temporal length
@@ -21,7 +21,7 @@
 %
 %ANALYTICAL OPERATORS
 % psyspectrum      - FFT spectrum with many post-processing operations
-% mirautocor       - Autocorrelation function
+% psyautocor       - Autocorrelation function
 % mirfilterbank    - Decomposes into channels via a bank of filters
 % mirsum           - Sums the channels of a filterbank
 %
@@ -53,7 +53,7 @@
 %
 %PITCH
 % mirpitch         - Pitch frequencies
-% mircepstrum      - Cepstrum representation (showing periodicities)
+% psycepstrum      - Cepstrum representation (showing periodicities)
 % mirmidi          - Attempts a conversion of audio into MIDI
 %
 %TONALITY

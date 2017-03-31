@@ -4,7 +4,7 @@ d = get(a,'Data');
 f = cell(1,length(d));
 n = get(a,'Name');
 t = get(a,'Title');
-if not(isa(a,'miraudio'))
+if not(isa(a,'psyaudio'))
     if isa(b,'psydata')
         t = [t,' * ',get(b,'Title')];
     else
@@ -36,7 +36,7 @@ for i = 1:length(d)
             f{i}{j} = d{i}{j} .* e{i}{j};
         end
     end
-    if isa(a,'miraudio')
+    if isa(a,'psyaudio')
         n{i} = [n{i} '*' m{i}];
     end
 end

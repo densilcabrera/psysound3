@@ -31,7 +31,7 @@ function varargout = mirsum(orig,varargin)
     
 specif.option = option;
 
-if isamir(orig,'mirtemporal')
+if isamir(orig,'psytemporal')
     specif.eachchunk = @eachtemporalchunk;
     specif.combinechunk = 'Concat'; %@combinetemporalchunk;
 else

@@ -301,7 +301,7 @@ specif.defaultframehop = 0.5;
 specif.eachchunk = @eachchunk;
 specif.combinechunk = @combinechunk;
 
-if isamir(orig,'mirscalar') || isamir(orig,'mirenvelope')
+if isamir(orig,'psyscalar') || isamir(orig,'mirenvelope')
     specif.nochunk = 1;
 end
 
@@ -369,7 +369,7 @@ if isa(orig,'psyspectrum') && ...
         s = post(s,postoption);
     end
 elseif ischar(orig)
-    s = psyspectrum(miraudio(orig),option,postoption);
+    s = psyspectrum(psyaudio(orig),option,postoption);
 else
     if nargin == 0
         orig = [];

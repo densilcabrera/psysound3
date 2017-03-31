@@ -90,7 +90,7 @@ varargout = mirfunction(@mirfilterbank,orig,varargin,nargout,specif,@init,@main)
 
 
 function [x type] = init(x,option)
-type = 'miraudio';
+type = 'psyaudio';
 
 
 function b = main(x,option,postoption)
