@@ -23,10 +23,10 @@ varargout = mirfunction(@mircentroid,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'psyaudio')
+if not(isamir(x,'psydata')) || isamir(x,'miraudio')
     x = psyspectrum(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function c = main(x,option,postoption)
@@ -73,7 +73,7 @@ elseif isa(x,'mirenvelope')
 else
     t = ['centroid of ',get(x,'Title')];
 end
-c = psyscalar(x,'Data',cx,'Title',t);
+c = mirscalar(x,'Data',cx,'Title',t);
 
 
 function c = centroid(d,p)

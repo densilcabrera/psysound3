@@ -157,13 +157,13 @@ p = {};
 m = {};
 fe = {};
 
-if isa(x,'psydesign')
+if isa(x,'mirdesign')
     if not(get(x,'Eval'))
         % During bottom-up construction of the general design
 
         [unused option] = miroptions(@mirframe,x,specif,varargin);
         type = get(x,'Type');
-        f = psydesign(@mirsegment,x,option,{},struct,type);
+        f = mirdesign(@mirsegment,x,option,{},struct,type);
         
         sg = get(x,'Segment');
         if not(isempty(sg))
@@ -248,7 +248,7 @@ elseif isa(x,'psydata')
         dx = get(x,'Data');
         dt = get(x,'Time');
 
-        if isa(option.strat,'psyscalar')
+        if isa(option.strat,'mirscalar')
             ds = get(option.strat,'PeakPos');
             fp = get(option.strat,'FramePos');
         elseif isa(option.strat,'psydata')
@@ -285,7 +285,7 @@ elseif isa(x,'psydata')
                 end
                 for m = 1:length(dsj)
                     % segmentation times in mth bank channel
-                    if isa(option.strat,'psyscalar')
+                    if isa(option.strat,'mirscalar')
                         dsm = mean(fp{k}{m}(:,dsj{m}));
                     elseif isa(option.strat,'psydata')
                         dsm = xx{k}{m}(dsj{m});
@@ -380,7 +380,7 @@ elseif isa(x,'psydata')
         fe = {};
     end
 else
-    [f p] = mirsegment(psyaudio(x),varargin{:});
+    [f p] = mirsegment(miraudio(x),varargin{:});
 end 
 
 

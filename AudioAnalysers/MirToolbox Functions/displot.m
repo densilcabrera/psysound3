@@ -1,5 +1,5 @@
 function res = displot(x,y,xlab,ylab,t,fp,pp,tp,tv,ch,multidata,pm,ap,rp,cl)
-% graphical display of any data (except psyscalar data) computed by MIRToolbox
+% graphical display of any data (except mirscalar data) computed by MIRToolbox
 
 %opengl('OpenGLWobbleTesselatorBug',1)
 % Rendering complex patch object may cause segmentation violation and

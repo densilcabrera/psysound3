@@ -9,10 +9,10 @@ varargout = mirfunction(@mirspread,orig,varargin,nargout,struct,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'psyaudio')
+if not(isamir(x,'psydata')) || isamir(x,'miraudio')
     x = psyspectrum(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function S = main(x,option,postoption)
@@ -29,7 +29,7 @@ elseif isa(x,'mirenvelope')
 else
     t = ['Spread of ',get(x,'Title')];
 end
-S = psyscalar(x,'Data',y,'Title',t);
+S = mirscalar(x,'Data',y,'Title',t);
 
 
 function s = spread(d,p,c)

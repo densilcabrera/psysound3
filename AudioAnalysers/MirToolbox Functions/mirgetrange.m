@@ -17,7 +17,7 @@ if iscell(x)
     x = x{1};
 end
 v = get(x,'Data');
-if isa(x,'psyscalar')
+if isa(x,'mirscalar')
     m = get(x,'Mode');
 end
 
@@ -38,7 +38,7 @@ pv = get(x,'PeakVal');
 if not(isempty(pv)) && not(isempty(pv{1})) && not(isempty(pv{1}{1}))
     d = uncell(pv);
 else
-    d = uncell(v,isa(x,'psyscalar'));
+    d = uncell(v,isa(x,'mirscalar'));
 end
 
 if not(iscell(d))

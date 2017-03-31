@@ -36,7 +36,7 @@ for k = 1:length(d)
             end
         end
     end
-    fout = psyaudio(out,44100);
+    fout = miraudio(out,44100);
     mirsave(fout,[n{k},'.',t]);
 end
 

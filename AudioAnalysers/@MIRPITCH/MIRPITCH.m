@@ -7,7 +7,7 @@ switch nargin
  case 0
   % Default Constructor
   % Inherit from the Analyser base class
-  base = psyscalar();
+  base = mirscalar();
   obj.amplitude = [];
   
   obj.Frame=[];
@@ -23,7 +23,7 @@ switch nargin
     obj = arg1;
   elseif isstruct(arg1)
     % This should be a file handle
-    base = psyscalar(arg1);
+    base = mirscalar(arg1);
     obj.amplitude = [];  
     
     obj.Frame=[];

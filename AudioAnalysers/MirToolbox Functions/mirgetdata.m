@@ -48,7 +48,7 @@ if iscell(x)
     x = x{1};
 end
 v = get(x,'Data');
-if isa(x,'psyscalar')
+if isa(x,'mirscalar')
     m = get(x,'Mode');
 end
 d2 = {};
@@ -86,7 +86,7 @@ if not(isempty(pt)) && not(isempty(pt{1})) && not(isempty(pt{1}{1}))
     end
 end
 
-d = uncell(v,isa(x,'psyscalar'));
+d = uncell(v,isa(x,'mirscalar'));
 if iscell(d) && not(isempty(d)) && nargin == 1
     disp('The result is an array of cell.')
     disp(['If d is the name of the output variable, ',...

@@ -12,7 +12,7 @@ varargout = mirfunction(@mirhcdf,orig,varargin,nargout,specif,@init,@main);
 
 
 function [df type] = init(orig,option)
-if isamir(orig,'psyscalar')
+if isamir(orig,'mirscalar')
     df = orig;
 else
     if isframed(orig)
@@ -22,7 +22,7 @@ else
     end
     df = mirflux(tc);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function df = main(df,option,postoption)

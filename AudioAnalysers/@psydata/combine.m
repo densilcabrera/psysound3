@@ -24,7 +24,7 @@ rp = cell(1,l);
 if isa(c,'temporal')
     nb = cell(1,l);
 end
-if isa(c,'psyscalar')
+if isa(c,'mirscalar')
     m = cell(1,l);
 end
 if isa(c,'miremotion')
@@ -57,7 +57,7 @@ for i = 1:l
         ct = getargin(argin,'Centered');
         nb{i} = getargin(argin,'NBits');
     end
-    if isa(c,'psyscalar')
+    if isa(c,'mirscalar')
         m{i} = getargin(argin,'Mode');
     end
     if isa(c,'miremotion')
@@ -75,7 +75,7 @@ c = setMir(c,'Pos',p,'Data',d,'FramePos',fp,'Channels',ch,...
 if isa(c,'temporal')
     c = setMir(c,'Centered',ct,'NBits',nb);
 end
-if isa(c,'psyscalar')
+if isa(c,'mirscalar')
     c = setMir(c,'Mode',m);
 end
 if isa(c,'miremotion')

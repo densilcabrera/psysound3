@@ -1,6 +1,6 @@
 function varargout = mirplay(a,varargin)
 
-% mirplay method for psyaudio objects. Help displayed in ../mirplay.m
+% mirplay method for miraudio objects. Help displayed in ../mirplay.m
 
         ch.key = 'Channel';
         ch.type = 'Integer';

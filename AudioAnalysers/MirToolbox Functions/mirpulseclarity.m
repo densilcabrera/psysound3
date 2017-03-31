@@ -136,7 +136,7 @@ function varargout = mirpulseclarity(orig,varargin)
         slope.default = 'Diff';
     option.slope = slope;
     
-%% options related to psyautocor:    
+%% options related to mirautocor:    
     
         enh.key = 'Enhanced';
         enh.type = 'Integers';
@@ -194,11 +194,11 @@ function [x type] = init(x,option)
 if iscell(x)
     x = x{1};
 end
-if isamir(x,'psyautocor')
-    type = {'psyscalar','psyautocor'};
+if isamir(x,'mirautocor')
+    type = {'mirscalar','mirautocor'};
 elseif length(option.model) > 1
     a = x;
-    type = {'psyscalar'};
+    type = {'mirscalar'};
     for m = 1:length(option.model)
         if option.frame.length.val
             y = mirpulseclarity(a,'Model',option.model(m),...
@@ -272,20 +272,20 @@ else
                        'Min',option.mi,'Max',option.ma,...
                        'Total',option.m,'Contrast',option.thr);
         end
-        type = {'psyscalar','psyautocor'};
+        type = {'mirscalar','mirautocor'};
     elseif strcmpi(option.stratg,'ExtremEnvelop')
         x = mironsets(x,'Filterbank',option.fb);
-        type = {'psyscalar','mirenvelope'};
+        type = {'mirscalar','mirenvelope'};
     elseif strcmpi(option.stratg,'Attack')
         x = mirattackslope(x,option.slope);
-        type = {'psyscalar','mirenvelope'};
+        type = {'mirscalar','mirenvelope'};
 %    elseif strcmpi(option.stratg,'AttackDiff')
-%        type = {'psyscalar','mirenvelope'};
+%        type = {'mirscalar','mirenvelope'};
     elseif strcmpi(option.stratg,'Articulation')
         x = mirlowenergy(x,'ASR');
-        type = {'psyscalar','psyscalar'};
+        type = {'mirscalar','mirscalar'};
     else
-        type = {'psyscalar','psyaudio'};
+        type = {'mirscalar','miraudio'};
     end
 end
 
@@ -297,7 +297,7 @@ function o = main(a,option,postoption)
 if option.model == 2
     option.stratg = 'InterfAutocor';
 end
-if isa(a,'psyscalar') && not(strcmpi(option.stratg,'Attack')) % not very nice test... to improve.
+if isa(a,'mirscalar') && not(strcmpi(option.stratg,'Attack')) % not very nice test... to improve.
     o = {a};
     return
 end
@@ -353,7 +353,7 @@ elseif strcmpi(option.stratg,'Articulation')
 end
 
 if iscell(rc)
-    pc = psyscalar(a,'Data',rc,'Title','Pulse clarity');
+    pc = mirscalar(a,'Data',rc,'Title','Pulse clarity');
 else
     pc = set(rc,'Title',['Pulse clarity (',get(rc,'Title'),')']);
 end

@@ -1,5 +1,5 @@
-function s = psyscalar(orig,varargin)
-%   s = psyscalar(x,n) creates a scalar object
+function s = mirscalar(orig,varargin)
+%   s = mirscalar(x,n) creates a scalar object
 
 if nargin == 0
     orig = [];
@@ -7,7 +7,7 @@ end
 if iscell(orig)
     orig = orig{1};
 end
-if isa(orig,'psyscalar')
+if isa(orig,'mirscalar')
     s.mode = orig.mode;
     s.legend = orig.legend;
     s.parameter = orig.parameter;
@@ -18,7 +18,7 @@ else
 end
 
 base=psydata(orig);
-s = class(s,'psyscalar',base);
+s = class(s,'mirscalar',base);
 
 
 
@@ -26,4 +26,4 @@ s = purgedata(s);
 s = setMir(s,'Pos',{},'Abs','Temporal position of frames','Ord','Value',varargin{:});
 
 % Adapted for psysound3
-s = set(s, 'Name', 'MirToolbox (psyscalar)');
+s = set(s, 'Name', 'MirToolbox (mirscalar)');

@@ -55,7 +55,7 @@ else
 end
 for v = 2:narg
     argv = varargin{v-1};
-    if isa(argv,'psydesign')
+    if isa(argv,'mirdesign')
         mirerror('MIREXPORT','You can only export features that have been already evaluated (using mireval).');
     end
     if ischar(argv)

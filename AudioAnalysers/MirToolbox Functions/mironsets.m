@@ -368,7 +368,7 @@ if isnan(option.env)
         option.env = 1;
     end
 end
-if isamir(x,'psyaudio')
+if isamir(x,'miraudio')
     if option.env
         if strcmpi(option.envmeth,'Filter') && option.fb>1
             fb = mirfilterbank(x,option.filtertype,'NbChannels',option.fb);
@@ -385,23 +385,23 @@ if isamir(x,'psyaudio')
     elseif option.flux
         x = mirframenow(x,option);
         y = mirflux(x,'Inc',option.inc,'Complex',option.complex);
-        type = 'psyscalar';
+        type = 'mirscalar';
     elseif option.pitch
         [unused ac] = mirpitch(x,'Frame','Min',option.min,'Max',option.max);
         y = mirnovelty(ac,'KernelSize',option.kernelsize);
-        type = 'psyscalar';
+        type = 'mirscalar';
     end
-elseif (option.pitch && not(isamir(x,'psyscalar'))) ...
+elseif (option.pitch && not(isamir(x,'mirscalar'))) ...
         || isamir(x,'mirsimatrix')
     y = mirnovelty(x,'KernelSize',option.kernelsize);
-    type = 'psyscalar';
-elseif isamir(x,'psyscalar') || isamir(x,'mirenvelope')
+    type = 'mirscalar';
+elseif isamir(x,'mirscalar') || isamir(x,'mirenvelope')
     y = x; %mirframenow(x,option);
     type = mirtype(x);
 else
     x = mirframenow(x,option);
     y = mirflux(x,'Inc',option.inc,'Complex',option.complex); %Not used...
-    type = 'psyscalar';
+    type = 'mirscalar';
 end
 
 
@@ -470,7 +470,7 @@ if isfield(postoption,'cthr')
         if postoption.c
             o = mirenvelope(o,'Center');
         end
-    elseif isa(o,'psyscalar') && strcmp(get(o,'Title'),'Spectral flux')
+    elseif isa(o,'mirscalar') && strcmp(get(o,'Title'),'Spectral flux')
         if postoption.median
             o = mirflux(o,'Median',postoption.median(1),postoption.median(2),...
                           'Halfwave',postoption.hw);
@@ -496,7 +496,7 @@ if isfield(option,'presel') && ...
     o = mirsum(o,'Weights',(filtfreq(1:end-1)+filtfreq(2:end))/2);
     o = mirenvelope(o,'Smooth',12);
 end
-if not(isa(o,'psyscalar'))
+if not(isa(o,'mirscalar'))
     o = mirframenow(o,postoption);
 end
 if isfield(postoption,'detect') && ischar(postoption.detect)

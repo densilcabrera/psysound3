@@ -25,6 +25,6 @@ end
 ss.mode = m;
 ss.legend = l;
 ss.parameter = p;
-ss = class(ss,'psyscalar',d);
+ss = class(ss,'mirscalar',d);
 
 end

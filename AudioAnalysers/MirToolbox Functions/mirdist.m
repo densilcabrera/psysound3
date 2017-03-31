@@ -17,10 +17,10 @@ function d = mirdist(x,y,dist)
 % wrapped for Matlab by Elias Pampalk.
 
 if not(isa(x,'psydata'))
-    x = psyaudio(x);
+    x = miraudio(x);
 end
 if not(isa(y,'psydata'))
-    y = psyaudio(y);
+    y = miraudio(y);
 end
 
 clx = get(x,'Clusters');
@@ -118,5 +118,5 @@ else
         dt{h}{1} = emd_wrapper(cost,clx{1}.weight,cly{h}.weight);
     end
 end
-d = psyscalar(y,'Data',dt,'Title',[get(y,'Title'),' Distance'],...
+d = mirscalar(y,'Data',dt,'Title',[get(y,'Title'),' Distance'],...
                 'Name',get(x,'Name'),'Name2',get(y,'Name'));

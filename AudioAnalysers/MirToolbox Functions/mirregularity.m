@@ -38,13 +38,13 @@ varargout = mirfunction(@mirregularity,orig,varargin,nargout,specif,@init,@main)
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'psyaudio')
+if not(isamir(x,'psydata')) || isamir(x,'miraudio')
     x = psyspectrum(x);
 end
 if not(haspeaks(x))
     x = mirpeaks(x,'Reso','SemiTone','Contrast',option.cthr);  %% FIND BETTER
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function o = main(x,option,postoption)
@@ -86,5 +86,5 @@ if isa(x,'psyspectrum')
 else
     t = ['Irregularity of ',get(x,'Title')];;
 end
-i = psyscalar(x,'Data',y,'Title',t);
+i = mirscalar(x,'Data',y,'Title',t);
 o = {i,x};

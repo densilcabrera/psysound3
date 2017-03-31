@@ -33,7 +33,7 @@ po = get(o,'PeakPosUnit');
 pa = get(o,'AttackPosUnit');
 at = mircompute(@algo,po,pa,option.scale);
 fp = mircompute(@frampose,pa,po);
-at = psyscalar(o,'Data',at,'FramePos',fp,'Title','Attack Time');
+at = mirscalar(o,'Data',at,'FramePos',fp,'Title','Attack Time');
 at = {at,o};
 
 

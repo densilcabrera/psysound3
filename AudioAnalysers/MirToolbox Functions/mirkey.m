@@ -45,7 +45,7 @@ if not(isamir(x,'mirkeystrength'))
     x = mirkeystrength(x,'Weight',option.wth,'Triangle',option.tri);
 end
 p = mirpeaks(x,'Total',option.tot,'Contrast',option.thr);
-type = {'psyscalar','psyscalar','mirkeystrength'};
+type = {'mirscalar','mirscalar','mirkeystrength'};
 
 
 function k = main(p,option,postoption)
@@ -55,7 +55,7 @@ end
 pc = get(p,'PeakPos');
 pv = get(p,'PeakMaxVal');
 pm = get(p,'PeakMode');
-k = psyscalar(p,'Data',pc,'Mode',pm,'Title','Key',...
+k = mirscalar(p,'Data',pc,'Mode',pm,'Title','Key',...
     'Legend',{'C','C#','D','D#','E','F','F#','G','G#','A','A#','B'});
-m = psyscalar(p,'Data',pv,'Title','Key clarity','MultiData',{});
+m = mirscalar(p,'Data',pv,'Title','Key clarity','MultiData',{});
 k = {k m p};

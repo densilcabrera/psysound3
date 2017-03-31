@@ -282,7 +282,7 @@ function b = isdesign(f)
 if iscell(f)
     f = f{1};
 end
-if isa(f,'psydesign') || isa(f,'mirstruct')
+if isa(f,'mirdesign') || isa(f,'mirstruct')
     b = 1;
 elseif isa(f,'psydata') || not(isstruct(f))
     b = 0;

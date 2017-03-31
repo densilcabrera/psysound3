@@ -9,7 +9,7 @@ if isa(b,'psydata')
     e = get(b,'Data');
     m = get(b,'Name');
     u = get(b,'Title');
-    if not(isa(a,'psyaudio'))
+    if not(isa(a,'miraudio'))
        t = [t,' + ',get(b,'Title')];
     end
 else
@@ -31,7 +31,7 @@ for i = 1:length(d)
             f{i}{j} = d{i}{j} + e{i}{j};
         end
     end
-    if isa(a,'psyaudio')
+    if isa(a,'miraudio')
         n{i} = [n{i} '+' m{i}];
     end
 end

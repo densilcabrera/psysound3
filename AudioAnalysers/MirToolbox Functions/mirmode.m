@@ -22,7 +22,7 @@ function [x type] = init(x,option)
 if not(isamir(x,'mirkeystrength'))
     x = mirkeystrength(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function o = main(s,option,postoption)
@@ -35,7 +35,7 @@ if strcmpi(option.stra,'sum')
 elseif strcmpi(option.stra,'best')
     v = mircompute(@algobest,m);
 end
-b = psyscalar(s,'Data',v,'Title','Mode');
+b = mirscalar(s,'Data',v,'Title','Mode');
 o = {b,s};
 
 

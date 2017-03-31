@@ -5,10 +5,10 @@ function varargout = mirpitch(orig,varargin)
 %       mirpitch(...,'Autocor') computes an autocorrelation function
 %           (Default method)
 %           mirpitch(...'Enhanced',a) computes enhanced autocorrelation
-%               (see help psyautocor)
+%               (see help mirautocor)
 %              toggled on by default
 %           mirpitch(...,'Compress',k) performs magnitude compression
-%               (see help psyautocor)
+%               (see help mirautocor)
 %           mirpitch(...,fb) specifies a type of filterbank.
 %               Possible values:
 %                   fb = 'NoFilterBank': no filterbank decomposition
@@ -223,7 +223,7 @@ if isnumeric(orig)
     
     p.Frame=[];
     p.SpectrumType='';
-    s = psyscalar([],'Data',{{orig'}},'Title','Pitch','Unit','Hz',...
+    s = mirscalar([],'Data',{{orig'}},'Title','Pitch','Unit','Hz',...
                      'FramePos',{{fp}},'Sampling',f,'Name',{inputname(1)});
     p = class(p,'MIRPITCH',s);
     varargout = {p};
@@ -249,23 +249,23 @@ if isnan(option.frame.hop.val)
     option.frame.hop.val = .01;
     option.frame.hop.unit = 's';
 end
-if isamir(orig,'psyscalar') || haspeaks(orig)
+if isamir(orig,'mirscalar') || haspeaks(orig)
     y = orig;
 else
-    if isamir(orig,'psyautocor')
-        y = psyautocor(orig,'Min',option.mi,'Hz','Max',option.ma,'Hz','Freq');
-    elseif isamir(orig,'psycepstrum')
+    if isamir(orig,'mirautocor')
+        y = mirautocor(orig,'Min',option.mi,'Hz','Max',option.ma,'Hz','Freq');
+    elseif isamir(orig,'mircepstrum')
         y = orig;
     elseif isamir(orig,'psyspectrum')
         if not(option.as) && not(option.ce) && not(option.s)
             option.ce = 1;
         end
         if option.as
-            y = psyautocor(orig,...
+            y = mirautocor(orig,...
                             'Min',option.mi,'Hz','Max',option.ma,'Hz');
         end
         if option.ce
-            ce = psycepstrum(orig,'freq',...
+            ce = mircepstrum(orig,'freq',...
                             'Min',option.mi,'Hz','Max',option.ma,'Hz');
             if option.as
                 y = y*ce;
@@ -280,18 +280,18 @@ else
                 x = mirfilterbank(x,option.filtertype);
             end
             x = mirframenow(x,option);
-            y = psyautocor(x,'Generalized',option.gener,...
+            y = mirautocor(x,'Generalized',option.gener,...
                                 'Min',option.mi,'Hz','Max',option.ma,'Hz');
             if option.sum
                 y = mirsummary(y);
             end
-            y = psyautocor(y,'Enhanced',option.enh,'Freq');
+            y = mirautocor(y,'Enhanced',option.enh,'Freq');
         end
         if option.as || option.ce || option.s
             x = mirframenow(orig,option);
             y = psyspectrum(x);
             if option.as
-                as = psyautocor(y,...
+                as = mirautocor(y,...
                                 'Min',option.mi,'Hz','Max',option.ma,'Hz');
                 if option.ac
                     y = y*as;
@@ -300,7 +300,7 @@ else
                 end
             end
             if option.ce
-                ce = psycepstrum(y,'freq',...
+                ce = mircepstrum(y,'freq',...
                                 'Min',option.mi,'Hz','Max',option.ma,'Hz');
                 if option.ac || option.as
                     y = y*ce;
@@ -330,7 +330,7 @@ if not(isa(x,'MIRPITCH'))
                    'Reso',option.reso,'NoBegin','NoEnd',...
                    'Order',option.order);
 end
-if isa(x,'psyscalar')
+if isa(x,'mirscalar')
     pf = get(x,'Data');
 else
     pf = get(x,'PeakPrecisePos');
@@ -384,7 +384,7 @@ if option.median
         end
     end
 end
-if isa(x,'psyscalar')
+if isa(x,'mirscalar')
     p.amplitude = 0;
 % Modified for the needs of parallell computing features in Psysound3    
     p.OptionStr = {};
@@ -397,6 +397,6 @@ else
     p.Frame=[];
     p.SpectrumType='';
 end
-s = psyscalar(x,'Data',pf,'Title','Pitch','Unit','Hz');
+s = mirscalar(x,'Data',pf,'Title','Pitch','Unit','Hz');
 p = class(p,'MIRPITCH',s);
 o = {p,x};

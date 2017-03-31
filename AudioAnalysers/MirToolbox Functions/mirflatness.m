@@ -12,7 +12,7 @@ function [x type] = init(x,option)
 if not(isamir(x,'mirenvelope') || isamir(x,'mirhisto'))
     x = psyspectrum(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function f = main(x,option,postoption)
@@ -50,4 +50,4 @@ elseif isa(x,'psyspectrum')
 else
     t = ['Flatness of ',get(x,'Title')];
 end
-f = psyscalar(x,'Data',y,'Title',t,'Unit','');
+f = mirscalar(x,'Data',y,'Title',t,'Unit','');

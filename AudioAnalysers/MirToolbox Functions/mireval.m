@@ -1,12 +1,12 @@
 function v = mireval(d,file,single,export)
-%   mireval(d,filename) applies the psydesign object d to the audio file
+%   mireval(d,filename) applies the mirdesign object d to the audio file
 %       named filename.
-%   mireval(d,'Folder') applied the psydesign object to each audio files in
+%   mireval(d,'Folder') applied the mirdesign object to each audio files in
 %       the current directory.
-%   mireval(d,'Folders') applied the psydesign object recursively to the
+%   mireval(d,'Folders') applied the mirdesign object recursively to the
 %       subfolders.
 %   Optional argument: mireval(...,'Single') only keeps the first
-%       output when several output are returned for a given psydesign
+%       output when several output are returned for a given mirdesign
 %       object.
 
 % mireval performs the actual evaluation of the design flowchart.
@@ -83,7 +83,7 @@ else
     else
         w = [1;d1];
     end
-    if isa(d,'psydesign') && getsampling(d)
+    if isa(d,'mirdesign') && getsampling(d)
         sr = getsampling(d);
     else
         sr = f1;
@@ -97,7 +97,7 @@ if not(l)
 end
 
 order = 1:l;
-if isa(d,'psydesign') && isequal(get(d,'Method'),@mirplay)
+if isa(d,'mirdesign') && isequal(get(d,'Method'),@mirplay)
     op = get(d,'Option');
     if isfield(op,'inc')
         if not(isnumeric(op.inc))
@@ -187,7 +187,7 @@ if isstruct(d)
         if isstat
             if isa(field,'mirstruct')
                 field = set(field,'Stat',1);
-            elseif isa(field,'psydesign')
+            elseif isa(field,'mirdesign')
                 field = mirstat(field,'FileNames',0);
             else
                 field.Stat = 1;
@@ -196,7 +196,7 @@ if isstruct(d)
         res = evalaudiofile(field,file,sampling,lg,size,struc,istmp,index,...
                                                      single,fieldname,ch);
         if not(isempty(single)) && not(isequal(single,0)) && ...
-                iscell(res) && isa(field,'psydesign')
+                iscell(res) && isa(field,'mirdesign')
             res = res{1};
         end
         v.(fieldname) = res;

@@ -22,7 +22,7 @@ varargout = mirfunction(@mirlength,orig,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function z = main(a,option,postoption)
@@ -42,7 +42,7 @@ for h = 1:length(d)
         end
     end
 end
-z = psyscalar(a,'Data',v,'Title','Temporal length');
+z = mirscalar(a,'Data',v,'Title','Temporal length');
 if strcmp(option.unit,'Second')
     z = set(z,'Unit','s.');
 else

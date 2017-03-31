@@ -11,10 +11,10 @@ varargout = mirfunction(@mirskewness,orig,varargin,nargout,struct,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'psydata')) || isamir(x,'psyaudio')
+if not(isamir(x,'psydata')) || isamir(x,'miraudio')
     x = psyspectrum(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function s = main(x,option,postoption)
@@ -32,7 +32,7 @@ elseif isa(x,'mirenvelope')
 else
     t = ['Skewness of ',get(x,'Title')];
 end
-s = psyscalar(x,'Data',y,'Title',t,'Unit','');
+s = mirscalar(x,'Data',y,'Title',t,'Unit','');
 
 
 function s = skewness(d,p,c,sp)

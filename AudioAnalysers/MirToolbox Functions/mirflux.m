@@ -84,7 +84,7 @@ varargout = mirfunction(@mirflux,orig,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if isamir(x,'psyaudio') 
+if isamir(x,'miraudio') 
     if isframed(x)
         x = psyspectrum(x);
     else
@@ -92,10 +92,10 @@ if isamir(x,'psyaudio')
                                   option.frame.hop.val,option.frame.hop.unit);
     end
 end
-if isa(x,'psydesign')
+if isa(x,'mirdesign')
     x = set(x,'Overlap',1);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function f = main(s,option,postoption)
@@ -103,7 +103,7 @@ if iscell(s)
     s = s{1};
 end
 t = get(s,'Title');
-if isa(s,'psyscalar') && ...
+if isa(s,'mirscalar') && ...
         (strcmp(t,'Harmonic Change Detection Function') || ...
          (length(t)>4 && strcmp(t(end-3:end),'flux')) || ...
          (length(t)>5 && strcmp(t(end-4:end-1),'flux')))
@@ -191,7 +191,7 @@ else
             newsr{h} = 1/(fpi(1,2)-fpi(1,1));
         end
     end
-    f = psyscalar(s,'Data',ff,'FramePos',fp,'Sampling',newsr,...
+    f = mirscalar(s,'Data',ff,'FramePos',fp,'Sampling',newsr,...
                         'Title',t,'Parameter',param); %,'Tmp',tmp);
     %f = settmp(f,tmp);
     if not(isempty(postoption))

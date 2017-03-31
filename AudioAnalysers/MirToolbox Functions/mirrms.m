@@ -28,7 +28,7 @@ varargout = mirfunction(@mirrms,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function e = main(x,option,postoption)
@@ -37,7 +37,7 @@ if iscell(x)
 end
 d = get(x,'Data');
 v = mircompute(@algo,d,option);
-e = psyscalar(x,'Data',v,'Title','RMS energy');
+e = mirscalar(x,'Data',v,'Title','RMS energy');
 
 
 function e = algo(d,option)

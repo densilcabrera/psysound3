@@ -12,11 +12,11 @@ if not(isempty(varg)) && (isstruct(varg{1}) || isempty(varg{1}))
     during = varg{1};
     if isstruct(varg{1})
         if isfield(during,'struct')
-            if isa(orig,'psydesign') 
+            if isa(orig,'mirdesign') 
                 orig = set(orig,'Struct',during.struct);
             elseif iscell(orig)
                 for i = 1:length(orig)
-                    if isa(orig{i},'psydesign')
+                    if isa(orig{i},'mirdesign')
                         orig{i} = set(orig{i},'Struct',during.struct);
                     end
                 end
@@ -54,7 +54,7 @@ for i = 1:length(fields)
             (strcmpi(option.(field).when,'After') || ...
              strcmpi(option.(field).when,'Both'))
         if isamir(orig,func2str(method)) ...
-                && not(strcmp(func2str(method),'psyaudio'))
+                && not(strcmp(func2str(method),'miraudio'))
             after.(field) = 0;
         elseif strcmp(field,'detect')
            %if haspeaks(orig)
@@ -345,7 +345,7 @@ while i <= length(varg)
                             else
                                 optionvalue = [optionvalue 0];
                             end
-                            if isa(orig,'psydesign')
+                            if isa(orig,'mirdesign')
                                 orig = set(orig,'Size',optionvalue);
                             end
                         end

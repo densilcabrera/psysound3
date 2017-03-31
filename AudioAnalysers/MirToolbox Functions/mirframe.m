@@ -31,14 +31,14 @@ if iscell(x)
     x = x{1};
 end
 if nargin == 0
-    f = psyaudio;
-elseif isa(x,'psydesign')
+    f = miraudio;
+elseif isa(x,'mirdesign')
     if not(get(x,'Eval'))
         % During bottom-up construction of the general design
         
         para = scanargin(varargin);
         type = get(x,'Type');
-        f = psydesign(@mirframe,x,para,{},struct,type);
+        f = mirdesign(@mirframe,x,para,{},struct,type);
         
         fl = get(x,'FrameLength');
         fh = get(x,'FrameHop');
@@ -55,7 +55,7 @@ elseif isa(x,'psydesign')
         end
         f = set(f,'FrameEval',1,...
                   'SeparateChannels',get(x,'SeparateChannels'));
-        if not(isamir(x,'psyaudio'))
+        if not(isamir(x,'miraudio'))
             f = set(f,'NoChunk',1);
         end
     else
@@ -90,7 +90,7 @@ elseif isa(x,'psydata')
     else
         x = purgedata(x);
         dx = get(x,'Data');
-        if isa(x,'psytemporal')
+        if isa(x,'mirtemporal')
             dt = get(x,'Time');
         else
             dt = get(x,'FramePos');
@@ -127,7 +127,7 @@ elseif isa(x,'psydata')
                 for j = 1:length(dxk)   % For each segment, ...
                     dxj = dxk{j};
                     dtj = dtk{j};
-                    if not(isa(x,'psytemporal'))
+                    if not(isa(x,'mirtemporal'))
                         dxj = dxj';
                         dtj = dtj(1,:)';
                     end
@@ -164,7 +164,7 @@ elseif isa(x,'psydata')
                 for j = 1:length(l)   % For each scale, ...
                     dxj = dxk{1};
                     dtj = dtk{1};
-                    if not(isa(x,'psytemporal'))
+                    if not(isa(x,'mirtemporal'))
                         dxj = dxj';
                         dtj = dtj(1,:)';
                     end
@@ -196,17 +196,17 @@ elseif isa(x,'psydata')
                 fp{k} = fpk;
             end
         end
-        if isa(x,'psytemporal')
+        if isa(x,'mirtemporal')
             f = set(x,'Time',dt2,'Data',dx2,'FramePos',fp);
         else
-            f = psytemporal([],'Time',dt2,'Data',dx2,'FramePos',fp,...
+            f = mirtemporal([],'Time',dt2,'Data',dx2,'FramePos',fp,...
                     'Sampling',get(x,'Sampling'),'Name',get(x,'Name'),...
                     'Label',get(x,'Label'),'Channels',get(x,'Channels'),...
                     'Centered',0,'Title',get(x,'Title'));
         end
     end
 else
-    f = mirframe(psyaudio(x),varargin{:});
+    f = mirframe(miraudio(x),varargin{:});
 end
 
 

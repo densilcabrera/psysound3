@@ -17,7 +17,7 @@ varargout = mirfunction(@mirauditory,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if isamir(x,'psyaudio')
+if isamir(x,'miraudio')
     x = mirfilterbank(x,'NbChannels',option.fb);
     x = mirenvelope(x,'Center','Diff','Halfwave','Center');
 end

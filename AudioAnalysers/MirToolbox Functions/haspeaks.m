@@ -1,6 +1,6 @@
 function h = haspeaks(d)
 
-if isa(d,'psydesign')
+if isa(d,'mirdesign')
     h = strcmp(func2str(get(d,'Method')),'mirpeaks');
 else
     if iscell(d)

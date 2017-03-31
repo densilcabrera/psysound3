@@ -40,9 +40,9 @@ varargout = mirfunction(@mirzerocross,orig,varargin,nargout,specif,@init,@main);
 
 function [x type] = init(x,option)
 if not(isamir(x,'psydata'))
-    x = psyaudio(x);
+    x = miraudio(x);
 end
-type = 'psyscalar';
+type = 'mirscalar';
 
 
 function z = main(a,option,postoption)
@@ -69,4 +69,4 @@ for h = 1:length(d)
         v{h}{i} = zc;
     end
 end
-z = psyscalar(a,'Data',v,'Title','Zero-crossing rate');
+z = mirscalar(a,'Data',v,'Title','Zero-crossing rate');

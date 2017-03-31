@@ -22,13 +22,13 @@ OptionStr=get(obj,'OptionStr');
 
 
 % Core of The Analyser 
-dataOut=psyaudio(dataIn,fs);
+dataOut=miraudio(dataIn,fs);
 
 
 [p, ac] = mirpitch(dataOut,OptionStr{:});
 
 w = mirinharmonicity(dataOut); % example for the new release manual
-inh = mirgetdata(w); % mirgetdata extracts the numeric data of w, which is a "psyscalar" object.
+inh = mirgetdata(w); % mirgetdata extracts the numeric data of w, which is a "mirscalar" object.
 
 z = mirroughness(dataOut);
 rough = mirgetdata(z);

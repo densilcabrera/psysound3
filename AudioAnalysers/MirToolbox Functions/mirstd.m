@@ -89,4 +89,4 @@ for i = 1:l
         end
     end
 end
-m = psyscalar(f,'Data',m,'Title',['Standard deviation of ',ti]);
+m = mirscalar(f,'Data',m,'Title',['Standard deviation of ',ti]);

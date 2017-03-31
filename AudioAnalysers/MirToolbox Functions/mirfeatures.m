@@ -15,16 +15,16 @@ function r = mirfeatures(x,varargin)
 %   mirfeatures(...,'Frame',...) 
 %   mirfeatures(...,'Normal')
 %   mirfeatures(...,'Sampling',s)
-%   psyaudio options (Extract, ...)
+%   miraudio options (Extract, ...)
 
 [stat,nchan,segm,feat] = scanargin(varargin);
 
-if isa(x,'psyaudio') || isa(x,'psydesign')
-    a = psyaudio(x,'Normal'); % normalize with respect to RMS energy 
+if isa(x,'miraudio') || isa(x,'mirdesign')
+    a = miraudio(x,'Normal'); % normalize with respect to RMS energy 
                               % in order to consider timbre independently of
                              % energy
 else
-    a = psyaudio('Design','Normal');
+    a = miraudio('Design','Normal');
 end
 
 if not(isempty(segm))
@@ -112,7 +112,7 @@ if stat
     % SHOULD COMPUTE STAT OF CURVES FROM FRAMED_DECOMPOSED HIGH FEATURES
 end
     
-if not(isa(x,'psyaudio')) && not(isa(x,'psydesign'))
+if not(isa(x,'miraudio')) && not(isa(x,'mirdesign'))
     r = mireval(r,x);
 end
 
