@@ -55,7 +55,7 @@ else
 end
 for v = 2:narg
     argv = varargin{v-1};
-    if isa(argv,'mirdesign')
+    if isa(argv,'psydesign')
         mirerror('MIREXPORT','You can only export features that have been already evaluated (using mireval).');
     end
     if ischar(argv)
@@ -153,7 +153,7 @@ if isstruct(data)
             newname = checkname(newname,name);
         end
     end
-elseif isa(data,'mirdata')
+elseif isa(data,'psydata')
     newinput.data = mirstat(data);
     if isfield(newinput.data,'FileNames')
         newinput.data = rmfield(newinput.data,'FileNames');

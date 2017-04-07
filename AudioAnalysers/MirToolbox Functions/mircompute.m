@@ -6,7 +6,7 @@ for i = 1:l
     v = varargin;
     for j = 1:length(v)
         % for each variable associated to that audio
-        if isa(v{j},'mirdata')
+        if isa(v{j},'psydata')
             v{j} = get(v{j},'Data');
         end
         if iscell(v{j})

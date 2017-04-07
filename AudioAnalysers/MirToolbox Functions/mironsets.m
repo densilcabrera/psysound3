@@ -13,7 +13,7 @@ function varargout = mironsets(x,varargin)
 %                       between 0 and 1)
 %                       Default values: fl = .1 s., fh = .1
 %                    the frequency reassigment method can be specified:
-%                    'Freq' (default), 'Mel', 'Bark' or 'Cents' (cf. mirspectrum).
+%                    'Freq' (default), 'Mel', 'Bark' or 'Cents' (cf. psyspectrum).
 %               mironsets(...,'Filter'):
 %                   mironsets(...,'Filterbank',nc) specifies a preliminary
 %                       filterbank decomposition into nc channels. If nc = 0,
@@ -368,7 +368,7 @@ if isnan(option.env)
         option.env = 1;
     end
 end
-if isamir(x,'miraudio')
+if isamir(x,'psyaudio')
     if option.env
         if strcmpi(option.envmeth,'Filter') && option.fb>1
             fb = mirfilterbank(x,option.filtertype,'NbChannels',option.fb);
@@ -385,23 +385,23 @@ if isamir(x,'miraudio')
     elseif option.flux
         x = mirframenow(x,option);
         y = mirflux(x,'Inc',option.inc,'Complex',option.complex);
-        type = 'mirscalar';
+        type = 'psyscalar';
     elseif option.pitch
         [unused ac] = mirpitch(x,'Frame','Min',option.min,'Max',option.max);
         y = mirnovelty(ac,'KernelSize',option.kernelsize);
-        type = 'mirscalar';
+        type = 'psyscalar';
     end
-elseif (option.pitch && not(isamir(x,'mirscalar'))) ...
+elseif (option.pitch && not(isamir(x,'psyscalar'))) ...
         || isamir(x,'mirsimatrix')
     y = mirnovelty(x,'KernelSize',option.kernelsize);
-    type = 'mirscalar';
-elseif isamir(x,'mirscalar') || isamir(x,'mirenvelope')
+    type = 'psyscalar';
+elseif isamir(x,'psyscalar') || isamir(x,'mirenvelope')
     y = x; %mirframenow(x,option);
     type = mirtype(x);
 else
     x = mirframenow(x,option);
     y = mirflux(x,'Inc',option.inc,'Complex',option.complex); %Not used...
-    type = 'mirscalar';
+    type = 'psyscalar';
 end
 
 
@@ -470,7 +470,7 @@ if isfield(postoption,'cthr')
         if postoption.c
             o = mirenvelope(o,'Center');
         end
-    elseif isa(o,'mirscalar') && strcmp(get(o,'Title'),'Spectral flux')
+    elseif isa(o,'psyscalar') && strcmp(get(o,'Title'),'Spectral flux')
         if postoption.median
             o = mirflux(o,'Median',postoption.median(1),postoption.median(2),...
                           'Halfwave',postoption.hw);
@@ -496,7 +496,7 @@ if isfield(option,'presel') && ...
     o = mirsum(o,'Weights',(filtfreq(1:end-1)+filtfreq(2:end))/2);
     o = mirenvelope(o,'Smooth',12);
 end
-if not(isa(o,'mirscalar'))
+if not(isa(o,'psyscalar'))
     o = mirframenow(o,postoption);
 end
 if isfield(postoption,'detect') && ischar(postoption.detect)

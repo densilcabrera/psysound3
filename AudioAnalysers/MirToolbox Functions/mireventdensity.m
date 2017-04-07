@@ -41,7 +41,7 @@ if not(isamir(x,'mirenvelope'))
         x = mironsets(x,'Klapuri99');
     end
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function e = main(o,option,postoption)
@@ -52,7 +52,7 @@ sr = get(o,'Sampling');
 p = mirpeaks(o); %%%%<<<<<<< MORE OPTIONS HERE
 pv = get(p,'PeakVal');
 v = mircompute(@algo,pv,o,option,sr);
-e = mirscalar(o,'Data',v,'Title','Event density','Unit','per second');
+e = psyscalar(o,'Data',v,'Title','Event density','Unit','per second');
 e = {e o};
 
 

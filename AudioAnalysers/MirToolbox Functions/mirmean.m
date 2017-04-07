@@ -108,4 +108,4 @@ for i = 1:l
         end
     end
 end
-m = mirscalar(f,'Data',m,'Title',['Average of ',ti]);
+m = psyscalar(f,'Data',m,'Title',['Average of ',ti]);

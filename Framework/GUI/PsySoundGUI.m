@@ -972,7 +972,7 @@ for i=1:length(handles.SettingsPanel)
   
   j=get(h,'Tag');
  
-  if ~(strcmp(j,'MIRPITCHFrame3'))
+  if ~(strcmp(j,'PSYPITCHFrame3'))
   set(h, 'Enable', AnalyserSetting);
   h  = findobj(panel, '-regexp', 'Tag', 'WindowSize', 'Style', 'popupmenu');
   end 

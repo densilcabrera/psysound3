@@ -31,14 +31,14 @@ if iscell(x)
     x = x{1};
 end
 if nargin == 0
-    f = miraudio;
-elseif isa(x,'mirdesign')
+    f = psyaudio;
+elseif isa(x,'psydesign')
     if not(get(x,'Eval'))
         % During bottom-up construction of the general design
         
         para = scanargin(varargin);
         type = get(x,'Type');
-        f = mirdesign(@mirframe,x,para,{},struct,type);
+        f = psydesign(@mirframe,x,para,{},struct,type);
         
         fl = get(x,'FrameLength');
         fh = get(x,'FrameHop');
@@ -55,7 +55,7 @@ elseif isa(x,'mirdesign')
         end
         f = set(f,'FrameEval',1,...
                   'SeparateChannels',get(x,'SeparateChannels'));
-        if not(isamir(x,'miraudio'))
+        if not(isamir(x,'psyaudio'))
             f = set(f,'NoChunk',1);
         end
     else
@@ -83,14 +83,14 @@ elseif isa(x,'mirdesign')
             f = mirframe(e,varargin{:});
         end
     end
-elseif isa(x,'mirdata')
+elseif isa(x,'psydata')
     if isframed(x)
         warning('WARNING IN MIRFRAME: The input data is already decomposed into frames. No more frame decomposition.');
         f = x;
     else
         x = purgedata(x);
         dx = get(x,'Data');
-        if isa(x,'mirtemporal')
+        if isa(x,'psytemporal')
             dt = get(x,'Time');
         else
             dt = get(x,'FramePos');
@@ -127,7 +127,7 @@ elseif isa(x,'mirdata')
                 for j = 1:length(dxk)   % For each segment, ...
                     dxj = dxk{j};
                     dtj = dtk{j};
-                    if not(isa(x,'mirtemporal'))
+                    if not(isa(x,'psytemporal'))
                         dxj = dxj';
                         dtj = dtj(1,:)';
                     end
@@ -164,7 +164,7 @@ elseif isa(x,'mirdata')
                 for j = 1:length(l)   % For each scale, ...
                     dxj = dxk{1};
                     dtj = dtk{1};
-                    if not(isa(x,'mirtemporal'))
+                    if not(isa(x,'psytemporal'))
                         dxj = dxj';
                         dtj = dtj(1,:)';
                     end
@@ -196,17 +196,17 @@ elseif isa(x,'mirdata')
                 fp{k} = fpk;
             end
         end
-        if isa(x,'mirtemporal')
+        if isa(x,'psytemporal')
             f = set(x,'Time',dt2,'Data',dx2,'FramePos',fp);
         else
-            f = mirtemporal([],'Time',dt2,'Data',dx2,'FramePos',fp,...
+            f = psytemporal([],'Time',dt2,'Data',dx2,'FramePos',fp,...
                     'Sampling',get(x,'Sampling'),'Name',get(x,'Name'),...
                     'Label',get(x,'Label'),'Channels',get(x,'Channels'),...
                     'Centered',0,'Title',get(x,'Title'));
         end
     end
 else
-    f = mirframe(miraudio(x),varargin{:});
+    f = mirframe(psyaudio(x),varargin{:});
 end
 
 

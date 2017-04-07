@@ -15,10 +15,10 @@ varargout = mirfunction(@mirentropy,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if isamir(x,'miraudio')
-    x = mirspectrum(x);
+if isamir(x,'psyaudio')
+    x = psyspectrum(x);
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function h = main(x,option,postoption)
@@ -32,7 +32,7 @@ for h = 1:length(m)
     for k = 1:length(m{h})
         mk = m{h}{k};
         mn = mk;
-        if isa(x,'mirhisto') || isa(x,'mirscalar')
+        if isa(x,'mirhisto') || isa(x,'psyscalar')
             mn = mn';
         end
         
@@ -51,10 +51,10 @@ for h = 1:length(m)
         % Actual computation of entropy
         v{h}{k} = -sum(mn.*log(mn + 1e-12))./log(size(mn,1));
         
-        if isa(x,'mirhisto') || isa(x,'mirscalar')
+        if isa(x,'mirhisto') || isa(x,'psyscalar')
             v{h}{k} = v{h}{k}';
         end
     end
 end
 t = ['Entropy of ',get(x,'Title')];
-h = mirscalar(x,'Data',v,'Title',t);
+h = psyscalar(x,'Data',v,'Title',t);

@@ -16,11 +16,11 @@ function d = mirdist(x,y,dist)
 % The Earth Mover Distance is based on the implementation by Yossi Rubner,
 % wrapped for Matlab by Elias Pampalk.
 
-if not(isa(x,'mirdata'))
-    x = miraudio(x);
+if not(isa(x,'psydata'))
+    x = psyaudio(x);
 end
-if not(isa(y,'mirdata'))
-    y = miraudio(y);
+if not(isa(y,'psydata'))
+    y = psyaudio(y);
 end
 
 clx = get(x,'Clusters');
@@ -118,5 +118,5 @@ else
         dt{h}{1} = emd_wrapper(cost,clx{1}.weight,cly{h}.weight);
     end
 end
-d = mirscalar(y,'Data',dt,'Title',[get(y,'Title'),' Distance'],...
+d = psyscalar(y,'Data',dt,'Title',[get(y,'Title'),' Distance'],...
                 'Name',get(x,'Name'),'Name2',get(y,'Name'));

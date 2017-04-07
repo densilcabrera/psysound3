@@ -11,9 +11,9 @@ function varargout = mirplay(a,varargin)
 %       mirplay(...,'Sequence',l) plays the sequence(s) of rank(s) indicated
 %           by the array l.
 %       mirplay(...,'Increasing',d) plays the sequences in increasing order
-%           of d, which could be either an array or a mirscalar data.
+%           of d, which could be either an array or a psyscalar data.
 %       mirplay(...,'Decreasing',d) plays the sequences in decreasing order
-%           of d, which could be either an array or a mirscalar data.
+%           of d, which could be either an array or a psyscalar data.
 %       mirplay(...,'Every',s) plays every s sequence, where s is a number
 %           indicating the step between sequences.
 %       mirplay(...,'Burst',0) toggles off the burst sound between
@@ -23,7 +23,7 @@ function varargout = mirplay(a,varargin)
 %                        'every',5)
 
 if ischar(a)
-    varargout = mirplay(miraudio(a),varargin{:});
+    varargout = mirplay(psyaudio(a),varargin{:});
 elseif isscalar(a)
             ch.key = 'Channel';
             ch.type = 'Integer';
@@ -79,7 +79,7 @@ if iscell(a)
     a = a{1};
 end
 d = get(a,'Data');
-if isa(a,'MIRPITCH')
+if isa(a,'PSYPITCH')
     amp = get(a,'Amplitude');
 end
 f = get(a,'Sampling');
@@ -137,7 +137,7 @@ if not(isempty(order))
                     display(['      Playing segment #' num2str(i)])
                 end
                 di = dk{i};
-                if isa(a,'MIRPITCH')
+                if isa(a,'PSYPITCH')
                     ampi = amp{k}{i};
                 end
                 synth = zeros(1,ceil((fp{k}{i}(end)-fp{k}{i}(1))*44100)+1);
@@ -148,7 +148,7 @@ if not(isempty(order))
                         dj = di(:,j);
                     end
                     dj(isnan(dj)) = 0;
-                    if isa(a,'MIRPITCH')
+                    if isa(a,'PSYPITCH')
                         ampj = zeros(size(dj));
                         if iscell(ampi)
                             ampj(1:size(ampi{j})) = ampi{j};
@@ -159,7 +159,7 @@ if not(isempty(order))
                     if not(isempty(dj))
                         k1 = floor((fp{k}{i}(1,j)-fp{k}{i}(1))*44100)+1;
                         k2 = floor((fp{k}{i}(2,j)-fp{k}{i}(1))*44100)+1;
-                        if isa(a,'MIRPITCH')
+                        if isa(a,'PSYPITCH')
                             ampj = repmat(ampj,1,k2-k1+1);
                         else
                             ampj = ones(size(dj),k2-k1+1);

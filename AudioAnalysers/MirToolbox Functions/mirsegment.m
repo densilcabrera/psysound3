@@ -157,13 +157,13 @@ p = {};
 m = {};
 fe = {};
 
-if isa(x,'mirdesign')
+if isa(x,'psydesign')
     if not(get(x,'Eval'))
         % During bottom-up construction of the general design
 
         [unused option] = miroptions(@mirframe,x,specif,varargin);
         type = get(x,'Type');
-        f = mirdesign(@mirsegment,x,option,{},struct,type);
+        f = psydesign(@mirsegment,x,option,{},struct,type);
         
         sg = get(x,'Segment');
         if not(isempty(sg))
@@ -181,7 +181,7 @@ if isa(x,'mirdesign')
         end
         p = x;
     end
-elseif isa(x,'mirdata')
+elseif isa(x,'psydata')
     [unused option] = miroptions(@mirframe,x,specif,varargin);
     if ischar(option.strat)
         dx = get(x,'Data');
@@ -206,7 +206,7 @@ elseif isa(x,'mirdata')
             if 0 %not(isequal(option.mfc,0)) % not in Matlab Central version
                 fe = mirmfcc(fr,'Rank',option.mfc);
             elseif strcmpi(option.ana,'Spectrum')
-                fe = mirspectrum(fr,'Min',option.mi,'Max',option.ma,...
+                fe = psyspectrum(fr,'Min',option.mi,'Max',option.ma,...
                                     'Normal',option.norm,option.band,...
                                     'Window',option.win);
             elseif strcmpi(option.ana,'Keystrength')
@@ -248,10 +248,10 @@ elseif isa(x,'mirdata')
         dx = get(x,'Data');
         dt = get(x,'Time');
 
-        if isa(option.strat,'mirscalar')
+        if isa(option.strat,'psyscalar')
             ds = get(option.strat,'PeakPos');
             fp = get(option.strat,'FramePos');
-        elseif isa(option.strat,'mirdata')
+        elseif isa(option.strat,'psydata')
             ds = get(option.strat,'AttackPos');
             if isempty(ds) || isempty(ds{1})
                 ds = get(option.strat,'PeakPos');
@@ -267,7 +267,7 @@ elseif isa(x,'mirdata')
         for k = 1:length(dx)
             dxk = dx{k}{1}; % values in kth audio file
             dtk = dt{k}{1}; % time positions in kth audio file
-            if isa(option.strat,'mirdata')
+            if isa(option.strat,'psydata')
                 dsk = ds{k}{1}; % segmentation times in kth audio file
             else
                 dsk = {ds};
@@ -275,7 +275,7 @@ elseif isa(x,'mirdata')
             fsk = [];   % the structured array of segmentation times 
                          % needs to be flatten
             for j = 1:length(dsk)
-                if isa(option.strat,'mirdata')
+                if isa(option.strat,'psydata')
                     dsj = dsk{j}; % segmentation times in jth segment
                 else
                     dsj = ds;
@@ -285,9 +285,9 @@ elseif isa(x,'mirdata')
                 end
                 for m = 1:length(dsj)
                     % segmentation times in mth bank channel
-                    if isa(option.strat,'mirscalar')
+                    if isa(option.strat,'psyscalar')
                         dsm = mean(fp{k}{m}(:,dsj{m}));
-                    elseif isa(option.strat,'mirdata')
+                    elseif isa(option.strat,'psydata')
                         dsm = xx{k}{m}(dsj{m});
                     else
                         dsm = dsj{m};
@@ -380,7 +380,7 @@ elseif isa(x,'mirdata')
         fe = {};
     end
 else
-    [f p] = mirsegment(miraudio(x),varargin{:});
+    [f p] = mirsegment(psyaudio(x),varargin{:});
 end 
 
 

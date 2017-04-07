@@ -7,7 +7,7 @@ if iscell(x)
     return
 end
     
-if isa(x,'mirdesign')
+if isa(x,'psydesign')
     type = get(x,'Type');
 else
     type = class(x);

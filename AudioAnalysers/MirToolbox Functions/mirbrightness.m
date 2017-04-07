@@ -32,10 +32,10 @@ varargout = mirfunction(@mirbrightness,x,varargin,nargout,specif,@init,@main);
 
 
 function [x type] = init(x,option)
-if not(isamir(x,'mirspectrum'))
-    x = mirspectrum(x);
+if not(isamir(x,'psyspectrum'))
+    x = psyspectrum(x);
 end
-type = 'mirscalar';
+type = 'psyscalar';
 
 
 function b = main(s,option,postoption)
@@ -48,7 +48,7 @@ w = warning('query','MATLAB:divideByZero');
 warning('off','MATLAB:divideByZero');
 v = mircompute(@algo,m,f,option.cutoff);
 warning(w.state,'MATLAB:divideByZero');
-b = mirscalar(s,'Data',v,'Title','Brightness');
+b = psyscalar(s,'Data',v,'Title','Brightness');
 
 
 function v = algo(m,f,k)

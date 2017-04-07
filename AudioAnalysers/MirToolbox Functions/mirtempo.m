@@ -16,13 +16,13 @@ function varargout = mirtempo(x,varargin)
 %       mirtempo(...,s) selects the tempo estimation strategy:
 %           s = 'Autocor': Approach based on the computation of the
 %               autocorrelation. (Default strategy)
-%               Option associated to the mirautocor function can be
-%               passed here as well (see help mirautocor):
+%               Option associated to the psyautocor function can be
+%               passed here as well (see help psyautocor):
 %                   'Enhanced' (toggled on by default here)
 %           s = 'Spectrum': Approach based on the computation of the
 %               spectrum .
-%               Option associated to the mirspectrum function can be
-%               passed here as well (see help mirspectrum):
+%               Option associated to the psyspectrum function can be
+%               passed here as well (see help psyspectrum):
 %                   'ZeroPad' (set by default to 10000 samples)
 %                   'Prod' (toggled off by default)
 %           These two strategies can be combined: the autocorrelation
@@ -190,7 +190,7 @@ function varargout = mirtempo(x,varargin)
         option.hw = hw;                
         
         
-%% options related to mirautocor:    
+%% options related to psyautocor:    
 
         aut.key = 'Autocor';
         aut.type = 'Integer';
@@ -215,7 +215,7 @@ function varargout = mirtempo(x,varargin)
     option.r = r;
 
 
-%% options related to mirspectrum:
+%% options related to psyspectrum:
     
         spe.key = 'Spectrum';
         spe.type = 'Integer';
@@ -289,8 +289,8 @@ if option.perio
     option.m = 3;
     option.enh = 2:10;
 end
-if not(isamir(x,'mirautocor')) && not(isamir(x,'mirspectrum'))
-    if isframed(x) && strcmpi(option.fea,'Envelope') && not(isamir(x,'mirscalar'))
+if not(isamir(x,'psyautocor')) && not(isamir(x,'psyspectrum'))
+    if isframed(x) && strcmpi(option.fea,'Envelope') && not(isamir(x,'psyscalar'))
         warning('WARNING IN MIRTEMPO: The input should not be already decomposed into frames.');
         disp(['Suggestion: Use the ''Frame'' option instead.'])
     end
@@ -336,19 +336,19 @@ end
 if option.aut == 0 && option.spe == 0
     option.aut = 1;
 end
-if isamir(x,'mirautocor') || (option.aut && not(option.spe))
-    y = mirautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
+if isamir(x,'psyautocor') || (option.aut && not(option.spe))
+    y = psyautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
           'Enhanced',option.enh,...'NormalInput','coeff',...
           'Resonance',option.r,'NormalWindow',option.nw);
-elseif isamir(x,'mirspectrum') || (option.spe && not(option.aut))
-    y = mirspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
+elseif isamir(x,'psyspectrum') || (option.spe && not(option.aut))
+    y = psyspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
                        'Prod',option.prod,...'NormalInput',...
                        'ZeroPad',option.zp,'Resonance',option.r);
 elseif option.spe && option.aut
-    ac = mirautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
+    ac = psyautocor(x,'Min',60/option.ma,'Max',60/option.mi,...
           'Enhanced',option.enh,...'NormalInput','coeff',...
           'Resonance',option.r);
-    sp = mirspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
+    sp = psyspectrum(x,'Min',option.mi/60,'Max',option.ma/60,...
                        'Prod',option.prod,...'NormalInput',...
                        'ZeroPad',option.zp,'Resonance',option.r);
     y = ac*sp;
@@ -360,7 +360,7 @@ y = mirpeaks(y,'Total',option.m,'Track',option.track,...
                'Pref',option.pref(1),option.pref(2),...
                'Contrast',option.thr,'NoBegin','NoEnd',...
                'Normalize','Local');
-type = {'mirscalar',mirtype(y)};            
+type = {'psyscalar',mirtype(y)};            
 
 
 %% MAIN
@@ -387,7 +387,7 @@ for j = 1:length(pt)
                 if isempty(ptl)
                     bpmk{1,l,h} = NaN;
                 else
-                    if isa(p,'mirautocor') && not(get(p,'FreqDomain'))
+                    if isa(p,'psyautocor') && not(get(p,'FreqDomain'))
                         bpmk{1,l,h} = 60./ptl;
                     else
                         bpmk{1,l,h} = ptl*60;
@@ -401,5 +401,5 @@ for j = 1:length(pt)
         bpm{j}{k} = bpmk;
     end 
 end
-t = mirscalar(p,'Data',bpm,'Title','Tempo','Unit','bpm');
+t = psyscalar(p,'Data',bpm,'Title','Tempo','Unit','bpm');
 o = {t,p};

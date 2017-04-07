@@ -2,7 +2,7 @@ function x = uncell(x,lvl)
     % lvl >= 0: The recursion level, starting from 0, when observing the 
     %   cell structures of cell structures of etc. of the input data x. 
     % lvl = NaN:
-    % lvl = -Inf: used in display of segmented mirscalar
+    % lvl = -Inf: used in display of segmented psyscalar
 if nargin < 2
     lvl = 0;
 end

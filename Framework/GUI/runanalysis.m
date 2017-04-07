@@ -27,7 +27,7 @@ aLen = length(analysers);
 % Frame=[];
 % Name='';
 % if ~isempty(MirOptionStr)
-%     obj=MIRPITCH();
+%     obj=PSYPITCH();
 %    [ Frame,Name  ] = getMirPlotType(obj); 
 % end
 
@@ -254,7 +254,7 @@ for i = 1:fLen
       
 %       obj = set(obj,'OptionStr',MirOptionStr);
 %       
-%               if isa(obj,'MIRPITCH')           
+%               if isa(obj,'PSYPITCH')           
 %           obj = setMir(obj,'Frame',Frame);
 %           obj = setMir(obj,'SpectrumType',Name);
 %               end
@@ -596,8 +596,8 @@ MirOptionStr={};
 for k=1:aLen
     analyser = analysers{k};
     
-    if strcmp('MIRPITCH',analyser)
-        obj = MIRPITCH();
+    if strcmp('PSYPITCH',analyser)
+        obj = PSYPITCH();
         MirOptionStr= getMirOptions(obj);              
     end
     
